@@ -50,7 +50,7 @@ public class PlayerAnimator : MonoBehaviour
     void UpdateAnimatorValue()
     {
         animator.SetInteger("AnimatorState", (int)animatorState);
-        animator.SetFloat("Horizontal", player.velocity.x);
-        animator.SetFloat("Vertical", player.velocity.y);
+        animator.SetFloat("Horizontal", player.lastDir.x);
+        animator.SetFloat("Vertical", player.lastDir.y);
     }
 }

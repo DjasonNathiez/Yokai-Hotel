@@ -34,11 +34,20 @@ public class PlayerController : MonoBehaviour
     float currentRecoilReset, currentRecoilDash;
 
     public float invincibleDelay, invincibleDuration;
+    [Header("Attack")]
+    public int combo;
+    public int attackChoose = -1;
+
+    public AttackManager attackM;
+
+    public Vector2 AttackDir;
+    public bool activeDamage;
 
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
+        attackM = GetComponent<AttackManager>();
 
         // set dash value
         currentRecoilDash = recoilDashTime;
@@ -58,6 +67,23 @@ public class PlayerController : MonoBehaviour
         // attack
         bool lightAttack = (Input.GetButtonDown("Fire1"));
         bool heavyAttack = (Input.GetButtonDown("Fire2"));
+
+        bool dashAttack = (dash && lightAttack);
+        bool counter = (dash && heavyAttack);
+        bool stunAttack = (lightAttack && heavyAttack);
+
+        // select attack
+        if(!counter && !dashAttack && !stunAttack)
+        {
+            if (lightAttack)
+                attackChoose = combo;
+            if (heavyAttack)
+                attackChoose = 3;
+        }
+
+        if (stunAttack && !dash)
+            attackChoose = 4;
+
         #endregion
 
         switch (playerState)
@@ -75,7 +101,10 @@ public class PlayerController : MonoBehaviour
                         StartCoroutine(LoadDash());
 
                     if (lightAttack || heavyAttack)
+                    {
                         playerState = PlayerState.ATTACK;
+                        AttackDir = lastDir;
+                    }
 
                     break;
                 }
@@ -103,6 +132,7 @@ public class PlayerController : MonoBehaviour
         rb2D.velocity = velocity;
     }
 
+    #region Dash
     public IEnumerator LoadDash()
     {
         dashDir = lastDir;
@@ -112,4 +142,13 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(recoilDashTime);
         playerState = PlayerState.FREE;
     }
+    #endregion
+
+    #region Attack
+    public void SetInertness( float inesrtness)
+    {
+        velocity = lastDir * inesrtness;
+    }
+    #endregion
+
 }

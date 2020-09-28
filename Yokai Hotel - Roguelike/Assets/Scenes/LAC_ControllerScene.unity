@@ -567,7 +567,7 @@ GameObject:
   - component: {fileID: 843241685}
   - component: {fileID: 843241684}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Ennemi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -587,14 +587,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ennemyState: 0
   healthPoints: 3
+  hit: 0
   speed: 3
-  idleCycle: 1.5
   idleRadius: 1.5
+  minSkinWidth: 0.1
+  maxSkinWidth: 0.5
+  detectX: 1
+  detectY: 1
+  idleTime: 0.5
+  idleCycle: 1.5
+  idleDir: {x: 0, y: 0}
   target: {fileID: 945736197}
   detectCycle: 1
   minDetectRadius: 5
   maxDetectRadius: 6
   obstructMask:
+    serializedVersion: 2
+    m_Bits: 512
+  wallMask:
     serializedVersion: 2
     m_Bits: 512
   minCacRadius: 0.5
@@ -622,8 +632,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &843241686
-BoxCollider2D:
+--- !u!58 &843241686
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -636,18 +646,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.5
 --- !u!23 &843241687
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -789,8 +789,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerState: 0
   speed: 10
-  acceleration: 0.1
-  deceleration: 0.05
+  acceleration: 0
+  deceleration: 0
   lastDir: {x: 0, y: 0}
   velocity: {x: 0, y: 0}
   velocitySmoothing: {x: 0, y: 0}
@@ -804,6 +804,11 @@ MonoBehaviour:
   recoilDashLimit: 4
   invincibleDelay: 0
   invincibleDuration: 0
+  combo: 0
+  attackChoose: -1
+  attackM: {fileID: 0}
+  AttackDir: {x: 0, y: 0}
+  activeDamage: 0
 --- !u!4 &945736201
 Transform:
   m_ObjectHideFlags: 0
@@ -816,7 +821,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1512294414}
-  - {fileID: 1644686638}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -865,6 +869,7 @@ GameObject:
   - component: {fileID: 1512294415}
   - component: {fileID: 1512294416}
   - component: {fileID: 1512294417}
+  - component: {fileID: 1512294418}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -969,36 +974,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSensibility: 0.1
   animatorState: 0
---- !u!1 &1644686637
-GameObject:
+--- !u!114 &1512294418
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1644686638}
-  m_Layer: 0
-  m_Name: HitBox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1644686638
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1644686637}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 945736201}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 1512294413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8911c168c2da74e49a67e4aa55e5078c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1776846406
 GameObject:
   m_ObjectHideFlags: 0
