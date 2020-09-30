@@ -80,9 +80,7 @@ public class PlayerController : MonoBehaviour
             if (heavyAttack)
                 attackChoose = 3;
         }
-
-        if (stunAttack && !dash)
-            attackChoose = 4;
+        
 
         #endregion
 
