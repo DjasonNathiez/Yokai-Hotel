@@ -572,7 +572,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &843241684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -804,6 +804,11 @@ MonoBehaviour:
   recoilDashLimit: 4
   invincibleDelay: 0
   invincibleDuration: 0
+  lightAttack: 0
+  heavyAttack: 0
+  lA_Buffer: 0.2
+  hA_Buffer: 0.2
+  attackable: 0
   combo: 0
   attackChoose: -1
   attackM: {fileID: 0}
@@ -870,6 +875,7 @@ GameObject:
   - component: {fileID: 1512294416}
   - component: {fileID: 1512294417}
   - component: {fileID: 1512294418}
+  - component: {fileID: 1512294419}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -986,6 +992,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8911c168c2da74e49a67e4aa55e5078c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1512294419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512294413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 968c90ba0ff597b4c9b841f845d9107c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attack:
+  - {fileID: 11400000, guid: ec672fda4cac6fb48989a0f53cc3f0b9, type: 2}
+  - {fileID: 11400000, guid: b051eba4f5863884e9e25b874cebe7e1, type: 2}
+  - {fileID: 11400000, guid: debb57419c4bc8e46bd44ac92eda4e7f, type: 2}
 --- !u!1 &1776846406
 GameObject:
   m_ObjectHideFlags: 0

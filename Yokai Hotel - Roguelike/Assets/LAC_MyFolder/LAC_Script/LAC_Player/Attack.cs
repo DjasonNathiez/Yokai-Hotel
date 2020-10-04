@@ -5,18 +5,19 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Attack", menuName = "ScriptableObjects/AttackScriptableObject", order = 1)]
 public class Attack : ScriptableObject
 {
-    public string name;
-
+    public string clipName;
+  
     public enum AttackType { LIGHT, HEAVY, SPECIAL}
     public AttackType attackType;
 
     public int damage;
-    public bool activeDamage;
 
-    public float inertness;
-    public int inertnessFrame;
+    public int comboLevel;
+    public float comboDuration;
 
-    public bool armorable;
-    public int armorTime;
+    public float inertDistance, inertTime, inertAccel;
+
+    public float knockBackvalue;
+
 
 }

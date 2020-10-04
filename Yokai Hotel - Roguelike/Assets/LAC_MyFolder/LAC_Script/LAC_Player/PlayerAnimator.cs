@@ -52,5 +52,6 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetInteger("AnimatorState", (int)animatorState);
         animator.SetFloat("Horizontal", player.lastDir.x);
         animator.SetFloat("Vertical", player.lastDir.y);
+        animator.SetInteger("AttackChoose", player.attackChoose);  
     }
 }

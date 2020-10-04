@@ -35,7 +35,19 @@ public class PlayerController : MonoBehaviour
 
     public float invincibleDelay, invincibleDuration;
     [Header("Attack")]
+
+    bool lightAttack;
+    bool heavyAttack;
+    public float lA_Buffer, hA_Buffer;
+    
+    float lA_Time, hA_Time;
+
+    public bool attackable = false; 
+
+   
     public int combo;
+    bool comboUpdate = true;
+
     public int attackChoose = -1;
 
     public AttackManager attackM;
@@ -65,22 +77,23 @@ public class PlayerController : MonoBehaviour
         bool dash = Input.GetButtonDown("Jump");
 
         // attack
-        bool lightAttack = (Input.GetButtonDown("Fire1"));
-        bool heavyAttack = (Input.GetButtonDown("Fire2"));
+        if (Input.GetButtonDown("Fire1"))
+            lA_Time = Time.time;
+        if (Input.GetButtonDown("Fire2"))
+            hA_Time = Time.time;
 
-        bool dashAttack = (dash && lightAttack);
-        bool counter = (dash && heavyAttack);
-        bool stunAttack = (lightAttack && heavyAttack);
+        lightAttack = (Time.time - lA_Time < lA_Buffer);
+        heavyAttack = (Time.time - hA_Time < hA_Buffer);
 
-        // select attack
-        if(!counter && !dashAttack && !stunAttack)
-        {
-            if (lightAttack)
-                attackChoose = combo;
-            if (heavyAttack)
-                attackChoose = 3;
-        }
-        
+       
+            
+
+        //if (attackChoose > 1)
+        //attackChoose = 1;
+
+
+
+
 
         #endregion
 
@@ -94,14 +107,24 @@ public class PlayerController : MonoBehaviour
                                                  (Mathf.Abs(velocity.x) <= Mathf.Abs(targetVelocity.x)) ? acceleration : deceleration);
                     velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocity.y, ref velocitySmoothing.y, 
                                                  (Mathf.Abs(velocity.y) <= Mathf.Abs(targetVelocity.y)) ? acceleration : deceleration);
-
+                    // dash
                     if (dash)
                         StartCoroutine(LoadDash());
 
-                    if (lightAttack || heavyAttack)
+
+                    // attack
+
+                    if (!lightAttack && !heavyAttack)
+                        attackable = true;
+                   
+                    if ((lightAttack || heavyAttack)&& attackable)
                     {
-                        playerState = PlayerState.ATTACK;
+                        UpdateAttackChoose();
+                        comboUpdate = true;
+
                         AttackDir = lastDir;
+
+                        playerState = PlayerState.ATTACK;
                     }
 
                     break;
@@ -118,6 +141,33 @@ public class PlayerController : MonoBehaviour
                 {
                     // reset velocity
                     velocity = Vector2.zero;
+
+                    // set up combo
+                    if ((Time.time - lA_Time < lA_Buffer * 8) && comboUpdate && attackChoose ==1)
+                    {
+                        combo++;
+                        comboUpdate = false;
+                    }
+
+                    if ((Time.time - lA_Time < lA_Buffer * 10) && comboUpdate && attackChoose == 0)
+                    {
+                        combo++;
+                        comboUpdate = false;
+                    }
+
+                    if ((Time.time - lA_Time > lA_Buffer * 10))
+                    {
+
+                        combo = 0;
+                    }
+
+                    if (attackChoose == 2)
+                        combo = 0;
+
+                    
+                    //if (attackable)
+                        //UpdateAttackChoose();
+
                     break;
                 }
 
@@ -143,9 +193,19 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Attack
-    public void SetInertness( float inesrtness)
+    public void UpdateAttackChoose()
     {
-        velocity = lastDir * inesrtness;
+        int lastAttackChoose = attackChoose;
+
+        if (lightAttack)
+            attackChoose = combo;
+            
+
+        if (heavyAttack)
+            attackChoose = 3;
+
+        if (lastAttackChoose != attackChoose && attackChoose != -1)
+            attackable = false;
     }
     #endregion
 
