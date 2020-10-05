@@ -12,11 +12,8 @@ public class Attack : ScriptableObject
 
     public int damage;
 
-    public int comboLevel;
-    public float comboDuration;
-
-    public float inertDistance, inertTime, inertAccel;
-
+    public float inertness, acceleration;
+    
     public float knockBackvalue;
 
 

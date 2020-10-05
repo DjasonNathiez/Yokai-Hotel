@@ -38,28 +38,24 @@ public class PlayerController : MonoBehaviour
 
     bool lightAttack;
     bool heavyAttack;
+    public bool attackable = false;
+
     public float lA_Buffer, hA_Buffer;
-    
     float lA_Time, hA_Time;
 
-    public bool attackable = false; 
+    public float[] lA_ComboDuration;
 
-   
     public int combo;
     bool comboUpdate = true;
 
     public int attackChoose = -1;
-
     public AttackManager attackM;
-
-    public Vector2 AttackDir;
-    public bool activeDamage;
 
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
-        attackM = GetComponent<AttackManager>();
+        attackM = GetComponentInChildren<AttackManager>();
 
         // set dash value
         currentRecoilDash = recoilDashTime;
@@ -113,6 +109,8 @@ public class PlayerController : MonoBehaviour
 
 
                     // attack
+                    if (Time.time - lA_Time >= lA_ComboDuration[combo])
+                        combo = 0;
 
                     if (!lightAttack && !heavyAttack)
                         attackable = true;
@@ -121,8 +119,10 @@ public class PlayerController : MonoBehaviour
                     {
                         UpdateAttackChoose();
                         comboUpdate = true;
+                        velocity = lastDir.normalized * speed;
 
-                        AttackDir = lastDir;
+                        if(attackChoose != -1)
+                            velocity = lastDir.normalized * attackM.attack[attackChoose].inertness; 
 
                         playerState = PlayerState.ATTACK;
                     }
@@ -140,33 +140,27 @@ public class PlayerController : MonoBehaviour
             case PlayerState.ATTACK:
                 {
                     // reset velocity
-                    velocity = Vector2.zero;
+                    if (attackM && attackChoose != -1)
+                    {
+                  
+                        float acceleration = attackM.attack[attackChoose].acceleration;
+
+                        velocity.x = Mathf.SmoothDamp(velocity.x, 0, ref velocitySmoothing.x,acceleration);
+                        velocity.y = Mathf.SmoothDamp(velocity.y, 0, ref velocitySmoothing.y, acceleration);
+                    }
 
                     // set up combo
-                    if ((Time.time - lA_Time < lA_Buffer * 8) && comboUpdate && attackChoose ==1)
+                    bool combo1 = ((Time.time - lA_Time < lA_ComboDuration[1]) && attackChoose == 1);
+                    bool combo2 = ((Time.time - lA_Time < lA_ComboDuration[0]) && attackChoose == 0);
+
+                    if ((combo1 || combo2) && comboUpdate)
                     {
                         combo++;
                         comboUpdate = false;
                     }
 
-                    if ((Time.time - lA_Time < lA_Buffer * 10) && comboUpdate && attackChoose == 0)
-                    {
-                        combo++;
-                        comboUpdate = false;
-                    }
-
-                    if ((Time.time - lA_Time > lA_Buffer * 10))
-                    {
-
+                    if(attackChoose == 2)
                         combo = 0;
-                    }
-
-                    if (attackChoose == 2)
-                        combo = 0;
-
-                    
-                    //if (attackable)
-                        //UpdateAttackChoose();
 
                     break;
                 }
