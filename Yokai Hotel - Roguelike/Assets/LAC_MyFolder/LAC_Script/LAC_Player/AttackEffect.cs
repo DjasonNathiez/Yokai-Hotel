@@ -7,15 +7,30 @@ public class AttackEffect : MonoBehaviour
     PlayerController player;
     AttackManager attackM;
     Animator animator;
-
+    BoxCollider2D col2D;
     // Start is called before the first frame update
     void Start()
     {
         player = GetComponentInParent<PlayerController>();
         attackM = GetComponent<AttackManager>();
+        col2D = GetComponent<BoxCollider2D>();
        
     }
-
+    private void Update()
+    {
+        //col2D.offset = player.lastDir.normalized * 10;
+    }
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if(collider.tag == "Ennemi" && player.attackChoose != -1)
+        {
+            BasiqueEnnemiCac ennemi = collider.GetComponent<BasiqueEnnemiCac>();
+            if (ennemi)
+            {
+                ennemi.hitDamage = attackM.attack[player.attackChoose].damage;
+            }
+        }
+    }
 
     public void FREE_StateTranstion()
     {
@@ -28,6 +43,10 @@ public class AttackEffect : MonoBehaviour
         //SetCombo();
         ResetAttack();
     }
+    public void AttackStart()
+    {
+
+    }
 
     public void ResetAttack()
     {
@@ -37,6 +56,14 @@ public class AttackEffect : MonoBehaviour
     {
         player.attackable = allow;
     }
+
+    /*public IEnumerator Inertness(float time)
+    {
+       
+
+        yield return new WaitForSeconds(time);
+        //player.velocity = Vector2.zero;
+    }*/
     #region Combo
 
     /*

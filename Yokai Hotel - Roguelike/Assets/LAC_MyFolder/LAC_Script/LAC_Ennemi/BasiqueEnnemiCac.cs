@@ -96,6 +96,14 @@ public class BasiqueEnnemiCac : MonoBehaviour
         if (!checkXMax)
             detectX = true;
 
+        if(hitDamage != 0)
+        {
+            healthPoints -= hitDamage;
+            hitDamage = 0;
+        }
+
+        if (healthPoints <= 0)
+            Destroy(gameObject);
 
         Debug.DrawRay(transform.position, targetDir * 5, Color.white);
         Debug.DrawRay(transform.position,Vector2.right * (Mathf.Sign(targetDir.x) * cC2D.radius), Color.blue);
