@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
     bool comboUpdate = true;
 
     public int attackChoose = -1;
+    public Vector2 attackDir;
     public AttackManager attackM;
 
     // Start is called before the first frame update
@@ -119,10 +120,11 @@ public class PlayerController : MonoBehaviour
                     {
                         UpdateAttackChoose();
                         comboUpdate = true;
-                        velocity = lastDir.normalized * speed;
 
-                        if(attackChoose != -1)
-                            velocity = lastDir.normalized * attackM.attack[attackChoose].inertness; 
+                        attackDir = lastDir.normalized;
+
+                        if (attackChoose != -1)
+                            velocity = attackDir * attackM.attack[attackChoose].inertness; 
 
                         playerState = PlayerState.ATTACK;
                     }

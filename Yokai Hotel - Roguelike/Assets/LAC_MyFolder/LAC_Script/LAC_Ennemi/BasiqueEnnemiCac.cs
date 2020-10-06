@@ -11,11 +11,19 @@ public class BasiqueEnnemiCac : MonoBehaviour
     CircleCollider2D cC2D;
     public enum EnnemyState { IDLE, AGGRO, ATTACK, WAIT, HURT, DIE}
     public EnnemyState ennemyState;
+    EnnemyState lastState;
 
     public int healthPoints;
     public int hitDamage = 0;
 
+    public Vector2 repulseForce;
+    public float inertness;
+    [HideInInspector]
+    public float inertnessModifier;
+    public float recovery;
+
     public float speed;
+    Vector2 velocitySmoothing;
     Vector2 velocity;
 
     [Header("Idle")]
@@ -68,7 +76,7 @@ public class BasiqueEnnemiCac : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         cC2D = GetComponent<CircleCollider2D>();
 
-        ennemyState = EnnemyState.IDLE;
+        ennemyState = lastState = EnnemyState.IDLE;
         // initialize target
         targetTag = target.tag;
         targetPos = target.transform.position;
@@ -108,6 +116,17 @@ public class BasiqueEnnemiCac : MonoBehaviour
         Debug.DrawRay(transform.position, targetDir * 5, Color.white);
         Debug.DrawRay(transform.position,Vector2.right * (Mathf.Sign(targetDir.x) * cC2D.radius), Color.blue);
         Debug.DrawRay(transform.position, Vector2.up * (Mathf.Sign(targetDir.y) * cC2D.radius), Color.blue);
+
+        // hurt condition
+        if (repulseForce != Vector2.zero)
+        {
+            lastState = ennemyState;
+            ennemyState = EnnemyState.HURT;
+
+            velocity = repulseForce;
+            repulseForce = Vector2.zero;
+        }
+
         switch (ennemyState)
         {
             case EnnemyState.IDLE :
@@ -145,6 +164,21 @@ public class BasiqueEnnemiCac : MonoBehaviour
                     {
                         attackTimer = 0;
                         ennemyState = EnnemyState.AGGRO;
+                    }
+
+                    break;
+                }
+            case EnnemyState.HURT:
+                {
+                    velocity.x = Mathf.SmoothDamp(velocity.x, 0, ref velocitySmoothing.x, inertness * inertnessModifier);
+                    velocity.y = Mathf.SmoothDamp(velocity.y, 0, ref velocitySmoothing.y, inertness * inertnessModifier);
+
+                    if (velocity.magnitude <= recovery)
+                    {
+                        velocity = Vector2.zero;
+                        inertnessModifier = 1;
+
+                        ennemyState = lastState;
                     }
 
                     break;

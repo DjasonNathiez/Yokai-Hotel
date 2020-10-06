@@ -27,7 +27,13 @@ public class AttackEffect : MonoBehaviour
             BasiqueEnnemiCac ennemi = collider.GetComponent<BasiqueEnnemiCac>();
             if (ennemi)
             {
+                Vector2 repulseDir = (ennemi.transform.position - player.transform.position).normalized;
+
                 ennemi.hitDamage = attackM.attack[player.attackChoose].damage;
+
+                ennemi.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
+                ennemi.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
+
             }
         }
     }
