@@ -70,6 +70,9 @@ public class BasiqueEnnemiCac : MonoBehaviour
     public float breakDuration;
     float attackTimer = 0;
 
+    [Header("Loot")]
+    public GameObject Gold;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -110,7 +113,12 @@ public class BasiqueEnnemiCac : MonoBehaviour
             hitDamage = 0;
         }
 
-        
+        if (healthPoints <= 0)
+        {
+            Destroy(gameObject);
+            LootDrop();
+        }
+           
 
         Debug.DrawRay(transform.position, targetDir * 5, Color.white);
         Debug.DrawRay(transform.position,Vector2.right * (Mathf.Sign(targetDir.x) * cC2D.radius), Color.blue);
@@ -190,6 +198,19 @@ public class BasiqueEnnemiCac : MonoBehaviour
         }
     }
 
+    public void LootDrop()
+    {
+        int lootSelect = Random.Range(0, 2);
+
+        if(lootSelect == 1)
+        {
+            Instantiate(Gold, transform.position, Quaternion.identity);
+        }
+
+        Debug.Log(lootSelect);
+        
+    }
+
     private void FixedUpdate()
     {
         rb2D.velocity = velocity;
@@ -231,6 +252,8 @@ public class BasiqueEnnemiCac : MonoBehaviour
             
 
     }
+
+   
 
     public bool SeeEntities(float radius, Vector2 dir ,LayerMask obstructMask)
     {

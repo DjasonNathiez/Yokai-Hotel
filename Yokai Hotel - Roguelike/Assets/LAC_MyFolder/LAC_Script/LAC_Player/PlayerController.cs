@@ -107,7 +107,11 @@ public class PlayerController : MonoBehaviour
                                                  (Mathf.Abs(velocity.y) <= Mathf.Abs(targetVelocity.y)) ? acceleration : deceleration);
                     // dash
                     if (dash)
+                    {
+                        dashDir = lastDir;
                         StartCoroutine(LoadDash());
+                    }
+                        
 
 
                     // attack
@@ -192,9 +196,12 @@ public class PlayerController : MonoBehaviour
     #region Dash
     public IEnumerator LoadDash()
     {
-        dashDir = lastDir;
         yield return new WaitForSeconds(loadDashTime);
         playerState = PlayerState.DASH;
+
+        yield return new WaitForSeconds(dashTime);
+        dashDir = Vector2.zero;
+        velocity = Vector2.zero;
 
         yield return new WaitForSeconds(recoilDashTime);
         playerState = PlayerState.FREE;
