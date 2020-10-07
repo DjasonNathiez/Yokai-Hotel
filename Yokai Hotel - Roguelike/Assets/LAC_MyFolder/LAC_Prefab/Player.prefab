@@ -278,20 +278,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 0
-  speed: 10
-  acceleration: 0
+  speed: 7.2
+  acceleration: 0.06
   deceleration: 0
   lastDir: {x: 0, y: 0}
   velocity: {x: 0, y: 0}
   velocitySmoothing: {x: 0, y: 0}
-  dashDistance: 5
-  dashTime: 0.1
+  dashDistance: 4
+  dashTime: 0.12
   dashDir: {x: 0, y: 0}
   loadDashTime: 0.1
-  recoilDashTime: 0.1
-  recoilMultiplier: 1.2
-  recoilResetTime: 0.2
-  recoilDashLimit: 4
+  recoilDashTime: 0.2
+  recoilMultiplier: 1.5
+  recoilResetTime: 0.5
+  recoilDashLimit: 3
   invincibleDelay: 0
   invincibleDuration: 0
   attackable: 0
@@ -303,6 +303,7 @@ MonoBehaviour:
   - 0.5
   combo: 0
   attackChoose: -1
+  attackDir: {x: 0, y: 0}
   attackM: {fileID: 0}
 --- !u!61 &7724225713028539106
 BoxCollider2D:
