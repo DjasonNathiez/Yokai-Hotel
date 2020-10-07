@@ -13,12 +13,16 @@ public class LootSystemObject : MonoBehaviour
             Destroy(gameObject.GetComponent<BoxCollider2D>());
             StartCoroutine(WaitForDestroy());
         }
-    }
 
+    }
 
     IEnumerator WaitForDestroy()
     {
-        yield return new WaitForSeconds(1/2);
+        yield return new WaitForSeconds(90/100);
         Destroy(gameObject);
     }
+
+
+
+
 }
