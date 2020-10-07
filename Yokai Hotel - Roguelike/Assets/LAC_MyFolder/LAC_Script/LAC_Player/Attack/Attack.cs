@@ -12,8 +12,8 @@ public class Attack : ScriptableObject
 
     public int damage;
 
-    public float inertness, acceleration;
-    
+    public float inertness, inertnessTime;
+
     public float knockBackValue, knockBackModifier;
 
 

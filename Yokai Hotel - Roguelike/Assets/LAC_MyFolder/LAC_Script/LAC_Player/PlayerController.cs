@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
 
     public int attackChoose = -1;
     public Vector2 attackDir;
+
     public AttackManager attackM;
 
     // Start is called before the first frame update
@@ -68,7 +69,7 @@ public class PlayerController : MonoBehaviour
     {
         #region Input
         // movement
-        Vector2 inputAxis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Vector2 inputAxis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
         if (inputAxis.magnitude > dirSensibility)
             lastDir = inputAxis;
         bool dash = Input.GetButtonDown("Jump");
@@ -106,7 +107,11 @@ public class PlayerController : MonoBehaviour
                                                  (Mathf.Abs(velocity.y) <= Mathf.Abs(targetVelocity.y)) ? acceleration : deceleration);
                     // dash
                     if (dash)
+                    {
+                        dashDir = lastDir;
                         StartCoroutine(LoadDash());
+                    }
+                        
 
 
                     // attack
@@ -118,15 +123,21 @@ public class PlayerController : MonoBehaviour
                    
                     if ((lightAttack || heavyAttack)&& attackable)
                     {
-                        UpdateAttackChoose();
+                       
                         comboUpdate = true;
 
                         attackDir = lastDir.normalized;
 
-                        if (attackChoose != -1)
-                            velocity = attackDir * attackM.attack[attackChoose].inertness; 
+                        UpdateAttackChoose();
 
-                        playerState = PlayerState.ATTACK;
+                        if (attackChoose != -1)
+                        {
+                            velocity = lastDir * attackM.attack[attackChoose].inertness;
+                            playerState = PlayerState.ATTACK;
+                        }
+                            
+
+                       
                     }
 
                     break;
@@ -144,12 +155,16 @@ public class PlayerController : MonoBehaviour
                     // reset velocity
                     if (attackM && attackChoose != -1)
                     {
-                  
-                        float acceleration = attackM.attack[attackChoose].acceleration;
 
-                        velocity.x = Mathf.SmoothDamp(velocity.x, 0, ref velocitySmoothing.x,acceleration);
-                        velocity.y = Mathf.SmoothDamp(velocity.y, 0, ref velocitySmoothing.y, acceleration);
+                        float acceleration = attackM.attack[attackChoose].inertnessTime + 0.001f;
+                        float distance = attackM.attack[attackChoose].inertness;
+
+                        velocity.x -= (distance/ acceleration) * Time.deltaTime * Mathf.Sign(velocity.x);
+                        velocity.y -= (distance / acceleration) * Time.deltaTime * Mathf.Sign(velocity.y);
+
                     }
+                    else
+                    velocity = Vector2.zero;
 
                     // set up combo
                     bool combo1 = ((Time.time - lA_Time < lA_ComboDuration[1]) && attackChoose == 1);
@@ -168,6 +183,8 @@ public class PlayerController : MonoBehaviour
                 }
 
         }
+
+        
     }
 
     private void FixedUpdate()
@@ -179,9 +196,12 @@ public class PlayerController : MonoBehaviour
     #region Dash
     public IEnumerator LoadDash()
     {
-        dashDir = lastDir;
         yield return new WaitForSeconds(loadDashTime);
         playerState = PlayerState.DASH;
+
+        yield return new WaitForSeconds(dashTime);
+        dashDir = Vector2.zero;
+        velocity = Vector2.zero;
 
         yield return new WaitForSeconds(recoilDashTime);
         playerState = PlayerState.FREE;
