@@ -8,6 +8,7 @@ public class AttackEffect : MonoBehaviour
     AttackManager attackM;
     Animator animator;
     BoxCollider2D col2D;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +47,7 @@ public class AttackEffect : MonoBehaviour
     }
     public void AttackEnd()
     {
-        //SetCombo();
+        player.velocity = Vector2.zero;
         ResetAttack();
     }
     public void AttackStart()
