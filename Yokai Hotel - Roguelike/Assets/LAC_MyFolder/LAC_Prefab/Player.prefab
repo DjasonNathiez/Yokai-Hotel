@@ -72,9 +72,10 @@ GameObject:
   - component: {fileID: 7724225711392432375}
   - component: {fileID: 7724225711392432374}
   - component: {fileID: 7724225711392432369}
+  - component: {fileID: 3619968434713090176}
   m_Layer: 0
   m_Name: Visual
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -231,6 +232,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3619968434713090176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7724225711392432360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bbc2927af2640c4fa039bf1d9025a9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7724225713028539104
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,6 +256,8 @@ GameObject:
   - component: {fileID: 7724225713028539117}
   - component: {fileID: 7724225713028539106}
   - component: {fileID: 7724225713028539107}
+  - component: {fileID: 65211312}
+  - component: {fileID: 65211313}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -290,7 +305,7 @@ MonoBehaviour:
   loadDashTime: 0.1
   recoilDashTime: 0.1
   recoilMultiplier: 1.2
-  recoilResetTime: 0.2
+  recoilResetTime: 1
   recoilDashLimit: 4
   invincibleDelay: 0
   invincibleDuration: 0
@@ -303,6 +318,7 @@ MonoBehaviour:
   - 0.5
   combo: 0
   attackChoose: -1
+  attackDir: {x: 0, y: 0}
   attackM: {fileID: 0}
 --- !u!61 &7724225713028539106
 BoxCollider2D:
@@ -351,3 +367,31 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &65211312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7724225713028539104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a032b980be72b3549b7ab5c8fc34e040, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 5
+  maxHealth: 10
+  currentGold: 0
+  maxGold: 99
+--- !u!114 &65211313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7724225713028539104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bbc2927af2640c4fa039bf1d9025a9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

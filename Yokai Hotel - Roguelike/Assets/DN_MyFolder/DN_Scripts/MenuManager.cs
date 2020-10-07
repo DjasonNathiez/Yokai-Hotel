@@ -12,10 +12,12 @@ public class MenuManager : MonoBehaviour
     public Canvas pauseMenu;
     public bool paused;
 
+    PlayerController playerController;
+
     private void Awake()
     {
-            pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<Canvas>();
-        
+        pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<Canvas>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
     public void Start()
     {
@@ -60,7 +62,8 @@ public class MenuManager : MonoBehaviour
         
         pauseMenu.enabled = true;
         paused = true;
-        
+
+        playerController.enabled = false;
         Time.timeScale = 0;
     }
 
@@ -68,6 +71,7 @@ public class MenuManager : MonoBehaviour
     {
         pauseMenu.enabled = false;
         paused = false;
+        playerController.enabled = true;
         Time.timeScale = 1;
     }
 

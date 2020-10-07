@@ -19,13 +19,13 @@ public class HUDManager : MonoBehaviour
 
     [SerializeField] HealthBarUI[] healthBarUI;
 
+    PlayerValues playerValues;
     TextMeshProUGUI goldText;
-    public int goldAmount;
-    int goldAmountMax = 999;
 
     private void Start()
     {
         goldText = GameObject.FindGameObjectWithTag("GoldUI").GetComponent<TextMeshProUGUI>();
+        playerValues = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerValues>();
     }
     private void Update()
     {
@@ -39,11 +39,11 @@ public class HUDManager : MonoBehaviour
     }
     void Gold() //gold counter with limit
     {
-        goldText.text = goldAmount.ToString(); //the text
+        goldText.text = playerValues.currentGold.ToString(); //the text
 
-        if(goldAmount > goldAmountMax) //creat a limit for the text
+        if(playerValues.currentGold > playerValues.maxGold) //creat a limit for the text
         {
-            goldText.text = "+" + goldAmountMax.ToString();
+            goldText.text = "+" + playerValues.maxGold.ToString();
         }
     }
 }
