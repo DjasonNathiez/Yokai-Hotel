@@ -70,8 +70,6 @@ public class BasiqueEnnemiCac : MonoBehaviour
     public float breakDuration;
     float attackTimer = 0;
 
-    [Header("Loot")]
-    public GameObject Gold;
 
     // Start is called before the first frame update
     void Start()
@@ -79,10 +77,20 @@ public class BasiqueEnnemiCac : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         cC2D = GetComponent<CircleCollider2D>();
 
+        target = GameObject.FindGameObjectWithTag("Player");
         ennemyState = lastState = EnnemyState.IDLE;
         // initialize target
-        targetTag = target.tag;
-        targetPos = target.transform.position;
+        if (target != null)
+        {
+            targetTag = target.tag;
+            targetPos = target.transform.position;
+        }
+        else
+        {
+            targetTag = null;
+            targetPos = (Vector2)transform.position+Vector2.one;
+        }
+       
     }
 
     // Update is called once per frame
@@ -116,7 +124,7 @@ public class BasiqueEnnemiCac : MonoBehaviour
         if (healthPoints <= 0)
         {
             Destroy(gameObject);
-            LootDrop();
+        
         }
            
 
@@ -196,19 +204,6 @@ public class BasiqueEnnemiCac : MonoBehaviour
                     break;
                 }
         }
-    }
-
-    public void LootDrop()
-    {
-        int lootSelect = Random.Range(0, 2);
-
-        if(lootSelect == 1)
-        {
-            Instantiate(Gold, transform.position, Quaternion.identity);
-        }
-
-        Debug.Log(lootSelect);
-        
     }
 
     private void FixedUpdate()
