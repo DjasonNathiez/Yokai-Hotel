@@ -110,8 +110,7 @@ public class BasiqueEnnemiCac : MonoBehaviour
             hitDamage = 0;
         }
 
-        if (healthPoints <= 0)
-            Destroy(gameObject);
+        
 
         Debug.DrawRay(transform.position, targetDir * 5, Color.white);
         Debug.DrawRay(transform.position,Vector2.right * (Mathf.Sign(targetDir.x) * cC2D.radius), Color.blue);
@@ -120,7 +119,9 @@ public class BasiqueEnnemiCac : MonoBehaviour
         // hurt condition
         if (repulseForce != Vector2.zero)
         {
-            lastState = ennemyState;
+            if(ennemyState != EnnemyState.HURT)
+                lastState = ennemyState;
+
             ennemyState = EnnemyState.HURT;
 
             velocity = repulseForce;
@@ -175,6 +176,9 @@ public class BasiqueEnnemiCac : MonoBehaviour
 
                     if (velocity.magnitude <= recovery)
                     {
+                        //if (healthPoints <= 0)
+                            //Destroy(gameObject);
+
                         velocity = Vector2.zero;
                         inertnessModifier = 1;
 
