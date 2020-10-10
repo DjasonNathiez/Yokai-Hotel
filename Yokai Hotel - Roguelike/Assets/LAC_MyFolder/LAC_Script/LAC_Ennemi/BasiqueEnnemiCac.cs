@@ -70,16 +70,27 @@ public class BasiqueEnnemiCac : MonoBehaviour
     public float breakDuration;
     float attackTimer = 0;
 
+
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
         cC2D = GetComponent<CircleCollider2D>();
 
+        target = GameObject.FindGameObjectWithTag("Player");
         ennemyState = lastState = EnnemyState.IDLE;
         // initialize target
-        targetTag = target.tag;
-        targetPos = target.transform.position;
+        if (target != null)
+        {
+            targetTag = target.tag;
+            targetPos = target.transform.position;
+        }
+        else
+        {
+            targetTag = null;
+            targetPos = (Vector2)transform.position+Vector2.one;
+        }
+       
     }
 
     // Update is called once per frame
@@ -110,7 +121,12 @@ public class BasiqueEnnemiCac : MonoBehaviour
             hitDamage = 0;
         }
 
+        if (healthPoints <= 0)
+        {
+            Destroy(gameObject);
         
+        }
+           
 
         Debug.DrawRay(transform.position, targetDir * 5, Color.white);
         Debug.DrawRay(transform.position,Vector2.right * (Mathf.Sign(targetDir.x) * cC2D.radius), Color.blue);
@@ -231,6 +247,8 @@ public class BasiqueEnnemiCac : MonoBehaviour
             
 
     }
+
+   
 
     public bool SeeEntities(float radius, Vector2 dir ,LayerMask obstructMask)
     {
