@@ -50,7 +50,13 @@ public class PlayerAnimator : MonoBehaviour
     void UpdateAnimatorValue()
     {
         animator.SetInteger("AnimatorState", (int)animatorState);
-        UpdateBlendTree(player.lastDir);
+
+        if ((int)player.playerState != 1)
+            UpdateBlendTree(player.dashDir);
+
+        if ((int)player.playerState != 1)
+            UpdateBlendTree(player.lastDir);
+
         animator.SetInteger("AttackChoose", player.attackChoose);  
     }
     void UpdateBlendTree(Vector2 velocity)

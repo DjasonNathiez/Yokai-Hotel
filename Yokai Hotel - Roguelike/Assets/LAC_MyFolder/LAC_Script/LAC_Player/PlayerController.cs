@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public Vector2 dashDir;
     public float loadDashTime, recoilDashTime;
+    Vector2 dashVelocity;
+    bool dashable = true;
 
     public float recoilMultiplier, recoilResetTime, recoilDashLimit;
     float currentRecoilReset, currentRecoilDash;
@@ -50,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
     public int attackChoose = -1;
     public Vector2 attackDir;
+    public Vector2 attackVelocity;
 
     public AttackManager attackM;
 
@@ -72,26 +75,20 @@ public class PlayerController : MonoBehaviour
         Vector2 inputAxis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
         if (inputAxis.magnitude > dirSensibility)
             lastDir = inputAxis;
-        bool dash = Input.GetButtonDown("Jump");
+
+        bool dash = Input.GetButtonDown("Dash");
 
         // attack
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Attack1"))
             lA_Time = Time.time;
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Attack2"))
             hA_Time = Time.time;
 
         lightAttack = (Time.time - lA_Time < lA_Buffer);
         heavyAttack = (Time.time - hA_Time < hA_Buffer);
 
-       
-            
-
         //if (attackChoose > 1)
         //attackChoose = 1;
-
-
-
-
 
         #endregion
 
@@ -106,10 +103,12 @@ public class PlayerController : MonoBehaviour
                     velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocity.y, ref velocitySmoothing.y, 
                                                  (Mathf.Abs(velocity.y) <= Mathf.Abs(targetVelocity.y)) ? acceleration : deceleration);
                     // dash
-                    if (dash)
+                    if (dash && dashable)
                     {
-                        dashDir = lastDir;
+                        dashDir = lastDir.normalized;
+                        dashVelocity = lastDir.normalized *(dashDistance / dashTime);
                         StartCoroutine(LoadDash());
+                        dashable = false;
                     }
                         
 
@@ -132,12 +131,12 @@ public class PlayerController : MonoBehaviour
 
                         if (attackChoose != -1)
                         {
-                            velocity = lastDir * attackM.attack[attackChoose].inertness;
+                            if ((int)attackM.attack[attackChoose].attackType == 0)
+                                attackVelocity = lastDir * attackM.attack[attackChoose].inertness;
+
                             playerState = PlayerState.ATTACK;
                         }
-                            
 
-                       
                     }
 
                     break;
@@ -145,8 +144,7 @@ public class PlayerController : MonoBehaviour
 
             case PlayerState.DASH:
                 {
-                    float dashSpeed = dashDistance / dashTime;
-                    velocity = dashDir.normalized * dashSpeed;
+                    velocity = dashVelocity;
                     break;
                 }
 
@@ -155,13 +153,13 @@ public class PlayerController : MonoBehaviour
                     // reset velocity
                     if (attackM && attackChoose != -1)
                     {
-
                         float acceleration = attackM.attack[attackChoose].inertnessTime + 0.001f;
                         float distance = attackM.attack[attackChoose].inertness;
 
-                        velocity.x -= (distance/ acceleration) * Time.deltaTime * Mathf.Sign(velocity.x);
-                        velocity.y -= (distance / acceleration) * Time.deltaTime * Mathf.Sign(velocity.y);
+                        attackVelocity.x -= (distance/ acceleration) * Time.deltaTime * Mathf.Sign(attackVelocity.x);
+                        attackVelocity.y -= (distance / acceleration) * Time.deltaTime * Mathf.Sign(attackVelocity.y);
 
+                        velocity = attackVelocity;
                     }
                     else
                     velocity = Vector2.zero;
@@ -200,10 +198,10 @@ public class PlayerController : MonoBehaviour
         playerState = PlayerState.DASH;
 
         yield return new WaitForSeconds(dashTime);
-        dashDir = Vector2.zero;
-        velocity = Vector2.zero;
+        dashVelocity = Vector2.zero;
 
         yield return new WaitForSeconds(recoilDashTime);
+        dashable = true;
         playerState = PlayerState.FREE;
     }
     #endregion

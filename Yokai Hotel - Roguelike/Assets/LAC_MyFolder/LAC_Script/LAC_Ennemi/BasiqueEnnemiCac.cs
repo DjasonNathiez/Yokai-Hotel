@@ -121,11 +121,7 @@ public class BasiqueEnnemiCac : MonoBehaviour
             hitDamage = 0;
         }
 
-        if (healthPoints <= 0)
-        {
-            Destroy(gameObject);
-        
-        }
+       
            
 
         Debug.DrawRay(transform.position, targetDir * 5, Color.white);
@@ -190,7 +186,7 @@ public class BasiqueEnnemiCac : MonoBehaviour
                     velocity.x = Mathf.SmoothDamp(velocity.x, 0, ref velocitySmoothing.x, inertness * inertnessModifier);
                     velocity.y = Mathf.SmoothDamp(velocity.y, 0, ref velocitySmoothing.y, inertness * inertnessModifier);
 
-                    if (velocity.magnitude <= recovery)
+                    if (velocity.magnitude < recovery)
                     {
                         //if (healthPoints <= 0)
                             //Destroy(gameObject);
@@ -255,16 +251,16 @@ public class BasiqueEnnemiCac : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, radius, obstructMask);
         return (!hit);
     }
-public void UpdateTargetPos()
-{
-detectTimer += Time.deltaTime;
+    public void UpdateTargetPos()
+    {
+        detectTimer += Time.deltaTime;
 
-if (detectTimer >= detectCycle)
-{
-    detectTimer = 0;
-    targetPos = target.transform.position;
-}
-}
+        if (detectTimer >= detectCycle)
+        {
+            detectTimer = 0;
+            targetPos = target.transform.position;
+        }
+    }
 
     
 
