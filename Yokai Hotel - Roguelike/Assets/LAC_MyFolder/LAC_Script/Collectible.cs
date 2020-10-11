@@ -21,6 +21,7 @@ public class Collectible : MonoBehaviour
     public float oscilMag, oscilFreq;
     GameObject playerObj;
     InventoryManager inventory;
+    HUDManager hudManager;
 
     Vector2 playerDir;
     float playerDist;
@@ -29,6 +30,7 @@ public class Collectible : MonoBehaviour
     void Start()
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
+        hudManager = GameObject.FindGameObjectWithTag("Menu").GetComponent<HUDManager>();
 
         if (playerObj)
             inventory = playerObj.GetComponent<InventoryManager>();// get inventory component
@@ -83,6 +85,8 @@ public class Collectible : MonoBehaviour
                 case Collectype.HEALTH:
                     {
                         inventory.health+= value;
+                        if (hudManager)
+                            hudManager.healActive = true;
                         break;
                     }
 

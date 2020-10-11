@@ -16,7 +16,7 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(health > 0 && player.health < maxHealth)
+        if (health > 0 && player.health < maxHealth)
         {
             player.health += health;
             health = 0;
