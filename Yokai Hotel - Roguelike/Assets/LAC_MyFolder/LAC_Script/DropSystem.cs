@@ -6,6 +6,7 @@ using UnityEngine;
 public class DropSystem : MonoBehaviour
 {
     public int maxDropItem = 1;
+    public int minDropItem = 0;
     int dropItemNumber;
 
     public float dropRadius;
@@ -18,17 +19,19 @@ public class DropSystem : MonoBehaviour
     {
         // define random items
         GameObject itemToSpawn = null;
+        dropItemNumber = 0;
         while(dropItemNumber < maxDropItem)
         {
             float dropRate = dropRateG *Mathf.Pow(dropMultiplier, dropItemNumber);
-            itemToSpawn = SortItem(dropRate);
+            itemToSpawn = SortItem( (dropItemNumber < minDropItem)? 1 : dropRate);
 
             if (itemToSpawn != null)
             {
                 // define a position to spawn
-                Transform tSpawn = t;
-                tSpawn.position = SortPos(origin, radius, obstructMask);
-                Instantiate(itemToSpawn, tSpawn);
+                //Transform tSpawn = itemToSpawn.transform;
+                itemToSpawn.transform.position = SortPos(origin, radius, obstructMask);
+                Instantiate(itemToSpawn);
+                //itemToSpawn.transform.SetParent(null);
 
                 dropItemNumber++;
             }
@@ -48,7 +51,7 @@ public class DropSystem : MonoBehaviour
 
             for (int i = 0; i < dropItems.Length; i++)
             {
-               if(rValue >= rLimit && rValue < dropItems[i].dropRate)
+               if(rValue >= rLimit && rValue < rLimit + dropItems[i].dropRate)
                     itemToReturn = dropItems[i].itemToDrop;
 
                 rLimit += dropItems[i].dropRate;

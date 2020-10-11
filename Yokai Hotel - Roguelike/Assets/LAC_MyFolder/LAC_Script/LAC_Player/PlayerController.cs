@@ -56,11 +56,23 @@ public class PlayerController : MonoBehaviour
 
     public AttackManager attackM;
 
+    [Header("HURT")]
+    public int health;
+    public int hurtDamage;
+
+    public float hurtTime;
+    public float invincibleTime;
+    bool invincible;
+    SpriteRenderer spriteT;
+
+
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
         attackM = GetComponentInChildren<AttackManager>();
+
+        spriteT = GetComponentInChildren<SpriteRenderer>();
 
         // set dash value
         currentRecoilDash = recoilDashTime;
@@ -91,6 +103,22 @@ public class PlayerController : MonoBehaviour
         //attackChoose = 1;
 
         #endregion
+
+        // take damage
+        if(hurtDamage != 0 )
+        {
+            if (!invincible)
+            {
+                Debug.Log("lose health");
+                health -= hurtDamage;
+                invincible = true;
+
+                StartCoroutine(Recovery());
+                playerState = PlayerState.HURT;
+            }
+
+            hurtDamage = 0;
+        }
 
         switch (playerState)
         {
@@ -179,6 +207,15 @@ public class PlayerController : MonoBehaviour
 
                     break;
                 }
+            case PlayerState.HURT:
+                {
+                    Color col = Color.red;
+                    col.a = Mathf.Sin(Time.time * 30f) * 255;
+
+                    spriteT.color = col;
+
+                    break;
+                }
 
         }
 
@@ -220,6 +257,18 @@ public class PlayerController : MonoBehaviour
 
         if (lastAttackChoose != attackChoose && attackChoose != -1)
             attackable = false;
+    }
+    #endregion
+
+    #region Health
+    public IEnumerator Recovery()
+    {
+        yield return new WaitForSeconds(hurtTime);
+        spriteT.color = Color.white;
+        playerState = PlayerState.FREE;
+
+        yield return new WaitForSeconds(invincibleTime - hurtTime);
+        invincible = false;
     }
     #endregion
 
