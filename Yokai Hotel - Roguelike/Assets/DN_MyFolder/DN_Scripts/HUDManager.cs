@@ -20,6 +20,7 @@ public class HUDManager : MonoBehaviour
     [SerializeField] HealthBarUI[] healthBarUI;
 
     InventoryManager playerValues;
+    PlayerController player;
     TextMeshProUGUI goldText;
 
     public float healthBarCount = 0;
@@ -40,6 +41,7 @@ public class HUDManager : MonoBehaviour
     {
         goldText = GameObject.FindGameObjectWithTag("GoldUI").GetComponent<TextMeshProUGUI>();
         playerValues = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryManager>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
     }
     private void Update()
@@ -99,7 +101,20 @@ public class HUDManager : MonoBehaviour
 
             healing = false;
 
-            Debug.Log("Heal 2");
+        }
+
+        if (player.isHurt == true && healthBarToHeal > player.health) //loose hp
+        {
+            RawImage healthLose = GameObject.FindGameObjectWithTag("healthBAR" + healthActualState.ToString()).GetComponent<RawImage>();
+            healthLose.texture = pvDeadTexture;
+
+            healthActualState -= 1;
+            healthBarToHeal -= 1;
+
+            if (healthActualState < player.health)
+            {
+                player.isHurt = false;
+            }
         }
 
 
