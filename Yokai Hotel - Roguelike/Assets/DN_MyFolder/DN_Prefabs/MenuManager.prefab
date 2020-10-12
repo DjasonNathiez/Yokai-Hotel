@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 16
+  m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
@@ -320,7 +320,7 @@ GameObject:
   - component: {fileID: 2130648741}
   m_Layer: 0
   m_Name: MenuManager
-  m_TagString: Untagged
+  m_TagString: UIManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -370,10 +370,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarUI: []
+  healthBarCount: 0
+  healthBarToHeal: 0
+  healthActualState: -1
   healthPVBar: {fileID: 479469750209755301}
   PVPrefab: {fileID: 9203086843828882211, guid: d33fe615991a5da4298c50f53c2dcd10,
     type: 3}
   ParentPV: {fileID: 8203470637599164325}
+  spaceValue: 47
+  pvDeadTexture: {fileID: 2800000, guid: 8464360b400b30e4aada9354a54a8e1f, type: 3}
+  pvLifeTexture: {fileID: 2800000, guid: d326816a4036be94397927ab76a53216, type: 3}
+  healing: 0
+  healActive: 0
 --- !u!1001 &8711144037110880142
 PrefabInstance:
   m_ObjectHideFlags: 0

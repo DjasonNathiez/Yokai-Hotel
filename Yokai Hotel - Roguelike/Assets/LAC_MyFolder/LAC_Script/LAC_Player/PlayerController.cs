@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
     [Header("HURT")]
     public int health;
     public int hurtDamage;
+    public bool isHurt;
 
     public float hurtTime;
     public float invincibleTime;
@@ -111,6 +112,7 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("lose health");
                 health -= hurtDamage;
+                isHurt = true;
                 invincible = true;
 
                 StartCoroutine(Recovery());
@@ -213,7 +215,6 @@ public class PlayerController : MonoBehaviour
                     col.a = Mathf.Sin(Time.time * 30f) * 255;
 
                     spriteT.color = col;
-
                     break;
                 }
 
