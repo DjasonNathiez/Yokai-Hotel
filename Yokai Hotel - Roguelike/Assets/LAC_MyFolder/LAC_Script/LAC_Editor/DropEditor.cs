@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using UnityEditor;
-
+//using UnityEditor;
+/*
 [CustomEditor(typeof(DropSystem))]
 public class DropEditor : Editor
 {
@@ -14,4 +14,4 @@ public class DropEditor : Editor
             drop.UpdateDropRateItem(drop.dropItems);
         }
     }
-}
+}*/

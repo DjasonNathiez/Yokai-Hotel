@@ -21,7 +21,7 @@ public class Collectible : MonoBehaviour
     public float oscilMag, oscilFreq;
     GameObject playerObj;
     InventoryManager inventory;
-    HUDManager hudManager;
+   
 
     Vector2 playerDir;
     float playerDist;
@@ -30,7 +30,6 @@ public class Collectible : MonoBehaviour
     void Start()
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
-        hudManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<HUDManager>();
 
         if (playerObj)
             inventory = playerObj.GetComponent<InventoryManager>();// get inventory component
@@ -72,36 +71,43 @@ public class Collectible : MonoBehaviour
         }
 
         //pickup obj & apply different effect on Inventory manager
-        if (pickUp && inventory) 
+        if (pickUp ) 
         {
-            switch (collectype) 
+            if (inventory)
             {
-                case Collectype.MONEY:
-                    {
-                        inventory.money += value;
-                        break;
-                    }
+                switch (collectype)
+                {
+                    case Collectype.MONEY:
+                        {
 
-                case Collectype.HEALTH:
-                    {
-                        inventory.health+= value;
-                        if (hudManager)
-                            hudManager.healActive = true;
-                        break;
-                    }
+                            inventory.money += value;
+                            break;
+                        }
 
-                case Collectype.MAXHEALTH:
-                    {
-                        inventory.maxHealth+= value;
-                        break;
-                    }
+                    case Collectype.HEALTH:
+                        {
 
-                case Collectype.ATTACKBOOST:
-                    {
-                        inventory.attackBoost+= value;
-                        break;
-                    }
+                                inventory.health += value;
+
+                            break;
+                        }
+
+                    case Collectype.MAXHEALTH:
+                        {
+
+                            inventory.maxHealth += value;
+                            break;
+                        }
+
+                    case Collectype.ATTACKBOOST:
+                        {
+
+                            inventory.attackBoost += value;
+                            break;
+                        }
+                }
             }
+            
 
             Destroy(gameObject);
         }

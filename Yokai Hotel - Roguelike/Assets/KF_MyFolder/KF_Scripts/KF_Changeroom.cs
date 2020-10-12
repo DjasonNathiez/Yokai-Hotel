@@ -31,6 +31,7 @@ public class KF_Changeroom : MonoBehaviour
                 roomCamera = child;
                 roomCamera.gameObject.SetActive(true);
             }
+        playerGameObject = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

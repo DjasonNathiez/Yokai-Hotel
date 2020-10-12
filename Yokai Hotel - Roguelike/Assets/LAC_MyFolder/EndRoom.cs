@@ -7,7 +7,7 @@ public class EndRoom : MonoBehaviour
     GameObject postPro1,postPro2;
 
     Camera cam;
-    Vector2 boundMin, boundMax;
+    public Vector2 boundMin, boundMax;
     public LayerMask detectMask;
 
     public bool roomClean;
@@ -28,8 +28,8 @@ public class EndRoom : MonoBehaviour
             float height = cam.orthographicSize * 2;
             float width = cam.aspect * height;
 
-            boundMin = new Vector2(transform.position.x - height * 0.5f, transform.position.y - width * 0.5f);
-            boundMax = new Vector2(transform.position.x + height * 0.5f, transform.position.y + width * 0.5f);
+            boundMin = new Vector2(transform.position.x - height * 0.85f, transform.position.y - width*0.25f );
+            boundMax = new Vector2(transform.position.x + height *0.85f, transform.position.y + width * 0.25f);
 
             Collider2D hit = Physics2D.OverlapArea(boundMin, boundMax,detectMask);
             roomClean = !hit;
