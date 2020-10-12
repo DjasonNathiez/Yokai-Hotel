@@ -3,24 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CircleCollider2D))]
 
 public class BasiqueEnnemiCac : MonoBehaviour
 {
     Rigidbody2D rb2D;
+    CircleCollider2D cC2D;
     public enum EnnemyState { IDLE, AGGRO, ATTACK, WAIT, HURT, DIE}
     public EnnemyState ennemyState;
+    EnnemyState lastState;
 
     public int healthPoints;
+    public int hitDamage = 0;
+
+    public Vector2 repulseForce;
+    public float inertness;
+    [HideInInspector]
+    public float inertnessModifier;
+    public float recovery;
 
     public float speed;
+    Vector2 velocitySmoothing;
     Vector2 velocity;
 
     [Header("Idle")]
-    public float idleCycle;
     public float idleRadius;
+
+    public float minSkinWidth;
+    public float maxSkinWidth;
+
+    public bool detectX = true;
+    public bool detectY = true;
+
+    public float idleTime;
     float idleTimer = 0;
-    Vector2 idleDir;
+
+    public float idleCycle;
+    float idleCycleTimer = 0;
+
+
+    public Vector2 idleDir;
     Vector2 idlePoint;
 
     [Header("Chase")]
@@ -38,6 +60,7 @@ public class BasiqueEnnemiCac : MonoBehaviour
     public float maxDetectRadius;
 
     public LayerMask obstructMask;
+    public LayerMask wallMask;
 
     [Header("Attack")]
     public float minCacRadius;
@@ -47,12 +70,16 @@ public class BasiqueEnnemiCac : MonoBehaviour
     public float breakDuration;
     float attackTimer = 0;
 
+    [Header("Loot")]
+    public GameObject Gold;
+
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
+        cC2D = GetComponent<CircleCollider2D>();
 
-        ennemyState = EnnemyState.IDLE;
+        ennemyState = lastState = EnnemyState.IDLE;
         // initialize target
         targetTag = target.tag;
         targetPos = target.transform.position;
@@ -66,8 +93,49 @@ public class BasiqueEnnemiCac : MonoBehaviour
         targetDist = Vector2.Distance(targetPos, transform.position);
         targetDir = ((Vector3)targetPos - transform.position).normalized;
 
-        bool see = SeeEntities(maxDetectRadius, obstructMask);
+        bool see = SeeEntities(maxDetectRadius, targetDir, obstructMask);
+
+        bool checkXMin = SeeEntities(cC2D.radius + minSkinWidth, Vector2.right * Mathf.Sign(targetDir.x), obstructMask);
+        bool checkXMax = SeeEntities(cC2D.radius + maxSkinWidth, Vector2.right * Mathf.Sign(targetDir.x), obstructMask);
+
+        bool checkYMin = SeeEntities(cC2D.radius + minSkinWidth, Vector2.up * Mathf.Sign(targetDir.y), obstructMask);
+        bool checkYMax = SeeEntities(cC2D.radius + maxSkinWidth, Vector2.up * Mathf.Sign(targetDir.y), obstructMask);
+
+        if (!checkYMax)
+            detectY = true;
+
+        if (!checkXMax)
+            detectX = true;
+
+        if(hitDamage != 0)
+        {
+            healthPoints -= hitDamage;
+            hitDamage = 0;
+        }
+
+        if (healthPoints <= 0)
+        {
+            Destroy(gameObject);
+            LootDrop();
+        }
+           
+
         Debug.DrawRay(transform.position, targetDir * 5, Color.white);
+        Debug.DrawRay(transform.position,Vector2.right * (Mathf.Sign(targetDir.x) * cC2D.radius), Color.blue);
+        Debug.DrawRay(transform.position, Vector2.up * (Mathf.Sign(targetDir.y) * cC2D.radius), Color.blue);
+
+        // hurt condition
+        if (repulseForce != Vector2.zero)
+        {
+            if(ennemyState != EnnemyState.HURT)
+                lastState = ennemyState;
+
+            ennemyState = EnnemyState.HURT;
+
+            velocity = repulseForce;
+            repulseForce = Vector2.zero;
+        }
+
         switch (ennemyState)
         {
             case EnnemyState.IDLE :
@@ -109,7 +177,38 @@ public class BasiqueEnnemiCac : MonoBehaviour
 
                     break;
                 }
+            case EnnemyState.HURT:
+                {
+                    velocity.x = Mathf.SmoothDamp(velocity.x, 0, ref velocitySmoothing.x, inertness * inertnessModifier);
+                    velocity.y = Mathf.SmoothDamp(velocity.y, 0, ref velocitySmoothing.y, inertness * inertnessModifier);
+
+                    if (velocity.magnitude <= recovery)
+                    {
+                        //if (healthPoints <= 0)
+                            //Destroy(gameObject);
+
+                        velocity = Vector2.zero;
+                        inertnessModifier = 1;
+
+                        ennemyState = lastState;
+                    }
+
+                    break;
+                }
         }
+    }
+
+    public void LootDrop()
+    {
+        int lootSelect = Random.Range(0, 2);
+
+        if(lootSelect == 1)
+        {
+            Instantiate(Gold, transform.position, Quaternion.identity);
+        }
+
+        Debug.Log(lootSelect);
+        
     }
 
     private void FixedUpdate()
@@ -119,26 +218,46 @@ public class BasiqueEnnemiCac : MonoBehaviour
 
     public void Wandering()
     {
-        idleTimer += Time.deltaTime;
-        if(idleTimer >= idleCycle)
-        {
-            idleTimer = 0;
+        
+        idleCycleTimer += Time.deltaTime;
 
-            idleDir = new Vector2((Random.value-0.5f) + targetDir.x, (Random.value - 0.5f) + targetDir.y);
+        if(idleCycleTimer >= idleCycle)
+        {
+            idleCycleTimer = 0;
+
+            idleDir = new Vector2((Random.value-0.5f) + targetDir.x, (Random.value - 0.5f) + targetDir.y); // move random dir
             idlePoint = (Vector2)transform.position + idleDir * idleRadius;
         }
 
-        if (Vector2.Distance(transform.position, idlePoint) > 0.5f)
-            velocity = idleDir * speed;
+
+
+        //if (Vector2.Distance(transform.position, idlePoint) > 0.5f)
+        if (idleTimer < idleTime)
+        {
+            float detectLength = cC2D.radius*1.2f;
+            Vector2 currentDir = new Vector2((SeeEntities(detectLength, Vector2.right * idleDir.x, obstructMask)) ? idleDir.x : -idleDir.x,
+                                             (SeeEntities(detectLength, Vector2.up * idleDir.y, obstructMask)) ? idleDir.y : -idleDir.y);
+          
+            velocity = currentDir * speed;
+            idleDir = currentDir;
+
+            idleTimer += Time.deltaTime;
+        }
 
         else
+        {
+            idleTimer = 0;
             velocity = Vector2.zero;
+        }
+            
 
     }
 
-    public bool SeeEntities(float radius, LayerMask obstructMask)
+   
+
+    public bool SeeEntities(float radius, Vector2 dir ,LayerMask obstructMask)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDir, radius, obstructMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, radius, obstructMask);
         return (!hit);
     }
 public void UpdateTargetPos()
@@ -151,5 +270,8 @@ if (detectTimer >= detectCycle)
     targetPos = target.transform.position;
 }
 }
+
+    
+
 
 }

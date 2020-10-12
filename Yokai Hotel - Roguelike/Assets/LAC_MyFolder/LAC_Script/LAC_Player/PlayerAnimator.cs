@@ -50,7 +50,14 @@ public class PlayerAnimator : MonoBehaviour
     void UpdateAnimatorValue()
     {
         animator.SetInteger("AnimatorState", (int)animatorState);
-        animator.SetFloat("Horizontal", player.velocity.x);
-        animator.SetFloat("Vertical", player.velocity.y);
+        UpdateBlendTree(player.lastDir);
+        animator.SetInteger("AttackChoose", player.attackChoose);  
+    }
+    void UpdateBlendTree(Vector2 velocity)
+    {
+        bool vertical = (Mathf.Abs(velocity.y) > Mathf.Abs(velocity.x));
+        
+        animator.SetFloat("Vertical", (vertical) ?  Mathf.Sign(velocity.y) : 0);
+        animator.SetFloat("Horizontal", (vertical)? 0 : Mathf.Sign(velocity.x));
     }
 }
