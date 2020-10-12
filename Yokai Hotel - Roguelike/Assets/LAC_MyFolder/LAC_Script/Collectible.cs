@@ -30,7 +30,7 @@ public class Collectible : MonoBehaviour
     void Start()
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
-        hudManager = GameObject.FindGameObjectWithTag("Menu").GetComponent<HUDManager>();
+        hudManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<HUDManager>();
 
         if (playerObj)
             inventory = playerObj.GetComponent<InventoryManager>();// get inventory component
