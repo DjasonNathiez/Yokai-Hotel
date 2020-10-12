@@ -4,11 +4,15 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(DropSystem))]
 
 public class BasiqueEnnemiCac : MonoBehaviour
 {
     Rigidbody2D rb2D;
     CircleCollider2D cC2D;
+    [HideInInspector]
+    public PlayerController player;
+    DropSystem drop;
     public enum EnnemyState { IDLE, AGGRO, ATTACK, WAIT, HURT, DIE}
     public EnnemyState ennemyState;
     EnnemyState lastState;
@@ -16,6 +20,7 @@ public class BasiqueEnnemiCac : MonoBehaviour
     public int healthPoints;
     public int hitDamage = 0;
 
+    public SpriteRenderer spriteT;
     public Vector2 repulseForce;
     public float inertness;
     [HideInInspector]
@@ -24,7 +29,7 @@ public class BasiqueEnnemiCac : MonoBehaviour
 
     public float speed;
     Vector2 velocitySmoothing;
-    Vector2 velocity;
+    public Vector2 velocity;
 
     [Header("Idle")]
     public float idleRadius;
@@ -63,6 +68,8 @@ public class BasiqueEnnemiCac : MonoBehaviour
     public LayerMask wallMask;
 
     [Header("Attack")]
+    public int attackDamage;
+
     public float minCacRadius;
     public float maxCacRadius;
 
@@ -77,7 +84,12 @@ public class BasiqueEnnemiCac : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         cC2D = GetComponent<CircleCollider2D>();
 
+        spriteT = GetComponentInChildren<SpriteRenderer>();
+
         target = GameObject.FindGameObjectWithTag("Player");
+        player = target.GetComponent<PlayerController>();
+
+        drop = GetComponent<DropSystem>();
         ennemyState = lastState = EnnemyState.IDLE;
         // initialize target
         if (target != null)
@@ -121,13 +133,6 @@ public class BasiqueEnnemiCac : MonoBehaviour
             hitDamage = 0;
         }
 
-        if (healthPoints <= 0)
-        {
-            Destroy(gameObject);
-        
-        }
-           
-
         Debug.DrawRay(transform.position, targetDir * 5, Color.white);
         Debug.DrawRay(transform.position,Vector2.right * (Mathf.Sign(targetDir.x) * cC2D.radius), Color.blue);
         Debug.DrawRay(transform.position, Vector2.up * (Mathf.Sign(targetDir.y) * cC2D.radius), Color.blue);
@@ -135,7 +140,7 @@ public class BasiqueEnnemiCac : MonoBehaviour
         // hurt condition
         if (repulseForce != Vector2.zero)
         {
-            if(ennemyState != EnnemyState.HURT)
+            if (ennemyState != EnnemyState.HURT)
                 lastState = ennemyState;
 
             ennemyState = EnnemyState.HURT;
@@ -143,6 +148,8 @@ public class BasiqueEnnemiCac : MonoBehaviour
             velocity = repulseForce;
             repulseForce = Vector2.zero;
         }
+        if(ennemyState != EnnemyState.HURT)
+            spriteT.color = Color.white;
 
         switch (ennemyState)
         {
@@ -190,16 +197,27 @@ public class BasiqueEnnemiCac : MonoBehaviour
                     velocity.x = Mathf.SmoothDamp(velocity.x, 0, ref velocitySmoothing.x, inertness * inertnessModifier);
                     velocity.y = Mathf.SmoothDamp(velocity.y, 0, ref velocitySmoothing.y, inertness * inertnessModifier);
 
-                    if (velocity.magnitude <= recovery)
+                    if (velocity.magnitude < recovery)
                     {
-                        //if (healthPoints <= 0)
-                            //Destroy(gameObject);
+                        if (healthPoints <= 0)
+                        {
+                            drop.SortItemPos(transform, transform.position, drop.dropRadius, obstructMask);
+                            healthPoints = 3;
+                            Destroy(gameObject);
+                        }
+
 
                         velocity = Vector2.zero;
                         inertnessModifier = 1;
 
+                        
+
                         ennemyState = lastState;
                     }
+
+                    Color col = Color.white;
+                    col.a = Mathf.Sin(Time.time*30) * 255;
+                    spriteT.color = col;
 
                     break;
                 }
@@ -255,16 +273,16 @@ public class BasiqueEnnemiCac : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, radius, obstructMask);
         return (!hit);
     }
-public void UpdateTargetPos()
-{
-detectTimer += Time.deltaTime;
+    public void UpdateTargetPos()
+    {
+        detectTimer += Time.deltaTime;
 
-if (detectTimer >= detectCycle)
-{
-    detectTimer = 0;
-    targetPos = target.transform.position;
-}
-}
+        if (detectTimer >= detectCycle)
+        {
+            detectTimer = 0;
+            targetPos = target.transform.position;
+        }
+    }
 
     
 

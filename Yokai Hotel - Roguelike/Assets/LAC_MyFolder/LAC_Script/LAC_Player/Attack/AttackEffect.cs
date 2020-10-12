@@ -55,6 +55,13 @@ public class AttackEffect : MonoBehaviour
 
     }
 
+    public void SetInertness()
+    {
+        if(player.attackChoose != -1)
+        {
+            player.attackVelocity = player.lastDir * attackM.attack[player.attackChoose].inertness;
+        }
+    }
     public void ResetAttack()
     {
         player.attackChoose = -1;
