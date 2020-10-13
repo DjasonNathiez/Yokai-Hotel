@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
-[CustomEditor(typeof(DropSystem))]
+/*[CustomEditor(typeof(DropSystem))]
 public class DropEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -14,4 +14,4 @@ public class DropEditor : Editor
             drop.UpdateDropRateItem(drop.dropItems);
         }
     }
-}
+}*/
