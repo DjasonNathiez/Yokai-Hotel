@@ -135,10 +135,10 @@ public class PlayerController : MonoBehaviour
                     // dash
                     if (dash && dashable)
                     {
-                        dashDir = lastDir.normalized;
-                        dashVelocity = lastDir.normalized *(dashDistance / dashTime);
+                        //dashDir = lastDir.normalized;
+                        dashVelocity = velocity.normalized *(dashDistance / dashTime);
                         StartCoroutine(LoadDash());
-                        dashable = false;
+                        dashable = false; 
                     }
                         
 
