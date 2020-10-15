@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviour
     bool invincible;
     SpriteRenderer spriteT;
 
+    AudioManager audioManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +76,8 @@ public class PlayerController : MonoBehaviour
         attackM = GetComponentInChildren<AttackManager>();
 
         spriteT = GetComponentInChildren<SpriteRenderer>();
+
+        audioManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
 
         // set dash value
         currentRecoilDash = recoilDashTime;
@@ -93,9 +97,17 @@ public class PlayerController : MonoBehaviour
 
         // attack
         if (Input.GetButtonDown("Attack1"))
+        {
             lA_Time = Time.time;
+            audioManager.PlaySound("Player fast attack", 0);
+        }
+            
         if (Input.GetButtonDown("Attack2"))
+        {
             hA_Time = Time.time;
+            audioManager.PlaySound("Player heavy attack", 0);
+        }
+
 
         lightAttack = (Time.time - lA_Time < lA_Buffer);
         heavyAttack = (Time.time - hA_Time < hA_Buffer);
@@ -138,7 +150,8 @@ public class PlayerController : MonoBehaviour
                         //dashDir = lastDir.normalized;
                         dashVelocity = velocity.normalized *(dashDistance / dashTime);
                         StartCoroutine(LoadDash());
-                        dashable = false; 
+                        dashable = false;
+                        audioManager.PlaySound("Player dash", 0);
                     }
                         
 

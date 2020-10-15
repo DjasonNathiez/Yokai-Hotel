@@ -21,7 +21,8 @@ public class Collectible : MonoBehaviour
     public float oscilMag, oscilFreq;
     GameObject playerObj;
     InventoryManager inventory;
-   
+
+    AudioManager audioManager;
 
     Vector2 playerDir;
     float playerDist;
@@ -29,6 +30,7 @@ public class Collectible : MonoBehaviour
     void Awake()
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
+        audioManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
 
         if (playerObj)
             inventory = playerObj.GetComponent<InventoryManager>();// get inventory component
@@ -80,6 +82,7 @@ public class Collectible : MonoBehaviour
                         {
 
                             inventory.money += value;
+                            audioManager.PlaySound("Own gold", 0);
                             break;
                         }
 
@@ -87,6 +90,7 @@ public class Collectible : MonoBehaviour
                         {
 
                                 inventory.health += value;
+                            audioManager.PlaySound("Player healing", 0);
 
                             break;
                         }

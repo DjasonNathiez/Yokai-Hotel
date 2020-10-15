@@ -1,0 +1,630 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2178055192705325881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2178055192705325883}
+  - component: {fileID: 2178055192705325880}
+  - component: {fileID: 2178055192705325882}
+  - component: {fileID: 2178055192705325893}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: GameManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2178055192705325883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2178055192705325881}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -31.123997, y: 17.357061, z: -11.187852}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7347852165358415359}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2178055192705325880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2178055192705325881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fae5d5ec2dc4c145afe1c2b41a23e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Player walk
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Player dash
+    clip: {fileID: 8300000, guid: 53d9a0ad2eb3527478c231763140a1ef, type: 3}
+    volume: 0.5
+    pitch: 1.5
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Player fast attack
+    clip: {fileID: 8300000, guid: 94435988c2b70b542a5f25454bfd75bc, type: 3}
+    volume: 0.5
+    pitch: 1.3
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Player heavy attack
+    clip: {fileID: 8300000, guid: bf623a267acd4f74d9b6d98444604ff6, type: 3}
+    volume: 0.5
+    pitch: 1.61
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Player distance attack
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Player counter attack
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Player thunder attack
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Player dash attack
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Player projectile combo
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Player hurt
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Player healing
+    clip: {fileID: 8300000, guid: 351b0ed66fa97f140a0c1afcb49c91a0, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Player immobilised
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Player death
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Own gold
+    clip: {fileID: 8300000, guid: 60af5ef08054a3e4ca42edd57a3c6287, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Own neck
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Own echantment
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Own combo
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Buying
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy invisble voice
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy invisble walk
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy invisble attack
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy invisble hurt
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy invisble death
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy trap voice
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy trap walk
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy trap attack
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy trap hurt
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy trap death
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy berserk voice
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy berserk walk
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy berserk attack
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy berserk hurt
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy berserk death
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy fire voice
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy fire walk
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy fire attack
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy fire hurt
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy fire death
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy lantern voice
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy lantern walk
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy lantern attack
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy lantern hurt
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy lantern death
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy distance voice
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy distance walk
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy distance attack
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy distance hurt
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Ennemy distance death
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: UI open menu
+    clip: {fileID: 8300000, guid: e459429d9c390c24d8ca07face5ec6a1, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: UI close menu
+    clip: {fileID: 8300000, guid: 1202976fb8f59fc43a0c659ada9dfea6, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: UI naviguation
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: UI click button
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: UI switch scene
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: UI distance attack ready
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: UI add health bar
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Main Theme
+    clip: {fileID: 8300000, guid: 8ad9722b0413c024588ba63d59735ce1, type: 3}
+    volume: 0.31
+    pitch: 0.779
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: OST 1
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: OST 2
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: OST 3
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Boss Theme
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: Game Over Theme
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  - name: 
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: 0}
+  pause: {fileID: 7347852165358415358}
+  mixerGroupPause: {fileID: 0}
+--- !u!114 &2178055192705325882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2178055192705325881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 577cde557e1e2a14ebd5f84a2cd3a62e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicAllow:
+  - Main Theme
+  - OST 1
+  - OST 2
+  - OST 3
+  - Boss Theme
+  - Game Over Theme
+  musicChose: Main Theme
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!61 &2178055192705325893
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2178055192705325881}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!1001 &2178055192080228070
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2178055192705325883}
+    m_Modifications:
+    - target: {fileID: 1346930698, guid: ed57b1b53cdab15419efb4fedf18d11a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708335054979721080, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917920239512384281, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 677.82666
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917920239512384281, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 222.49925
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917920239512384281, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -349.1396
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917920239512384281, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917920239512384281, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917920239512384281, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917920239512384281, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917920239512384281, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917920239512384281, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917920239512384281, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917920239512384281, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917920239512384283, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_Name
+      value: UIManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ed57b1b53cdab15419efb4fedf18d11a, type: 3}
+--- !u!4 &7347852165358415359 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8917920239512384281, guid: ed57b1b53cdab15419efb4fedf18d11a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2178055192080228070}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7347852165358415358 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8917920239512384280, guid: ed57b1b53cdab15419efb4fedf18d11a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2178055192080228070}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f64e0cd1d9061db4182912500e028200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
