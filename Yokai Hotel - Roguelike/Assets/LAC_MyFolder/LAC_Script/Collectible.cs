@@ -26,8 +26,7 @@ public class Collectible : MonoBehaviour
     Vector2 playerDir;
     float playerDist;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
 

@@ -203,7 +203,7 @@ public class BasiqueEnnemiCac : MonoBehaviour
                         {
                             drop.SortItemPos(transform, transform.position, drop.dropRadius, obstructMask);
                             healthPoints = 3;
-                            Destroy(gameObject);
+                            //Destroy(gameObject);
                         }
 
 
