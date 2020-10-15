@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 //using UnityEditor;
-/*
-[CustomEditor(typeof(DropSystem))]
+
+/*[CustomEditor(typeof(DropSystem))]
 public class DropEditor : Editor
 {
     public override void OnInspectorGUI()

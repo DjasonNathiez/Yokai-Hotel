@@ -10,7 +10,8 @@ public class KF_RoomCam : MonoBehaviour
     {
         if (other.CompareTag("Player") && !other.isTrigger)
         {
-            virtulCam.SetActive(true);
+            if(virtulCam)
+                virtulCam.SetActive(true);
         }
     }
 
@@ -18,7 +19,8 @@ public class KF_RoomCam : MonoBehaviour
     {
         if (other.CompareTag("Player") && !other.isTrigger)
         {
-            virtulCam.SetActive(false);
+            if (virtulCam)
+                virtulCam.SetActive(false);
         }
     }
 }
