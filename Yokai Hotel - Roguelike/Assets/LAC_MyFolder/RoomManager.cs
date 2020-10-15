@@ -33,7 +33,7 @@ public class RoomManager : MonoBehaviour
         {
             dataRooms[i].room = roomObj[i];
             dataRooms[i].SetupPos(camWidth, camHeight);
-            GameObject[] door = roomObj.
+            //GameObject[] door = roomObj.
         }
 
         #endregion
