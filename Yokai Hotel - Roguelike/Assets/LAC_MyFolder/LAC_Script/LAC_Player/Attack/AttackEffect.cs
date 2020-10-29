@@ -7,7 +7,9 @@ public class AttackEffect : MonoBehaviour
     PlayerController player;
     AttackManager attackM;
     Animator animator;
-    BoxCollider2D col2D;
+    public BoxCollider2D col2D;
+
+    public LayerMask detectMask;
 
     // Start is called before the first frame update
     void Start()
@@ -19,13 +21,44 @@ public class AttackEffect : MonoBehaviour
     }
     private void Update()
     {
-        //col2D.offset = player.lastDir.normalized * 10;
+      
+            /*Vector2 maxBound = new Vector2(col2D.bounds.max.x, col2D.bounds.max.y);
+            Vector2 minBound = new Vector2(col2D.bounds.min.x, col2D.bounds.min.y);
+
+            Collider2D hit = Physics2D.OverlapArea(maxBound, minBound, detectMask);
+            if (hit && col2D.enabled == true)
+            {
+                if(hit.tag == "Ennemi" && player.attackChoose != -1)
+                {
+                    EnnemiBehaviour ennemiB = hit.GetComponentInParent<EnnemiBehaviour>();
+                    if (ennemiB)
+                    {
+                        Debug.Log("Hit ennemy");
+                        Vector2 repulseDir = (ennemiB.transform.position - player.transform.position).normalized;
+
+                        ennemiB.healthDamage = attackM.attack[player.attackChoose].damage;
+
+                        ennemiB.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
+                        ennemiB.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
+                    }
+                }
+            }*/
+        
+       
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        Vector2 size = new Vector2(col2D.bounds.max.x - col2D.bounds.min.x, col2D.bounds.max.y - col2D.bounds.min.y);
+        //Gizmos.DrawCube(col2D.offset + (Vector2)transform.position, size);
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if(collider.tag == "Ennemi" && player.attackChoose != -1)
         {
             BasiqueEnnemiCac ennemi = collider.GetComponent<BasiqueEnnemiCac>();
+            EnnemiBehaviour ennemiB = collider.GetComponentInParent<EnnemiBehaviour>();
             if (ennemi)
             {
                 Vector2 repulseDir = (ennemi.transform.position - player.transform.position).normalized;
@@ -35,6 +68,17 @@ public class AttackEffect : MonoBehaviour
                 ennemi.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
                 ennemi.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
 
+            }
+
+            if (ennemiB)
+            {
+                Debug.Log("Hit ennemy");
+                Vector2 repulseDir = (ennemiB.transform.position - player.transform.position).normalized;
+
+                ennemiB.healthDamage = attackM.attack[player.attackChoose].damage;
+
+                ennemiB.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
+                ennemiB.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
             }
         }
     }
