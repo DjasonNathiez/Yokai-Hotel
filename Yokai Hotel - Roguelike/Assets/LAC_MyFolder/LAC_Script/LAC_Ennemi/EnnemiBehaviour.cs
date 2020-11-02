@@ -51,6 +51,7 @@ public class EnnemiBehaviour : MonoBehaviour
     #region target
     public LayerMask obstructMask;
     public GameObject target;
+    public Vector2 targetAdjustement = new Vector2(0,0f);
 
     public float targetDist;
     public Vector2 targetDir;
@@ -66,6 +67,7 @@ public class EnnemiBehaviour : MonoBehaviour
         drop = GetComponent<DropSystem>();
 
         spriteT = GetComponentInChildren<SpriteRenderer>();
+ 
     }
     public virtual void Start()
     {
@@ -78,7 +80,7 @@ public class EnnemiBehaviour : MonoBehaviour
     public virtual void Update()
     {
         // Update target position
-        Vector2 targetPos = player.transform.position;
+        Vector2 targetPos =(Vector2)player.transform.position + targetAdjustement;
         targetDist = Vector2.Distance(targetPos, transform.position);
         targetDir = ((Vector3)targetPos - transform.position).normalized;
 
@@ -113,22 +115,27 @@ public class EnnemiBehaviour : MonoBehaviour
                 {
                     SetVelocity(Vector2.zero, inertness * inertnessModifier);
 
-                    if (velocity.magnitude < recovery)
-                    {
-                        if (healthPoints <= 0)
-                        {
-                            drop.SortItemPos(transform, transform.position, drop.dropRadius, obstructMask);
-                            healthPoints = 3;
-                            //Destroy(gameObject);
-                        }
+                    if (velocity.magnitude <= recovery)
+                    {  
                         ennemyState = lastState;
                         velocity = Vector2.zero;
                         inertnessModifier = 1;
                     }
+
+                    if (healthPoints <= 0)
+                    {
+                        drop.SortItemPos(transform, transform.position, drop.dropRadius, obstructMask);
+                        Debug.Log("DropItem");
+                        healthPoints = 3;
+                        //Destroy(gameObject);
+                    }
+
                     // show hurt
                     Color col = Color.white;
                     col.a = Mathf.Sin(Time.time * 30) * 255;
                     spriteT.color = col;
+
+                    
 
                     break;
                 }

@@ -41,9 +41,10 @@ public class EnnemiLantern : EnnemiBehaviour
     public float minCacRadius;
     public float maxCacRadius;
 
-    public float attackDuration;
+    public float attackFrequence;
     public float breakDuration;
-    float attackTimer = 0;
+    public float aFrqcTimer = 0;
+
     #endregion;
 
 
@@ -51,29 +52,21 @@ public class EnnemiLantern : EnnemiBehaviour
     public override void Update()
     {
         base.Update();
-        Debug.DrawRay(transform.position, targetDir * 5, Color.white);
+        Debug.DrawRay(transform.position, targetDir * targetDist, Color.white);
 
         Debug.DrawRay(transform.position, velocity*2, Color.blue);
         Debug.DrawRay(transform.position, idleDir*2, Color.red);
-
-        // Update target position
-        Vector2 targetPos = player.transform.position;
-        targetDist = Vector2.Distance(targetPos, transform.position);
-        targetDir = ((Vector3)targetPos - transform.position).normalized;
-
-        targetVisible = !DetectBlock(targetDist, targetDir, obstructMask);
-
 
         switch (ennemyState)
         {
             case EnnemyState.IDLE:
                 {
-                    if (targetVisible && targetDist < minDetectRadius)
+                    if (targetVisible && targetDist <= minDetectRadius)
                     {
                         SetVelocity(Vector2.zero, 0.1f);
                         ennemyState = EnnemyState.AGGRO;
                     }
-
+                    else
                     Wandering();
 
                     break;
@@ -89,18 +82,16 @@ public class EnnemiLantern : EnnemiBehaviour
                     if (targetDist <= minCacRadius)
                         ennemyState = EnnemyState.ATTACK;
 
+                    aFrqcTimer = attackFrequence;
                     break;
                 }
             case EnnemyState.ATTACK:
                 {
                     velocity = Vector2.zero;
-                    attackTimer += Time.deltaTime;
+                    aFrqcTimer += Time.deltaTime;
 
-                    if ((attackTimer >= attackDuration))
-                    {
-                        attackTimer = 0;
-                        ennemyState = EnnemyState.AGGRO;
-                    }
+                    if (targetDist > maxCacRadius && aFrqcTimer < attackFrequence)
+                        ennemyState = EnnemyState.IDLE;
 
                     break;
                 }
@@ -123,7 +114,7 @@ public class EnnemiLantern : EnnemiBehaviour
         //if (Vector2.Distance(transform.position, idlePoint) > 0.5f)
         if (idleTimer < idleTime)
         {
-            float detectLength = cC2D.radius * 1.2f;
+            float detectLength = cC2D.radius ;
 
             Vector2 currentDir = new Vector2((DetectBlock(detectLength, Vector2.right * idleDir.x, obstructMask)) ? -idleDir.x : idleDir.x,
                                              (DetectBlock(detectLength, Vector2.up * idleDir.y, obstructMask)) ? -idleDir.y : idleDir.y);
