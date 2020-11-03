@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer spriteT;
 
     AudioManager audioManager;
-
+    GameObject gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -77,7 +77,10 @@ public class PlayerController : MonoBehaviour
 
         spriteT = GetComponentInChildren<SpriteRenderer>();
 
-        audioManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
+        gameManager = GameObject.FindGameObjectWithTag("GameManager");
+
+        if (gameManager)
+            audioManager = gameManager.GetComponent<AudioManager>(); //get audioManager
 
         // set dash value
         currentRecoilDash = recoilDashTime;
@@ -87,6 +90,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         #region Input
         // movement
         Vector2 inputAxis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
@@ -99,13 +103,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Attack1"))
         {
             lA_Time = Time.time;
-            audioManager.PlaySound("Player fast attack", 0);
+
+            if(audioManager)
+                audioManager.PlaySound("Player fast attack", 0);
         }
             
         if (Input.GetButtonDown("Attack2"))
         {
             hA_Time = Time.time;
-            audioManager.PlaySound("Player heavy attack", 0);
+
+            if(audioManager)
+                audioManager.PlaySound("Player heavy attack", 0);
         }
 
 
@@ -151,7 +159,9 @@ public class PlayerController : MonoBehaviour
                         dashVelocity = velocity.normalized *(dashDistance / dashTime);
                         StartCoroutine(LoadDash());
                         dashable = false;
-                        audioManager.PlaySound("Player dash", 0);
+
+                        if(audioManager)
+                            audioManager.PlaySound("Player dash", 0);
                     }
                         
 
