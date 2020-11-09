@@ -25,7 +25,11 @@ public class AttackEffect : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Vector2 size = new Vector2(col2D.bounds.max.x - col2D.bounds.min.x, col2D.bounds.max.y - col2D.bounds.min.y);
+        if(col2D != null)
+        {
+            Vector2 size = new Vector2(col2D.bounds.max.x - col2D.bounds.min.x, col2D.bounds.max.y - col2D.bounds.min.y);
+        }
+            
         //Gizmos.DrawCube(col2D.offset + (Vector2)transform.position, size);
     }
     private void OnTriggerEnter2D(Collider2D collider)

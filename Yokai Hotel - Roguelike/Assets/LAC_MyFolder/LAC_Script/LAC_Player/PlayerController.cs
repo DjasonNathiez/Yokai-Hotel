@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     bool comboUpdate = true;
 
     public Vector2 firePoint, bulletDir;
-    float firePointRadius = 0.5f;
+    float firePointRadius = 0.7f;
 
     public int attackChoose = -1;
     public Vector2 attackDir;
@@ -175,7 +175,9 @@ public class PlayerController : MonoBehaviour
 
                             if(attackChoose == 4)
                             {
+                                
                                 firePoint = lastDir.normalized * firePointRadius + (Vector2)transform.position;
+                                firePoint.y += 0.5f;
                                 bulletDir = lastDir.normalized;
                             }
 
