@@ -40,15 +40,19 @@ public class PlayerController : MonoBehaviour
 
     bool lightAttack;
     bool heavyAttack;
+    bool shootAttack;
     public bool attackable = false;
 
-    public float lA_Buffer, hA_Buffer;
-    float lA_Time, hA_Time;
+    public float lA_Buffer, hA_Buffer, sA_Buffer;
+    float lA_Time, hA_Time, sA_Time;
 
     public float[] lA_ComboDuration;
 
     public int combo;
     bool comboUpdate = true;
+
+    public Vector2 firePoint, bulletDir;
+    float firePointRadius = 0.7f;
 
     public int attackChoose = -1;
     public Vector2 attackDir;
@@ -94,11 +98,16 @@ public class PlayerController : MonoBehaviour
         // attack
         if (Input.GetButtonDown("Attack1"))
             lA_Time = Time.time;
+
         if (Input.GetButtonDown("Attack2"))
             hA_Time = Time.time;
 
+        if (Input.GetButtonDown("Shoot"))
+            sA_Time = Time.time;
+
         lightAttack = (Time.time - lA_Time < lA_Buffer);
         heavyAttack = (Time.time - hA_Time < hA_Buffer);
+        shootAttack = (Time.time - sA_Time < sA_Buffer);
 
         //if (attackChoose > 1)
         //attackChoose = 1;
@@ -150,7 +159,7 @@ public class PlayerController : MonoBehaviour
                     if (!lightAttack && !heavyAttack)
                         attackable = true;
                    
-                    if ((lightAttack || heavyAttack)&& attackable)
+                    if ((lightAttack || heavyAttack|| shootAttack )&& attackable)
                     {
                        
                         comboUpdate = true;
@@ -163,6 +172,14 @@ public class PlayerController : MonoBehaviour
                         {
                             if ((int)attackM.attack[attackChoose].attackType == 0)
                                 attackVelocity = lastDir * attackM.attack[attackChoose].inertness;
+
+                            if(attackChoose == 4)
+                            {
+                                
+                                firePoint = lastDir.normalized * firePointRadius + (Vector2)transform.position;
+                                firePoint.y += 0.5f;
+                                bulletDir = lastDir.normalized;
+                            }
 
                             playerState = PlayerState.ATTACK;
                         }
@@ -209,6 +226,7 @@ public class PlayerController : MonoBehaviour
 
                     break;
                 }
+
             case PlayerState.HURT:
                 {
                     Color col = Color.red;
@@ -251,10 +269,12 @@ public class PlayerController : MonoBehaviour
 
         if (lightAttack)
             attackChoose = combo;
-            
 
         if (heavyAttack)
             attackChoose = 3;
+
+        if (shootAttack)
+            attackChoose = 4;
 
         if (lastAttackChoose != attackChoose && attackChoose != -1)
             attackable = false;

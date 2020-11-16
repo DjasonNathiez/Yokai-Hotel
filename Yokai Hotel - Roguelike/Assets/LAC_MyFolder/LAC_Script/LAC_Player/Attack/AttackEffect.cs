@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class AttackEffect : MonoBehaviour
 {
-    PlayerController player;
+    public PlayerController player;
     AttackManager attackM;
     Animator animator;
-    BoxCollider2D col2D;
+    public BoxCollider2D col2D;
+
+    public LayerMask detectMask;
+    public GameObject bulletPrefab;
+   
+
 
     // Start is called before the first frame update
     void Start()
@@ -17,25 +22,45 @@ public class AttackEffect : MonoBehaviour
         col2D = GetComponent<BoxCollider2D>();
        
     }
-    private void Update()
+
+    private void OnDrawGizmos()
     {
-        //col2D.offset = player.lastDir.normalized * 10;
+        if(col2D != null)
+        {
+            Vector2 size = new Vector2(col2D.bounds.max.x - col2D.bounds.min.x, col2D.bounds.max.y - col2D.bounds.min.y);
+        }
+            
+        //Gizmos.DrawCube(col2D.offset + (Vector2)transform.position, size);
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if(collider.tag == "Ennemi" && player.attackChoose != -1)
         {
-            BasiqueEnnemiCac ennemi = collider.GetComponent<BasiqueEnnemiCac>();
-            if (ennemi)
+
+            EnnemiBehaviour ennemiB = collider.GetComponentInParent<EnnemiBehaviour>();
+            if (ennemiB)
             {
-                Vector2 repulseDir = (ennemi.transform.position - player.transform.position).normalized;
+                Debug.Log("Hit ennemy");
+                Vector2 repulseDir = (ennemiB.transform.position - player.transform.position).normalized;
 
-                ennemi.hitDamage = attackM.attack[player.attackChoose].damage;
+                ennemiB.healthDamage = attackM.attack[player.attackChoose].damage;
 
-                ennemi.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
-                ennemi.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
-
+                ennemiB.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
+                ennemiB.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
             }
+        }
+
+        if (collider.tag == "BulletEnemy" && player.attackChoose == 3)
+        {
+            Bullet bullet = collider.GetComponentInParent<Bullet>();
+
+            if (bullet)
+            {
+                Debug.Log("hitBullet");
+                bullet.speed = -2*bullet.speed;
+                bullet.tag = "BulletAlly";
+            }
+            
         }
     }
 
@@ -69,6 +94,14 @@ public class AttackEffect : MonoBehaviour
     public void Attackable(bool allow)
     {
         player.attackable = allow;
+    }
+
+    public void InstantiateBullet()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, player.firePoint, transform.rotation);
+        Bullet b = bullet.GetComponent<Bullet>();
+        if(b)
+            b.dir = player.bulletDir;
     }
 
     /*public IEnumerator Inertness(float time)

@@ -59,4 +59,8 @@ public class BEnnemiAnimator : MonoBehaviour
         animator.SetFloat("Vertical", (vertical) ? Mathf.Sign(velocity.y) : 0);
         animator.SetFloat("Horizontal", (vertical) ? 0 : Mathf.Sign(velocity.x));
     }
+    public void EndAttack()
+    {
+        ennemi.ennemyState = BasiqueEnnemiCac.EnnemyState.IDLE;
+    }
 }

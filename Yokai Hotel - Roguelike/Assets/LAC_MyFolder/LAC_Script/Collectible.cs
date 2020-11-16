@@ -19,12 +19,13 @@ public class Collectible : MonoBehaviour
     float speed;
     public bool  oscilate;
     public float oscilMag, oscilFreq;
-    GameObject playerObj;
+    float randomOscil;
+    public GameObject playerObj;
     InventoryManager inventory;
    
 
     Vector2 playerDir;
-    float playerDist;
+    public float playerDist;
 
     void Awake()
     {
@@ -32,17 +33,19 @@ public class Collectible : MonoBehaviour
 
         if (playerObj)
             inventory = playerObj.GetComponent<InventoryManager>();// get inventory component
+        randomOscil = Random.value - 0.5f;
     }
 
     // Update is called once per frame
     void Update()
     {
         // detect pickup and magnet
+        //Debug.DrawRay(transform.position, playerDir * playerDist, Color.white);
         if (playerObj)
         {
             playerDir = (playerObj.transform.position - transform.position).normalized;
             playerDist = Vector2.Distance(transform.position, playerObj.transform.position);
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, playerDir, magnetRange, obstructMask);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, playerDir, playerDist, obstructMask);
 
             if (playerDist < magnetRange && !hit) 
                 magnet = true;
@@ -55,17 +58,15 @@ public class Collectible : MonoBehaviour
         {
             if (oscilate)
             {
-                float oscill = Mathf.Sin(Time.time * oscilFreq) * oscilMag;
+                float oscill = Mathf.Sin(Time.time * oscilFreq + randomOscil) * oscilMag ;
                 transform.position += Vector3.up * oscill * Time.deltaTime;
             }
-            
         }
 
         // apply magnet effect
         if (magnet && !pickUp)
         {
             speed = Mathf.Clamp(speed + (magnetSpeed / magnetAccel) * Time.deltaTime, 0, magnetSpeed); 
-           
             transform.position = (Vector2)transform.position + (playerDir * speed * Time.deltaTime);
         }
 
