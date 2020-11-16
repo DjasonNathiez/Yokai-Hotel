@@ -14,7 +14,7 @@ public class ProceduralGenerator : MonoBehaviour
     public RoomData[,] roomsGrid;
     public List<RoomData> validRooms = new List<RoomData>();
 
-    public GameObject roomPrefab, cellOrign, cellGround;
+    public GameObject roomPrefab, cellOrign, cellGround, endPrefab;
     public List<GameObject> rooms;
 
     [Header("Room")]
@@ -181,7 +181,7 @@ public class ProceduralGenerator : MonoBehaviour
 
             // generate end room
             Vector2 endRoomPos = new Vector2(preparendRX, preparendRY + 1);
-            GameObject endRoomObj = Instantiate(roomPrefab, new Vector2(preparendRX * resolutionX, (preparendRY + 1) * resolutionY), transform.rotation);
+            GameObject endRoomObj = Instantiate(endPrefab, new Vector2(preparendRX * resolutionX, (preparendRY + 1) * resolutionY), transform.rotation);
             Room roomEnd = endRoomObj.GetComponent<Room>();
 
             roomsGrid[preparendRX, preparendRY + 1].type = Room.RoomType.END;

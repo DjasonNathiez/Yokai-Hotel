@@ -12,7 +12,7 @@ public class Door : MonoBehaviour
 
 
     public Door doorLink;
-    public Transform arrivalPos;
+    private Transform arrivalPos;
     public GameObject playerObj;
    
 
@@ -21,12 +21,9 @@ public class Door : MonoBehaviour
     {
         sprite = GetComponent<SpriteRenderer>();
         playerObj = GameObject.FindGameObjectWithTag("Player");
-    }
-
-    private void Start()
-    {
         arrivalPos = doorLink.transform;
     }
+
 
 
     public void UpdateDoor(int doorType, bool isOpen)
