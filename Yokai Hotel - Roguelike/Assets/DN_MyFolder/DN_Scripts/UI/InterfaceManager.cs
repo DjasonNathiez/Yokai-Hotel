@@ -9,6 +9,8 @@ using UnityEngine.UI;
 public class InterfaceManager : MonoBehaviour
 {
     InventoryManager inventory;
+    PlayerController player;
+    public Slider fillSlider;
 
     [Header("Health")]
     public RawImage[] allTextureLantern;
@@ -19,6 +21,8 @@ public class InterfaceManager : MonoBehaviour
     int currentHealth;
     int maxHealth;
 
+    float shootValue;
+
     [Header("Money")]
     TextMeshProUGUI moneyText;
     int currentMoney;
@@ -27,6 +31,7 @@ public class InterfaceManager : MonoBehaviour
     {
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryManager>(); //initialization du script InventoryManager
         moneyText = GameObject.FindGameObjectWithTag("MoneyText").GetComponent<TextMeshProUGUI>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         allTextureLantern = GetComponentsInChildren<RawImage>();
 
@@ -46,6 +51,7 @@ public class InterfaceManager : MonoBehaviour
 
         UpdateHealth();
         UpdateMoney();
+        UpdateShoot();
     }
 
     void UpdateHealth()
@@ -60,15 +66,23 @@ public class InterfaceManager : MonoBehaviour
         {
             if(i != 0)
             {
-                allTextureLantern[i].texture = (currentHealth >= i) ? hpActivate : hpDown; 
+                allTextureLantern[i].texture = (currentHealth >= i) ? hpActivate : hpDown;
             }
         }
     }
 
     void UpdateMoney()
     {
-        currentMoney = inventory.money;
-        moneyText.text = currentMoney.ToString();
+        if (inventory)
+            currentMoney = inventory.money;
+
+        if(moneyText)
+            moneyText.text = currentMoney.ToString();
     }
 
+    void UpdateShoot()
+    {
+        if (player)
+            fillSlider.value = player.shootGaugeState;
+    }
 }

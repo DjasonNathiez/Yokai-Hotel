@@ -22,7 +22,9 @@ public class Collectible : MonoBehaviour
     float randomOscil;
     public GameObject playerObj;
     InventoryManager inventory;
-   
+
+    GameObject gameManager;
+    AudioManager audioManager;
 
     Vector2 playerDir;
     public float playerDist;
@@ -30,9 +32,15 @@ public class Collectible : MonoBehaviour
     void Awake()
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
+        gameManager = GameObject.FindGameObjectWithTag("GameManager");
+        
 
         if (playerObj)
             inventory = playerObj.GetComponent<InventoryManager>();// get inventory component
+
+        if (gameManager)
+            audioManager = gameManager.GetComponent<AudioManager>(); //get audioManager component
+
         randomOscil = Random.value - 0.5f;
     }
 
@@ -81,27 +89,30 @@ public class Collectible : MonoBehaviour
                         {
 
                             inventory.money += value;
+
+                            if(audioManager)
+                                audioManager.PlaySound("Own gold", 0);
                             break;
                         }
 
                     case Collectype.HEALTH:
                         {
+                            
+                            inventory.health += value;
 
-                                inventory.health += value;
-
+                            if(audioManager)
+                                audioManager.PlaySound("Player healing", 0);
                             break;
                         }
 
                     case Collectype.MAXHEALTH:
                         {
-
                             inventory.maxHealth += value;
                             break;
                         }
 
                     case Collectype.ATTACKBOOST:
                         {
-
                             inventory.attackBoost += value;
                             break;
                         }

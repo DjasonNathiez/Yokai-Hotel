@@ -59,6 +59,7 @@ public class AttackEffect : MonoBehaviour
                 Debug.Log("hitBullet");
                 bullet.speed = -2*bullet.speed;
                 bullet.tag = "BulletAlly";
+
             }
             
         }
@@ -100,8 +101,12 @@ public class AttackEffect : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefab, player.firePoint, transform.rotation);
         Bullet b = bullet.GetComponent<Bullet>();
-        if(b)
+        if (b)
+        {
             b.dir = player.bulletDir;
+            player.shootGaugeState = 0;
+        }
+            
     }
 
     /*public IEnumerator Inertness(float time)
