@@ -14,7 +14,7 @@ public class ProceduralGenerator : MonoBehaviour
     public RoomData[,] roomsGrid;
     public List<RoomData> validRooms = new List<RoomData>();
 
-    public GameObject roomPrefab, cellOrign, cellGround, endPrefab;
+    public GameObject roomPrefab, keyPrefab, shopPrefab, startPrefab, preparePrefab, endPrefab;
     public List<GameObject> rooms;
 
     [Header("Room")]
@@ -74,12 +74,13 @@ public class ProceduralGenerator : MonoBehaviour
             roomsGrid[walkOrigin.posX, walkOrigin.posY].type = Room.RoomType.START;
         }
 
-        // show Origin cell
+        /* show Origin cell
         if (walkers.Count > 0)
         {
             Vector3 posOrigin = new Vector3(walkers[0].posX * resolutionX, walkers[0].posY * resolutionY, -1);
             Instantiate(cellOrign, posOrigin, transform.rotation);
         }
+        */
 
         // Generate
         GenerateDungeon(ref roomsGrid, walkers, targetWalkers);
@@ -101,12 +102,15 @@ public class ProceduralGenerator : MonoBehaviour
             {
                 for (int y = 0; y < gridSizeX; y++)
                 {
-                    if (roomsGrid[x, y].type != Room.RoomType.NULL  && (x != walkOrigin.posX || y != walkOrigin.posY))
+                    if (roomsGrid[x, y].type != Room.RoomType.NULL)
                     {
 
                         // instantiate room prefab
-                        GameObject newRoom = new GameObject();
-                        newRoom = rooms[Random.Range(0, rooms.Count)];
+                        GameObject newRoom;
+                        if (walkOrigin.posX == x && walkOrigin.posY == y)
+                            newRoom = startPrefab;
+                        else
+                            newRoom = rooms[Random.Range(0, rooms.Count)];
                         GameObject roomObj = Instantiate(newRoom, new Vector2(x * resolutionX, y * resolutionY) , transform.rotation);
                         Room room = roomObj.GetComponent<Room>();
 
