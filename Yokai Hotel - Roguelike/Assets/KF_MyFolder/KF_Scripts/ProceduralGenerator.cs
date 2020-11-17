@@ -179,12 +179,21 @@ public class ProceduralGenerator : MonoBehaviour
                 }
             }
             // apply special room change
+
+            // destroyRoom
+            Destroy(roomsGrid[preparendRX, preparendRY].room.gameObject);
+
+            // replace room 
+            GameObject prepareRoom = Instantiate(preparePrefab, new Vector2(preparendRX * resolutionX, preparendRY * resolutionY), transform.rotation);
+            roomsGrid[preparendRX, preparendRY].room = prepareRoom.GetComponent<Room>();
+
             roomsGrid[preparendRX, preparendRY].type = Room.RoomType.PREPAREND;
             roomsGrid[preparendRX, preparendRY].room.UpdateRoom((int)roomsGrid[preparendRX, preparendRY].type);
             roomsGrid[preparendRX, preparendRY].room.UpdateDoors(1, (int)Door.DoorType.FINAL, true);
+            
 
             // generate end room
-            Vector2 endRoomPos = new Vector2(preparendRX, preparendRY + 1);
+            Vector2 endRoomPos = new Vector2(preparendRX, preparendRY);
             GameObject endRoomObj = Instantiate(endPrefab, new Vector2(preparendRX * resolutionX, (preparendRY + 1) * resolutionY), transform.rotation);
             Room roomEnd = endRoomObj.GetComponent<Room>();
 
@@ -195,44 +204,62 @@ public class ProceduralGenerator : MonoBehaviour
 
             // generate key room 
             float powDistEnd = 0;
-            RoomData keyRoom = new RoomData(Room.RoomType.NULL, null, null, 0, 0);
+            RoomData keyRoomData = new RoomData(Room.RoomType.NULL, null, null, 0, 0);
             
             foreach( RoomData rd in validRooms)
             {
                 float powDist = Mathf.Pow((endRoomPos.x - rd.posX), 2) + Mathf.Pow((endRoomPos.y - rd.posY), 2);
                 bool roomCond = (rd.type == Room.RoomType.PREPAREND) || (rd.type == Room.RoomType.START) && (rd.type == Room.RoomType.KEY);
-                if (powDistEnd <= powDist  && !roomCond)
+                if (powDistEnd <= powDist  && !roomCond && (rd.type == Room.RoomType.COMMUN || rd.type == Room.RoomType.RARE))
                 {
                     powDistEnd = powDist;
-                    keyRoom = rd;
+                    keyRoomData = rd;
                 }
             }
-            keyRoom.type = Room.RoomType.KEY;
-            keyRoom.room.UpdateRoom((int)keyRoom.type);
+
+            // destroyRoom
+            Destroy(keyRoomData.room.gameObject);
+
+            // replace Room
+            GameObject  keyRoom = Instantiate(keyPrefab, new Vector2(keyRoomData.posX * resolutionX, keyRoomData.posY * resolutionY), transform.rotation);
+            roomsGrid[keyRoomData.posX, keyRoomData.posY].room = keyRoomData.room = keyRoom.GetComponent<Room>();
+
+            keyRoomData.type = Room.RoomType.KEY;
+            keyRoomData.room.UpdateRoom((int)keyRoomData.type);
 
             // generate shop room
             float maximisDist = 0;
-            RoomData shopRoom = new RoomData(Room.RoomType.NULL, null, null, 0, 0);
-
+            RoomData shopRoomData = new RoomData(Room.RoomType.NULL, null, null, 0, 0);
+            
             foreach (RoomData rd in validRooms)
             {
                 Vector2 currentPos = new Vector2(rd.posX, rd.posY);
-                Vector2 keyPos = new Vector2(keyRoom.posX, keyRoom.posY);
+                Vector2 keyPos = new Vector2(keyRoomData.posX, keyRoomData.posY);
 
                 float sEndDist = Vector2.Distance(endRoomPos, currentPos);
                 float sKeyDist = Vector2.Distance(keyPos, currentPos);
                 float sStartDist = Vector2.Distance(walkPos, currentPos);
 
                 float cMaximisDist = sEndDist + sKeyDist + sStartDist;
-                if (maximisDist <= cMaximisDist && rd.room.type != Room.RoomType.PREPAREND)
+                bool roomCond = (sKeyDist != 0 && sEndDist != 0 && sStartDist != 0 && rd.type != Room.RoomType.PREPAREND);
+                if (maximisDist <= cMaximisDist && roomCond)
                 {
                     maximisDist = cMaximisDist;
-                    shopRoom = rd;
-                    //Debug.Log("assign shop room");
+                    shopRoomData = rd;
+                    Debug.Log("assign shop room"+rd.posX * resolutionX+" "+ rd.posY * resolutionY);
+                    Debug.Log("room cond is" + roomCond+"");
                 }
             }
-            shopRoom.type = Room.RoomType.SHOP;
-            shopRoom.room.UpdateRoom((int)shopRoom.type);
+
+            // destroy Room
+            //Destroy(shopRoomData.room.gameObject);
+
+            // Replace
+            //GameObject shopRoom = Instantiate(shopPrefab, new Vector2(shopRoomData.posX * resolutionX, shopRoomData.posY * resolutionY), transform.rotation);
+            //roomsGrid[shopRoomData.posX, shopRoomData.posY].room = shopRoomData.room = shopRoom.GetComponent<Room>();
+
+            shopRoomData.type = Room.RoomType.SHOP;
+            shopRoomData.room.UpdateRoom((int)shopRoomData.type);
 
             // link door
             for (int x = 0; x < gridSizeX; x++)
