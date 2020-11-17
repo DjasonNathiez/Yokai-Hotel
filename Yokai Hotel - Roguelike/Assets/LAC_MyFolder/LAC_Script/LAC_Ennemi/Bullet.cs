@@ -63,7 +63,7 @@ public class Bullet : MonoBehaviour
         if(collision.CompareTag("Ennemi") && CompareTag("BulletAlly"))
         {
             BasiqueEnnemiCac ennemiCac = collision.GetComponentInParent<BasiqueEnnemiCac>();
-            EnnemiYoka ennemiDist = collision.GetComponentInParent<EnnemiYoka>();
+            EnnemiSlime ennemiDist = collision.GetComponentInParent<EnnemiSlime>();
 
             if(ennemiCac)
             {

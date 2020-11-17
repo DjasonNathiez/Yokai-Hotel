@@ -65,6 +65,9 @@ MonoBehaviour:
   recoilDashLimit: 3
   invincibleDelay: 0
   invincibleDuration: 0
+  lightAttack: 0
+  heavyAttack: 0
+  shootAttack: 0
   attackable: 0
   lA_Buffer: 0.2
   hA_Buffer: 0.2
@@ -85,6 +88,11 @@ MonoBehaviour:
   isHurt: 0
   hurtTime: 0.2
   invincibleTime: 1
+  lAFillAmount: 0
+  hAFillAmount: 0
+  uAFillAmount: 0
+  shootGaugeState: 0
+  shootGaugeMax: 0
 --- !u!61 &3867148610447654503
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -302,9 +310,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attack:
+  - {fileID: 11400000, guid: ec672fda4cac6fb48989a0f53cc3f0b9, type: 2}
   - {fileID: 11400000, guid: b051eba4f5863884e9e25b874cebe7e1, type: 2}
-  - {fileID: 11400000, guid: debb57419c4bc8e46bd44ac92eda4e7f, type: 2}
-  - {fileID: 11400000, guid: 5324fb3a6b39d9c419e71226196e6900, type: 2}
+  - {fileID: 11400000, guid: dafa2868b51e2be40a5b4ceaba4b3592, type: 2}
   - {fileID: 11400000, guid: e7fe1b811981ac94da688e7a90389ab5, type: 2}
   - {fileID: 11400000, guid: 7e0888549f30e7a4cbe28e6d6a8bd34d, type: 2}
 --- !u!61 &3867148611082786489
