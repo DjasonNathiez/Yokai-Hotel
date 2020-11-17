@@ -13,6 +13,7 @@ public class Door : MonoBehaviour
 
     public Door doorLink;
     public GameObject playerObj;
+    public BoxCollider2D doorTriggerZone;
    
 
     public SpriteRenderer sprite;
@@ -20,7 +21,16 @@ public class Door : MonoBehaviour
     {
         sprite = GetComponent<SpriteRenderer>();
         playerObj = GameObject.FindGameObjectWithTag("Player");
+        doorTriggerZone = this.gameObject.GetComponent<BoxCollider2D>();
     }
+
+    /*private void Update()
+    {
+        if (doorLink == null)
+        {
+            doorTriggerZone.isTrigger = false;
+        }
+    }*/                 // À activer quand on arriver fix le problème des doorLink
 
 
 
@@ -56,10 +66,15 @@ public class Door : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player")) 
+        if (collision.gameObject.CompareTag("Player"))
         {
-            playerObj.transform.position = doorLink.transform.position;
-            
+            Teleport();
+
         }
+    }
+
+    private void Teleport()
+    {
+        playerObj.transform.position = doorLink.GetComponent<Transform>().position;
     }
 }
