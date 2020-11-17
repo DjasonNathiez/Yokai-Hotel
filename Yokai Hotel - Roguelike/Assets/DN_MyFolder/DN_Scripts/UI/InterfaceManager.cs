@@ -29,11 +29,9 @@ public class InterfaceManager : MonoBehaviour
 
     private void Start()
     {
-        if(inventory)
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryManager>(); //initialization du script InventoryManager
-
-        if(moneyText)
         moneyText = GameObject.FindGameObjectWithTag("MoneyText").GetComponent<TextMeshProUGUI>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         allTextureLantern = GetComponentsInChildren<RawImage>();
 
@@ -68,7 +66,7 @@ public class InterfaceManager : MonoBehaviour
         {
             if(i != 0)
             {
-                allTextureLantern[i].texture = (currentHealth >= i) ? hpActivate : hpDown; 
+                allTextureLantern[i].texture = (currentHealth >= i) ? hpActivate : hpDown;
             }
         }
     }
