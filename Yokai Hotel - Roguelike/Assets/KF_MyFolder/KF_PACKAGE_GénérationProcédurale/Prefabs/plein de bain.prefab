@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 5809441457137699512}
   - component: {fileID: 3076193668882569134}
   m_Layer: 0
-  m_Name: CM vcam3- SDB2
+  m_Name: CM vcam3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -452,7 +452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ConfineMode: 0
   m_BoundingVolume: {fileID: 0}
-  m_BoundingShape2D: {fileID: 7096397870314668679}
+  m_BoundingShape2D: {fileID: 5261084695087389354}
   m_ConfineScreenEdges: 1
   m_Damping: 0
 --- !u!1 &2611565347318529781
@@ -601,7 +601,7 @@ GameObject:
   - component: {fileID: 5302441485956724790}
   - component: {fileID: 375530961447514115}
   - component: {fileID: 8097387415914433539}
-  - component: {fileID: 7096397870314668679}
+  - component: {fileID: 5261084695087389354}
   m_Layer: 0
   m_Name: plein de bain
   m_TagString: Untagged
@@ -709,8 +709,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtulCam: {fileID: 2011081969907158503}
---- !u!61 &7096397870314668679
-BoxCollider2D:
+--- !u!60 &5261084695087389354
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -732,9 +732,12 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 20, y: 11.25}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -10, y: 5.625}
+      - {x: -10, y: -5.625}
+      - {x: 10, y: -5.625}
+      - {x: 10, y: 5.625}
 --- !u!1 &5999119503878412950
 GameObject:
   m_ObjectHideFlags: 0

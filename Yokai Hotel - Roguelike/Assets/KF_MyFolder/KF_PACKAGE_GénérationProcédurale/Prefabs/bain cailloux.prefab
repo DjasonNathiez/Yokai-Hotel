@@ -992,7 +992,7 @@ GameObject:
   - component: {fileID: 5060988355296769874}
   - component: {fileID: 6180063450865987076}
   - component: {fileID: 3454251933959634839}
-  - component: {fileID: 780745605133877320}
+  - component: {fileID: 2667174241312098793}
   m_Layer: 0
   m_Name: bain cailloux
   m_TagString: Untagged
@@ -1100,8 +1100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtulCam: {fileID: 8520494875861745490}
---- !u!61 &780745605133877320
-BoxCollider2D:
+--- !u!60 &2667174241312098793
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1123,9 +1123,12 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 20, y: 11.25}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -10, y: 5.625}
+      - {x: -10, y: -5.625}
+      - {x: 10, y: -5.625}
+      - {x: 10, y: 5.625}
 --- !u!1 &8175395493973096720
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,7 +1241,7 @@ GameObject:
   - component: {fileID: 9200123922162400190}
   - component: {fileID: 3519659689310148730}
   m_Layer: 0
-  m_Name: CM vcam3- SDB2
+  m_Name: CM vcam3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1308,7 +1311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ConfineMode: 0
   m_BoundingVolume: {fileID: 0}
-  m_BoundingShape2D: {fileID: 780745605133877320}
+  m_BoundingShape2D: {fileID: 2667174241312098793}
   m_ConfineScreenEdges: 1
   m_Damping: 0
 --- !u!1 &8590531835891256445

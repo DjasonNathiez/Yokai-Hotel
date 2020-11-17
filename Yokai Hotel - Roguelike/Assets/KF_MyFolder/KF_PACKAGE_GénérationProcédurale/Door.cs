@@ -24,13 +24,13 @@ public class Door : MonoBehaviour
         doorTriggerZone = this.gameObject.GetComponent<BoxCollider2D>();
     }
 
-    /*private void Update()
+    private void Update()
     {
         if (doorLink == null)
         {
             doorTriggerZone.isTrigger = false;
         }
-    }*/                 // À activer quand on arriver fix le problème des doorLink
+    }             
 
 
 
