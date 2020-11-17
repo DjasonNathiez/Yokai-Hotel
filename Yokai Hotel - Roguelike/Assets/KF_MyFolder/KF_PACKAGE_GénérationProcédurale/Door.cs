@@ -12,7 +12,6 @@ public class Door : MonoBehaviour
 
 
     public Door doorLink;
-    private Transform arrivalPos;
     public GameObject playerObj;
    
 
@@ -21,7 +20,6 @@ public class Door : MonoBehaviour
     {
         sprite = GetComponent<SpriteRenderer>();
         playerObj = GameObject.FindGameObjectWithTag("Player");
-        arrivalPos = doorLink.transform;
     }
 
 
@@ -60,7 +58,7 @@ public class Door : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player")) 
         {
-            playerObj.transform.position = arrivalPos.position;
+            playerObj.transform.position = doorLink.transform.position;
             
         }
     }
