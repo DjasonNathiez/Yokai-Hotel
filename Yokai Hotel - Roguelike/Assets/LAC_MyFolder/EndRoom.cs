@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwitchPostPro : MonoBehaviour
+public class EndRoom : MonoBehaviour
 {
     GameObject postPro1,postPro2;
 

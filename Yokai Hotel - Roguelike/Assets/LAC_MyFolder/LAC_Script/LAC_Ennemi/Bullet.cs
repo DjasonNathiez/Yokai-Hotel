@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour
     public bool bulletEnnemy;
 
     public Rigidbody2D rb2D;
+    public LayerMask blockMask;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,39 +49,32 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // hurt player
-        if (collision.CompareTag("PHurtBox") && CompareTag("BulletEnemy"))
+        if (collision.CompareTag("PHurtBox") && (tag == "BulletEnemy"))
         {
             PlayerController player = collision.GetComponentInParent<PlayerController>();
             if (player)
             {
                 player.hurtDamage = damage;
+                Destroy(gameObject);
             }
 
             Debug.Log("bulletHit");
         }
 
         //hurt ennemy
-        if(collision.CompareTag("Ennemi") && CompareTag("BulletAlly"))
+        if(collision.CompareTag("Ennemi") && (tag == "BulletAlly"))
         {
-            BasiqueEnnemiCac ennemiCac = collision.GetComponentInParent<BasiqueEnnemiCac>();
-            EnnemiSlime ennemiDist = collision.GetComponentInParent<EnnemiSlime>();
-
-            if(ennemiCac)
+            EnnemiBehaviour ennemi = collision.GetComponentInParent<EnnemiBehaviour>();
+            if (ennemi)
             {
-                ennemiCac.hitDamage = damage;
-                Debug.Log("EnnemyCacHit");
-            }
-            if (ennemiDist)
-            {
-                ennemiDist.healthDamage = damage;
+                ennemi.healthDamage = damage;
                 Debug.Log("EnnemyDistHit");
+                Destroy(gameObject);
             }
-
-            Debug.Log("EnnemyHit");
         }
 
         // destroy on wall
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Block"))
+        if (collision.gameObject.layer == blockMask)
             Destroy(gameObject);
 
 
