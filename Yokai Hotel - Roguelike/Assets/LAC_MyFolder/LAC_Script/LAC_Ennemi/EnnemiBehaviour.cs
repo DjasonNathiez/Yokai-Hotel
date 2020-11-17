@@ -117,7 +117,7 @@ public class EnnemiBehaviour : MonoBehaviour
 
                     if (velocity.magnitude <= recovery)
                     {  
-                        ennemyState = lastState;
+                        ennemyState = EnnemyState.IDLE;
                         velocity = Vector2.zero;
                         inertnessModifier = 1;
                     }

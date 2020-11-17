@@ -9,14 +9,23 @@ public class MenuManager : MonoBehaviour
 
     public int playSceneNumber;
     public int hubScene;
-    public Canvas pauseMenu;
     public bool paused;
+
+    public Canvas pauseMenu;
+    public Canvas HUD;
 
     PlayerController playerController;
 
     private void Awake()
     {
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<Canvas>();
+        HUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<Canvas>();
+
+        if (playerController)
+        {
+            playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        }
+        
     }
     public void Start()
     {
@@ -32,13 +41,27 @@ public class MenuManager : MonoBehaviour
             Resume();
         }
 
-        if (pauseMenu.enabled == true)
+        if (pauseMenu)
         {
-            paused = true;
-        } else if (pauseMenu.enabled == false)
-        {
-            paused = false;
+            if (pauseMenu.enabled == true)
+            {
+                paused = true;
+            }
+            else if (pauseMenu.enabled == false)
+            {
+                paused = false;
+            }
+
+            if(HUD && paused == true)
+            {
+                HUD.enabled = false;
+            }
+            else if (HUD && paused == false)
+            {
+                HUD.enabled = true;
+            }
         }
+
     }
     public void Play()
     {
@@ -62,16 +85,24 @@ public class MenuManager : MonoBehaviour
         pauseMenu.enabled = true;
         paused = true;
 
-        playerController.enabled = false;
-        Time.timeScale = 0;
+        if (playerController)
+        {
+            playerController.enabled = false;
+            Time.timeScale = 0;
+        }
+        
     }
 
     public void Resume()
     {
         pauseMenu.enabled = false;
         paused = false;
-        playerController.enabled = true;
-        Time.timeScale = 1;
+
+        if (playerController)
+        {
+            playerController.enabled = true;
+            Time.timeScale = 1;
+        }
     }
 
 }

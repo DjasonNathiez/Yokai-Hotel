@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
 
     Rigidbody2D rb2D;
-    public enum PlayerState { FREE, DASH, ATTACK, HURT};
+    public enum PlayerState { FREE, DASH, ATTACK, HURT };
     public PlayerState playerState = PlayerState.FREE;
 
     [Header("Movement")]
@@ -36,19 +36,29 @@ public class PlayerController : MonoBehaviour
     float currentRecoilReset, currentRecoilDash;
 
     public float invincibleDelay, invincibleDuration;
+
     [Header("Attack")]
 
-    bool lightAttack;
-    bool heavyAttack;
+    [HideInInspector]
+    public bool lightAttack;
+    [HideInInspector]
+    public bool heavyAttack;
+    [HideInInspector]
+    public bool shootAttack;
+
+
     public bool attackable = false;
 
-    public float lA_Buffer, hA_Buffer;
-    float lA_Time, hA_Time;
+    public float lA_Buffer, hA_Buffer, sA_Buffer;
+    float lA_Time, hA_Time, sA_Time;
 
     public float[] lA_ComboDuration;
 
     public int combo;
     bool comboUpdate = true;
+
+    public Vector2 firePoint, bulletDir;
+    float firePointRadius = 0.7f;
 
     public int attackChoose = -1;
     public Vector2 attackDir;
@@ -64,10 +74,19 @@ public class PlayerController : MonoBehaviour
     public float hurtTime;
     public float invincibleTime;
     bool invincible;
+
+    [Header("Shoot")]
+    public float lAFillAmount;
+    public float hAFillAmount;
+    public float uAFillAmount;
+    public float shootGaugeState;
+    public float shootGaugeMax;
+
     SpriteRenderer spriteT;
 
     AudioManager audioManager;
     GameObject gameManager;
+    ScreenShake screenShake;
 
     // Start is called before the first frame update
     void Start()
@@ -78,6 +97,7 @@ public class PlayerController : MonoBehaviour
         spriteT = GetComponentInChildren<SpriteRenderer>();
 
         gameManager = GameObject.FindGameObjectWithTag("GameManager");
+        screenShake = GameObject.FindGameObjectWithTag("VirtualCam").GetComponent<ScreenShake>();
 
         if (gameManager)
             audioManager = gameManager.GetComponent<AudioManager>(); //get audioManager
@@ -101,24 +121,21 @@ public class PlayerController : MonoBehaviour
 
         // attack
         if (Input.GetButtonDown("Attack1"))
-        {
             lA_Time = Time.time;
 
-            if(audioManager)
-                audioManager.PlaySound("Player fast attack", 0);
-        }
             
         if (Input.GetButtonDown("Attack2"))
-        {
             hA_Time = Time.time;
 
-            if(audioManager)
-                audioManager.PlaySound("Player heavy attack", 0);
-        }
 
+        if (Input.GetButtonDown("Shoot") && shootGaugeState == shootGaugeMax)
+            sA_Time = Time.time;
+
+            
 
         lightAttack = (Time.time - lA_Time < lA_Buffer);
         heavyAttack = (Time.time - hA_Time < hA_Buffer);
+        shootAttack = (Time.time - sA_Time < sA_Buffer);
 
         //if (attackChoose > 1)
         //attackChoose = 1;
@@ -173,7 +190,7 @@ public class PlayerController : MonoBehaviour
                     if (!lightAttack && !heavyAttack)
                         attackable = true;
                    
-                    if ((lightAttack || heavyAttack)&& attackable)
+                    if ((lightAttack || heavyAttack|| shootAttack )&& attackable)
                     {
                        
                         comboUpdate = true;
@@ -184,8 +201,16 @@ public class PlayerController : MonoBehaviour
 
                         if (attackChoose != -1)
                         {
-                            if ((int)attackM.attack[attackChoose].attackType == 0)
+                            if ((int)attackM.attack[attackChoose].attackType == 0) 
                                 attackVelocity = lastDir * attackM.attack[attackChoose].inertness;
+
+                            if(attackChoose == 4)
+                            {
+                                
+                                firePoint = lastDir.normalized * firePointRadius + (Vector2)transform.position;
+                                firePoint.y += 0.5f;
+                                bulletDir = lastDir.normalized;
+                            }
 
                             playerState = PlayerState.ATTACK;
                         }
@@ -232,6 +257,7 @@ public class PlayerController : MonoBehaviour
 
                     break;
                 }
+
             case PlayerState.HURT:
                 {
                     Color col = Color.red;
@@ -243,6 +269,11 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        //maximize shoot gauge
+        if(shootGaugeState > shootGaugeMax)
+        {
+            shootGaugeState = shootGaugeMax;
+        }
         
     }
 
@@ -273,11 +304,35 @@ public class PlayerController : MonoBehaviour
         int lastAttackChoose = attackChoose;
 
         if (lightAttack)
+        {
             attackChoose = combo;
+            shootGaugeState += lAFillAmount;
+        
+
+            if (audioManager)
+                audioManager.PlaySound("Player fast attack", 0);
+        }
             
 
         if (heavyAttack)
+        {
             attackChoose = 3;
+            shootGaugeState += hAFillAmount;
+            screenShake.isShaking = true;
+
+            if (audioManager)
+                audioManager.PlaySound("Player heavy attack", 0);
+        }
+          
+
+        if (shootAttack)
+        {
+            attackChoose = 4;
+            if (audioManager)
+                audioManager.PlaySound("Player distance attack", 0);
+        }
+
+           
 
         if (lastAttackChoose != attackChoose && attackChoose != -1)
             attackable = false;
