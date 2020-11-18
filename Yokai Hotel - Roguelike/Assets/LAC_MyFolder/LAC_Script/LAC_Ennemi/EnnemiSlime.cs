@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnnemiYoka : EnnemiBehaviour
+public class EnnemiSlime : EnnemiBehaviour
 {
     #region Idle
     [Header("Idle")]
@@ -47,7 +47,7 @@ public class EnnemiYoka : EnnemiBehaviour
 
     public float timeToLoad, timeBetweenAttack;
     float loadTimer;
-    bool attackable;
+    bool attackable, shootAnim;
 
     #endregion
     public override void Start()
@@ -112,18 +112,7 @@ public class EnnemiYoka : EnnemiBehaviour
 
             case EnnemyState.ATTACK:
                 {
-                    if (attackable && attackStock > 0)
-                    {
-                        StartCoroutine(StartAttack(timeBetweenAttack));
-                        attackable = false;
-                        attackStock--;
-
-                        GameObject bullet = Instantiate(bulletObj, transform.position, transform.rotation);
-                        Bullet b = bullet.GetComponent<Bullet>();
-                        if(b)
-                         b.dir = targetDir;
- 
-                    }
+                    //Shoot();
 
                     if ((detectMaxDist && !detectMinDist && attackStock == 0) || !targetVisible)
                         ennemyState = EnnemyState.IDLE;
@@ -199,6 +188,22 @@ public class EnnemiYoka : EnnemiBehaviour
         yield return new WaitForSeconds(delay);
         attackable = true;
     }
+    public void Shoot()
+    {
+        if (attackable && attackStock > 0)
+        {
+            StartCoroutine(StartAttack(timeBetweenAttack));
+            attackable = false;
+            attackStock--;
+
+            GameObject bullet = Instantiate(bulletObj, transform.position, transform.rotation);
+            Bullet b = bullet.GetComponent<Bullet>();
+            if (b)
+                b.dir = targetDir;
+
+        }
+    }
+
     private void OnDrawGizmos()
     {
         float idleRad = Vector2.Angle(Vector2.right, idleDir) * Mathf.Deg2Rad;

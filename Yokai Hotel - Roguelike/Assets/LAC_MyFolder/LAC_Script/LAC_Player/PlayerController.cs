@@ -1,3 +1,4 @@
+
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -97,7 +98,9 @@ public class PlayerController : MonoBehaviour
         spriteT = GetComponentInChildren<SpriteRenderer>();
 
         gameManager = GameObject.FindGameObjectWithTag("GameManager");
-        screenShake = GameObject.FindGameObjectWithTag("VirtualCam").GetComponent<ScreenShake>();
+        GameObject cam = GameObject.FindGameObjectWithTag("VirtualCam");
+        if(cam)
+            screenShake = cam.GetComponent<ScreenShake>();
 
         if (gameManager)
             audioManager = gameManager.GetComponent<AudioManager>(); //get audioManager
@@ -318,7 +321,9 @@ public class PlayerController : MonoBehaviour
         {
             attackChoose = 3;
             shootGaugeState += hAFillAmount;
-            screenShake.isShaking = true;
+
+            if(screenShake)
+                screenShake.isShaking = true;
 
             if (audioManager)
                 audioManager.PlaySound("Player heavy attack", 0);
@@ -352,3 +357,4 @@ public class PlayerController : MonoBehaviour
     #endregion
 
 }
+

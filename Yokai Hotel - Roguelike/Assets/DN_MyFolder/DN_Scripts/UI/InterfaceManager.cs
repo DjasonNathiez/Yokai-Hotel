@@ -29,9 +29,14 @@ public class InterfaceManager : MonoBehaviour
 
     private void Start()
     {
-        inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryManager>(); //initialization du script InventoryManager
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if(playerObj)
+        inventory = playerObj.GetComponent<InventoryManager>(); //initialization du script InventoryManager
+
         moneyText = GameObject.FindGameObjectWithTag("MoneyText").GetComponent<TextMeshProUGUI>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+        if(playerObj)
+        player = playerObj.GetComponent<PlayerController>();
 
         allTextureLantern = GetComponentsInChildren<RawImage>();
 

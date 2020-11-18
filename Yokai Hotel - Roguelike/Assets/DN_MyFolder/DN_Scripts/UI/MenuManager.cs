@@ -18,13 +18,18 @@ public class MenuManager : MonoBehaviour
 
     private void Awake()
     {
-        pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<Canvas>();
-        HUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<Canvas>();
+        GameObject menu = GameObject.FindGameObjectWithTag("PauseMenu");
+        if( menu)
+        pauseMenu = menu.GetComponent<Canvas>();
 
-        if (playerController)
-        {
-            playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        }
+        GameObject hud = GameObject.FindGameObjectWithTag("HUD");
+        if(hud)
+            HUD = hud.GetComponent<Canvas>();
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if(player)
+            playerController = player.GetComponent<PlayerController>();
+        
         
     }
     public void Start()

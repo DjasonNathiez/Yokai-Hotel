@@ -54,12 +54,11 @@ public class AttackEffect : MonoBehaviour
         {
             Bullet bullet = collider.GetComponentInParent<Bullet>();
 
-            if (bullet)
+            if (bullet && bullet.tag == "BulletEnemy")
             {
                 Debug.Log("hitBullet");
                 bullet.speed = -2*bullet.speed;
                 bullet.tag = "BulletAlly";
-
             }
             
         }

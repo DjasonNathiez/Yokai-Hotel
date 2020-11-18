@@ -122,23 +122,21 @@ public class EnnemiBehaviour : MonoBehaviour
                         inertnessModifier = 1;
                     }
 
-                    if (healthPoints <= 0)
-                    {
-                        drop.SortItemPos(transform, transform.position, drop.dropRadius, obstructMask);
-                        Debug.Log("DropItem");
-                        healthPoints = 3;
-                        //Destroy(gameObject);
-                    }
-
                     // show hurt
                     Color col = Color.white;
                     col.a = Mathf.Sin(Time.time * 30) * 255;
                     spriteT.color = col;
 
-                    
-
                     break;
                 }
+        }
+
+        if (healthPoints <= 0)
+        {
+            drop.SortItemPos(transform, transform.position, drop.dropRadius, obstructMask);
+            Debug.Log("DropItem");
+            //healthPoints = 3;
+            Destroy(gameObject);
         }
     }
     private void FixedUpdate()
