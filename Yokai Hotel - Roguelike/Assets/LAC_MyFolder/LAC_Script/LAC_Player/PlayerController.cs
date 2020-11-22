@@ -83,6 +83,11 @@ public class PlayerController : MonoBehaviour
     public float shootGaugeState;
     public float shootGaugeMax;
 
+    [Header("Aim Assist")]
+    public float radius;
+    public float distance;
+    Vector2 nearEnnemyPos;
+
     SpriteRenderer spriteT;
 
     AudioManager audioManager;
@@ -356,5 +361,8 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Aiming Aid
+
+    #endregion
 }
 
