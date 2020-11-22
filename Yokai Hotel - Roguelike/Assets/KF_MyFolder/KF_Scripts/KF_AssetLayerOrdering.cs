@@ -15,7 +15,7 @@ public class KF_AssetLayerOrdering : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Ennemi"))
         {
             thisSP.sortingOrder = -1;
         }
@@ -23,7 +23,7 @@ public class KF_AssetLayerOrdering : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Ennemi"))
         {
             thisSP.sortingOrder = 1;
         }
