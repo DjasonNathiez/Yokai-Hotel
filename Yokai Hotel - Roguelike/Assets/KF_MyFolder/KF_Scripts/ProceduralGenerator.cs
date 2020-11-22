@@ -14,7 +14,7 @@ public class ProceduralGenerator : MonoBehaviour
     public RoomData[,] roomsGrid;
     public List<RoomData> validRooms = new List<RoomData>();
 
-    public GameObject roomPrefab, keyPrefab, shopPrefab, startPrefab, preparePrefab, endPrefab;
+    public GameObject keyPrefab, shopPrefab, startPrefab, preparePrefab, endPrefab;
     public List<GameObject> rooms;
 
     [Header("Room")]
