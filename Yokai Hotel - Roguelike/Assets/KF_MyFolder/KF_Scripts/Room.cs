@@ -24,7 +24,8 @@ public class Room : MonoBehaviour
         {
             case RoomType.START:
                 {
-                    roomColor = Color.green;
+                    //roomColor = Color.green;
+                    roomColor = Color.white;
                     break;
                 }
             case RoomType.COMMUN:
@@ -56,12 +57,14 @@ public class Room : MonoBehaviour
                 }
             case RoomType.PREPAREND:
                 {
-                    roomColor = new Color(0.5f, 0, 0.5f);
+                    //roomColor = new Color(0.5f, 0, 0.5f);
+                    roomColor = Color.white;
                     break;
                 }
             case RoomType.END:
                 {
-                    roomColor = new Color(1, 0, 0);
+                    //roomColor = new Color(1, 0, 0);
+                    roomColor = Color.white;
                     break;
                 }   
         }
