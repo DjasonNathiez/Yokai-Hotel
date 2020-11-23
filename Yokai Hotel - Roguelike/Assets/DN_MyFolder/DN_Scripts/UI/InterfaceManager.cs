@@ -30,6 +30,7 @@ public class InterfaceManager : MonoBehaviour
     private void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        
         if(playerObj)
         inventory = playerObj.GetComponent<InventoryManager>(); //initialization du script InventoryManager
 

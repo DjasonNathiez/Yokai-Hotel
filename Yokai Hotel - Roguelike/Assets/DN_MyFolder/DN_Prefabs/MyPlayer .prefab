@@ -1,5 +1,89 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2126374179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2126374182}
+  - component: {fileID: 2126374181}
+  - component: {fileID: 2126374180}
+  - component: {fileID: 2126374183}
+  m_Layer: 0
+  m_Name: AimdAid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2126374182
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126374179}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3867148610447654505}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &2126374181
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126374179}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.18689656, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
+--- !u!114 &2126374180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126374179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a31c690e18b1b7e4985a4e5747e90cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 0}
+  speed: 20
+--- !u!50 &2126374183
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126374179}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &3867148610447654501
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,6 +117,7 @@ Transform:
   m_Children:
   - {fileID: 3867148611082786487}
   - {fileID: 3867148611245771321}
+  - {fileID: 2126374182}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -88,11 +173,13 @@ MonoBehaviour:
   isHurt: 0
   hurtTime: 0.2
   invincibleTime: 1
-  lAFillAmount: 0
-  hAFillAmount: 0
-  uAFillAmount: 0
+  lAFillAmount: 12.5
+  hAFillAmount: 14.3
+  uAFillAmount: 33.4
   shootGaugeState: 0
-  shootGaugeMax: 0
+  shootGaugeMax: 50
+  radius: 1000
+  distance: 1000
 --- !u!61 &3867148610447654503
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -188,7 +275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3867148611082786484}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3867148611582636471}
@@ -295,7 +382,7 @@ MonoBehaviour:
   detectMask:
     serializedVersion: 2
     m_Bits: 1024
-  bulletPrefab: {fileID: 9174963586662408213, guid: 189a40e121eda7f4faf320d8bfeaec46,
+  bulletPrefab: {fileID: 5675991171498453655, guid: ca0ff352529c06a4c8d0b772f66f99f3,
     type: 3}
 --- !u!114 &3867148611082786488
 MonoBehaviour:
@@ -310,7 +397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attack:
-  - {fileID: 11400000, guid: ec672fda4cac6fb48989a0f53cc3f0b9, type: 2}
+  - {fileID: 11400000, guid: debb57419c4bc8e46bd44ac92eda4e7f, type: 2}
   - {fileID: 11400000, guid: b051eba4f5863884e9e25b874cebe7e1, type: 2}
   - {fileID: 11400000, guid: dafa2868b51e2be40a5b4ceaba4b3592, type: 2}
   - {fileID: 11400000, guid: e7fe1b811981ac94da688e7a90389ab5, type: 2}
