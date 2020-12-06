@@ -37,16 +37,16 @@ public class AttackEffect : MonoBehaviour
         if(collider.tag == "Ennemi" && player.attackChoose != -1)
         {
 
-            EnnemiBehaviour ennemiB = collider.GetComponentInParent<EnnemiBehaviour>();
-            if (ennemiB)
+            EnnemiBehaviour ennemi = collider.GetComponentInParent<EnnemiBehaviour>();
+            if (ennemi)
             {
                 Debug.Log("Hit ennemy");
-                Vector2 repulseDir = (ennemiB.transform.position - player.transform.position).normalized;
+                Vector2 repulseDir = (ennemi.transform.position - player.transform.position).normalized;
 
-                ennemiB.healthDamage = attackM.attack[player.attackChoose].damage;
+                ennemi.healthDamage = attackM.attack[player.attackChoose].damage;
 
-                ennemiB.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
-                ennemiB.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
+                ennemi.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
+                ennemi.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
             }
         }
 
