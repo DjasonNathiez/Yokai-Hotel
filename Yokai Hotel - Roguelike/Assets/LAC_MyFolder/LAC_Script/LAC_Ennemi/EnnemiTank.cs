@@ -46,7 +46,8 @@ public class EnnemiTank : EnnemiBehaviour
     public float bulletDelay;
     float bulletTimer;
 
-    public float shieldRadius, shieldSpeed, shieldAngle;
+    public int shieldPoint;
+    public float shieldRadius, shieldSpeed, shieldAngle, defelectDegree;
     public Vector2 shieldOrigin;
     Vector2 shieldDir;
     
@@ -248,8 +249,18 @@ public class EnnemiTank : EnnemiBehaviour
     // shield
     public void UpdateShieldPos()
     {
-        shieldDir = new Vector2(Mathf.Cos(shieldAngle * Mathf.Deg2Rad), Mathf.Sin(shieldAngle * Mathf.Deg2Rad)).normalized;
-        shield.transform.position = transform.position + (Vector3)shieldOrigin + (Vector3)shieldDir * shieldRadius;
+        if(shield != null)
+        {
+            shieldDir = new Vector2(Mathf.Cos(shieldAngle * Mathf.Deg2Rad), Mathf.Sin(shieldAngle * Mathf.Deg2Rad)).normalized;
+            shield.transform.position = transform.position + (Vector3)shieldOrigin + (Vector3)shieldDir * shieldRadius;
+
+            EnnemiShield shieldEffect = shield.GetComponent<EnnemiShield>();
+            Vector2 testDir = new Vector2(Mathf.Cos((shieldAngle * Mathf.Deg2Rad)), Mathf.Sin((shieldAngle * Mathf.Deg2Rad)));
+            shieldEffect.shieldDir = testDir;
+            Debug.DrawRay(transform.position + (Vector3)shieldOrigin, testDir, Color.blue);
+            shieldEffect.shieldPoint = shieldPoint;
+        }
+       
     }
     public void RotateShield( ref GameObject shield, float rotateSpeed )
     {
@@ -257,6 +268,7 @@ public class EnnemiTank : EnnemiBehaviour
         {
             float nextdAngle = (shieldAngle + rotateSpeed * Time.deltaTime) % 360;
             shieldAngle = nextdAngle;
+
         }
     }
     public void DetectBullet(Vector2 origin, float detectRadius, LayerMask detectMask)

@@ -62,14 +62,29 @@ public class Bullet : MonoBehaviour
         }
 
         //hurt ennemy
-        if(collision.CompareTag("Ennemi") && (tag == "BulletAlly"))
+        if (tag == "BulletAlly")
         {
-            EnnemiBehaviour ennemi = collision.GetComponentInParent<EnnemiBehaviour>();
-            if (ennemi)
+            if (collision.CompareTag("Ennemi"))
             {
-                ennemi.healthDamage = damage;
-                Debug.Log("EnnemyDistHit");
-                Destroy(gameObject);
+                EnnemiBehaviour ennemi = collision.GetComponentInParent<EnnemiBehaviour>();
+                if (ennemi)
+                {
+                    ennemi.healthDamage = damage;
+                    Debug.Log("EnnemyDistHit");
+                    Destroy(gameObject);
+                }
+            }
+
+            if (collision.CompareTag("Shield"))
+            {
+                
+                EnnemiShield shield = collision.GetComponent<EnnemiShield>();
+                if (shield)
+                {
+                    dir = shield.shieldDir.normalized;
+                    tag = "BulletEnemy";
+                }
+               
             }
         }
 
