@@ -16,10 +16,15 @@ public class Bullet : MonoBehaviour
 
     public Rigidbody2D rb2D;
     public LayerMask blockMask;
+
+    public Collider2D hitBox;
+
+    PlayerController player;
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         
     }
 
@@ -39,6 +44,7 @@ public class Bullet : MonoBehaviour
         }
 
         #endregion
+
     }
 
     private void FixedUpdate()
@@ -46,12 +52,12 @@ public class Bullet : MonoBehaviour
         rb2D.velocity = dir.normalized * speed;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D hitbox)
     {
         // hurt player
-        if (collision.CompareTag("PHurtBox") && (tag == "BulletEnemy"))
+        if (hitbox.CompareTag("PHurtBox") && (tag == "BulletEnemy"))
         {
-            PlayerController player = collision.GetComponentInParent<PlayerController>();
+            PlayerController player = hitbox.GetComponentInParent<PlayerController>();
             if (player)
             {
                 player.hurtDamage = damage;
@@ -62,38 +68,37 @@ public class Bullet : MonoBehaviour
         }
 
         //hurt ennemy
-        if (tag == "BulletAlly")
-        {
-            if (collision.CompareTag("Ennemi"))
-            {
-                EnnemiBehaviour ennemi = collision.GetComponentInParent<EnnemiBehaviour>();
-                if (ennemi)
-                {
-                    ennemi.healthDamage = damage;
-                    Debug.Log("EnnemyDistHit");
-                    Destroy(gameObject);
-                }
-            }
-
-            if (collision.CompareTag("Shield"))
-            {
-                
-                EnnemiShield shield = collision.GetComponent<EnnemiShield>();
-                if (shield)
-                {
-                    dir = shield.shieldDir.normalized;
-                    tag = "BulletEnemy";
-                }
-               
-            }
+        if (tag == "BulletAlly")
+        {
+            if (collision.CompareTag("Ennemi"))
+            {
+                EnnemiBehaviour ennemi = collision.GetComponentInParent<EnnemiBehaviour>();
+                if (ennemi)
+                {
+                    ennemi.healthDamage = damage;
+                    Debug.Log("EnnemyDistHit");
+                    Destroy(gameObject);
+                }
+            }
+
+            if (collision.CompareTag("Shield"))
+            {
+                
+                EnnemiShield shield = collision.GetComponent<EnnemiShield>();
+                if (shield)
+                {
+                    dir = shield.shieldDir.normalized;
+                    tag = "BulletEnemy";
+                }
+               
+            }
         }
 
         // destroy on wall
-        if (collision.gameObject.layer == blockMask)
+        if (hitbox.gameObject.layer == blockMask)
             Destroy(gameObject);
 
 
     }
-
 
 }

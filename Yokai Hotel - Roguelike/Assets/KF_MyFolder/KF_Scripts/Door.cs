@@ -14,6 +14,7 @@ public class Door : MonoBehaviour
     public Door doorLink;
     public GameObject playerObj;
     public BoxCollider2D doorTriggerZone;
+    public GameObject temporaryShow;
    
 
     public SpriteRenderer sprite;
@@ -29,6 +30,7 @@ public class Door : MonoBehaviour
         if (doorLink == null)
         {
             doorTriggerZone.isTrigger = false;
+            temporaryShow.SetActive(false);
         }
     }             
 
