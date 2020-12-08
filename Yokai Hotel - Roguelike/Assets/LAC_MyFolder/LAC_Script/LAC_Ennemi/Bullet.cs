@@ -70,9 +70,9 @@ public class Bullet : MonoBehaviour
         //hurt ennemy
         if (tag == "BulletAlly")
         {
-            if (collision.CompareTag("Ennemi"))
+            if (hitbox.CompareTag("Ennemi"))
             {
-                EnnemiBehaviour ennemi = collision.GetComponentInParent<EnnemiBehaviour>();
+                EnnemiBehaviour ennemi = hitbox.GetComponentInParent<EnnemiBehaviour>();
                 if (ennemi)
                 {
                     ennemi.healthDamage = damage;
@@ -81,10 +81,10 @@ public class Bullet : MonoBehaviour
                 }
             }
 
-            if (collision.CompareTag("Shield"))
+            if (hitbox.CompareTag("Shield"))
             {
                 
-                EnnemiShield shield = collision.GetComponent<EnnemiShield>();
+                EnnemiShield shield = hitbox.GetComponent<EnnemiShield>();
                 if (shield)
                 {
                     dir = shield.shieldDir.normalized;

@@ -84,9 +84,20 @@ public class PlayerController : MonoBehaviour
     public float shootGaugeMax;
 
     [Header("Aim Assist")]
+    public Collider2D[] hit;
+    public GameObject currentTarget;
     public float radius;
-    public float distance;
-    Vector2 nearEnnemyPos;
+    public float detectFreq;
+    float detectTimer;
+    public LayerMask ennemyLayer;
+    public Vector2 aimDirection;
+
+    [Header("FielOfView")] //angle de vision du personnage
+    public GameObject up;
+    public GameObject down;
+    public GameObject right;
+    public GameObject left;
+    public bool ennemyDetected;
 
     SpriteRenderer spriteT;
 
@@ -113,11 +124,14 @@ public class PlayerController : MonoBehaviour
         // set dash value
         currentRecoilDash = recoilDashTime;
         currentRecoilReset = recoilResetTime;
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        FielOfView();
 
         #region Input
         // movement
@@ -217,7 +231,7 @@ public class PlayerController : MonoBehaviour
                                 
                                 firePoint = lastDir.normalized * firePointRadius + (Vector2)transform.position;
                                 firePoint.y += 0.5f;
-                                bulletDir = lastDir.normalized;
+                                bulletDir = aimDirection.normalized;
                             }
 
                             playerState = PlayerState.ATTACK;
@@ -283,6 +297,23 @@ public class PlayerController : MonoBehaviour
             shootGaugeState = shootGaugeMax;
         }
         
+        //timer detection cible
+        if(detectTimer > detectFreq)
+        {
+            CheckTarget();
+            detectTimer = 0;
+        }
+
+        detectTimer += Time.deltaTime;
+
+        if (currentTarget && ennemyDetected == true)
+        {
+            aimDirection = (currentTarget.transform.position - transform.position).normalized;
+        }
+        else
+        {
+            aimDirection = lastDir.normalized;
+        }
     }
 
     private void FixedUpdate()
@@ -338,6 +369,7 @@ public class PlayerController : MonoBehaviour
         if (shootAttack)
         {
             attackChoose = 4;
+            
             if (audioManager)
                 audioManager.PlaySound("Player distance attack", 0);
         }
@@ -363,6 +395,71 @@ public class PlayerController : MonoBehaviour
 
     #region Aiming Aid
 
+    void CheckTarget()
+    {
+        float minDist = Mathf.Infinity;
+        hit = Physics2D.OverlapCircleAll(transform.position, radius, ennemyLayer);
+
+        if(hit.Length > 0)
+        {
+            foreach (Collider2D e in hit)
+            {
+                float distanceTarget = Vector2.Distance(transform.position, e.transform.position);
+
+                if (minDist > distanceTarget)
+                {
+                    minDist = distanceTarget;
+                    currentTarget = e.gameObject;
+                }
+            }
+        }
+        else
+        {
+            currentTarget = null;
+        }
+
+    }
+
+    void FielOfView()
+    {
+        #region activation direction
+        if (lastDir.x == 0 && lastDir.y == 1)
+        {
+            up.SetActive(true);
+            down.SetActive(false);
+            right.SetActive(false);
+            left.SetActive(false);
+        }
+
+        if (lastDir.x == 1 && lastDir.y == 0)
+        {
+            up.SetActive(false);
+            down.SetActive(false);
+            right.SetActive(true);
+            left.SetActive(false);
+        }
+
+        if (lastDir.x == 0 && lastDir.y == -1)
+        {
+            up.SetActive(false);
+            down.SetActive(true);
+            right.SetActive(false);
+            left.SetActive(false);
+        }
+
+        if (lastDir.x == -1 && lastDir.y == 0)
+        {
+            up.SetActive(false);
+            down.SetActive(false);
+            right.SetActive(false);
+            left.SetActive(true);
+        }
+
+        #endregion
+
+
+
+    }
     #endregion
 }
 
