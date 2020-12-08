@@ -42,43 +42,50 @@ public class AttackEffect : MonoBehaviour
             {
                 EnnemiTank eTank = ennemi.GetComponentInParent<EnnemiTank>();
                 bool deflectShield = false;
+                int damage = attackM.attack[player.attackChoose].damage;
 
-               
                 Vector2 repulseDir = (ennemi.transform.position - player.transform.position).normalized;
-                if (eTank)
-                {
-                    if(eTank.shield != null)
-                    {
-                        Debug.Log("Hit shield");
-                        Vector2 enemyDir = (collider.transform.position - transform.position).normalized;
+                if (eTank)
+                {
+                    if(eTank.shield != null)
+                    {
+                        Debug.Log("Hit shield");
+                        Vector2 enemyDir = (collider.transform.position - transform.position).normalized;
                         float enemyAngle = ((Mathf.Atan2(enemyDir.y, enemyDir.x) * Mathf.Rad2Deg)+ 180) % 360;
-
-                        Debug.Log("ennemyAngle" + enemyAngle);
+                        if (Mathf.Sign(enemyAngle) != Mathf.Sign(eTank.shieldAngle))
+                            enemyAngle = (Mathf.Sign(enemyAngle) < 0) ? (enemyAngle + 360) % 360 : (enemyAngle - 360) % 360;
+
+                        Debug.Log("ennemyAngle" + enemyAngle);
                         Debug.Log("shieldAngle" + eTank.shieldAngle);
-
-                        if ((enemyAngle > (eTank.shieldAngle - eTank.defelectDegree)) && (enemyAngle < (eTank.shieldAngle + eTank.defelectDegree)))
-                        {
-  
-                            deflectShield = true;
-                        }
-                            
-                    }
-
+                        if (Mathf.Abs(enemyAngle - eTank.shieldAngle) < eTank.defelectDegree)
+                            deflectShield = true;
+                    }
                 }
-                if (deflectShield)
-                {
-                    eTank.shieldPoint -= attackM.attack[player.attackChoose].damage;
-                    Debug.Log("damage shield");
+
+             
+                if(deflectShield)
+                {
+                    if (player.attackChoose == 3)
+                        damage += 1;
+
+                    eTank.shieldPoint -= damage;
+                    damage = 0;
+
+                    Debug.Log("damage shield");
                 }
-                else
-                {
-                    Debug.Log("Hit ennemy");
-                    ennemi.healthDamage = attackM.attack[player.attackChoose].damage;
-
-                    ennemi.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
-                    ennemi.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
+                else if (!deflectShield)
+                {
+                    
+                    if (damage != 0)
+                    {
+                        Debug.Log("Hit ennemy");
+                        ennemi.healthDamage = damage;
+                        ennemi.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
+                        ennemi.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
+                        damage = 0;
+                    }
                 }
-                
+
             }
         }
 

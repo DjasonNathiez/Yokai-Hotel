@@ -1437,6 +1437,7 @@ GameObject:
   - component: {fileID: 256005334}
   - component: {fileID: 256005333}
   - component: {fileID: 256005337}
+  - component: {fileID: 256005338}
   m_Layer: 8
   m_Name: 'MyPlayer '
   m_TagString: Player
@@ -1548,6 +1549,8 @@ MonoBehaviour:
   uAFillAmount: 0
   shootGaugeState: 0
   shootGaugeMax: 0
+  radius: 0
+  distance: 0
 --- !u!4 &256005336
 Transform:
   m_ObjectHideFlags: 0
@@ -1582,6 +1585,31 @@ MonoBehaviour:
   maxHealth: 0
   currentHealth: 0
   attackBoost: 0
+--- !u!114 &256005338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256005332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c07feccea6ad884da4dc4feb00d1c27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actions:
+  - name: Light Attack
+    trigger: 0
+    delay: 1
+  - name: Heavy Attack
+    trigger: 0
+    delay: 1
+  - name: Distance Attack
+    trigger: 0
+    delay: 1
+  - name: Dash
+    trigger: 0
+    delay: 0
 --- !u!1 &264936878
 GameObject:
   m_ObjectHideFlags: 0
@@ -1768,7 +1796,7 @@ MonoBehaviour:
   stunInertness: 0
   inertnessModifier: 1
   recovery: 0
-  speed: 0
+  speed: 3
   velocity: {x: 0, y: 0}
   obstructMask:
     serializedVersion: 2
@@ -1788,8 +1816,8 @@ MonoBehaviour:
   attackDamage: 1
   attackSpeed: 5
   attackDuration: 1
-  minCacRadius: 0
-  maxCacRadius: 0
+  minCacRadius: 3
+  maxCacRadius: 4
   shieldPrefab: {fileID: 3326273500668777465, guid: 6c755f1af416ba0459b6cbbcc287876e,
     type: 3}
   shield: {fileID: 0}
@@ -1800,11 +1828,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   bulletDelay: 1
-  shieldPoint: 2
+  shieldPoint: 3
   shieldRadius: 0.8
   shieldSpeed: 50
   shieldAngle: 0
-  defelectDegree: 50
+  defelectDegree: 90
   shieldOrigin: {x: 0, y: 0.3}
 --- !u!58 &309748952
 CircleCollider2D:
@@ -3225,7 +3253,7 @@ MonoBehaviour:
   detectMask:
     serializedVersion: 2
     m_Bits: 1024
-  bulletPrefab: {fileID: 9174963586662408213, guid: 189a40e121eda7f4faf320d8bfeaec46,
+  bulletPrefab: {fileID: 5675991171498453655, guid: ca0ff352529c06a4c8d0b772f66f99f3,
     type: 3}
 --- !u!114 &622787595
 MonoBehaviour:
@@ -8039,6 +8067,12 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1761099782500723714, guid: a0969a0c59b49da448b9437132f8128b,
+        type: 3}
+      propertyPath: bulletObj
+      value: 
+      objectReference: {fileID: 9174963586662408213, guid: 189a40e121eda7f4faf320d8bfeaec46,
+        type: 3}
     - target: {fileID: 1761099782500723718, guid: a0969a0c59b49da448b9437132f8128b,
         type: 3}
       propertyPath: m_LocalPosition.x
