@@ -27,6 +27,7 @@ public class EnnemiBehaviour : MonoBehaviour
     public int healthPoints;
     public int healthDamage = 0;
 
+    [HideInInspector]
     public bool hurt;
     #endregion
     #region recoil
@@ -50,11 +51,15 @@ public class EnnemiBehaviour : MonoBehaviour
     #endregion
     #region target
     public LayerMask obstructMask;
+    [HideInInspector]
     public GameObject target;
     public Vector2 targetAdjustement = new Vector2(0,0f);
 
+    [HideInInspector]
     public float targetDist;
+    [HideInInspector]
     public Vector2 targetDir;
+    [HideInInspector]
     public bool targetVisible;
     #endregion
 

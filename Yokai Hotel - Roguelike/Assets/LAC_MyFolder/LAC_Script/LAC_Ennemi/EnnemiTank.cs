@@ -5,23 +5,71 @@ using UnityEngine;
 public class EnnemiTank : EnnemiBehaviour
 {
     [Header("Idle")]
-    float nearestEnemyDist = Mathf.Infinity;
+
+    public Vector2 moveDir;
+    Vector2 enemyTargetPos, enemyTargetLastPos;
+    Vector2 followDir, enemyDir;
+
     public LayerMask detectMask;
 
+    public List<Collider2D> enemyList = new List<Collider2D>();
+    public GameObject nearestEnemy;
+    float nearestEnemyDist = Mathf.Infinity;
+
     float detectTimer, detectFreq = 1f;
-
-    public GameObject nearestEnemy, lastEnemy;
-
-    Vector2 enemyTargetPos, enemyTargetLastPos;
-    public Vector2 followDir, enemyDir, moveDir;
-
     float timeBetweenPos = 0.5f;
     bool updatingPos = true;
 
+    [Header("Chase")]
+    public float timeToAttack;
+    float loadAttackTimer;
+
+    [Header("Attack")]
+    public int attackDamage;
+    public float attackSpeed;
+    public float attackDuration;
+
+    public float minCacRadius;
+    public float maxCacRadius;
+
+    Vector2 attackDir;
+
+    [Header("Shield")]
+    public GameObject shieldPrefab;
+    public GameObject shield;
+
+    public float distToShield;
+    public float approxToShield;
+
+    public GameObject bulletToFocus;
+    public LayerMask bulletMask;
+    public float bulletDelay;
+    float bulletTimer;
+
+    public int shieldPoint;
+    public float shieldRadius, shieldSpeed, shieldAngle, defelectDegree;
+    public Vector2 shieldOrigin;
+    Vector2 shieldDir;
+    
+
+    
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
+        moveDir = new Vector2(Random.value - 0.5f, Random.value - 0.5f).normalized;
+
+        // initialize shield
+        Vector2 instantiatePos = ( Vector2)transform.position + shieldOrigin + new Vector2(0, shieldRadius);
+        shield = Instantiate(shieldPrefab,instantiatePos , transform.rotation);
+
+
+        EnnemiShield shieldEffect = shield.GetComponent<EnnemiShield>();
+        if (shieldEffect)
+            shieldEffect.objShielded = gameObject;
+
+        shield.transform.SetParent(transform);
+        shieldAngle = Mathf.Abs(Vector2.Angle(Vector2.right, shieldDir)) % 360;
     }
 
     // Update is called once per frame
@@ -29,10 +77,11 @@ public class EnnemiTank : EnnemiBehaviour
     {
         base.Update();
 
+        #region detect enemy
         // Update nearest Enemy Object
         if (detectTimer >= detectFreq)
         {
-            Collider2D[] enemyList = EnemyList(transform.position, 5f, detectMask);
+            EnemyList(ref enemyList,transform.position, 6f, detectMask);
             ClosestEnemy(transform.position, enemyList, ref nearestEnemyDist);
 
             detectTimer = 0;
@@ -42,31 +91,108 @@ public class EnnemiTank : EnnemiBehaviour
         // Update pos & last pos of enemy
         if (updatingPos)
             StartCoroutine(UpdateEnemyTargetPos(timeBetweenPos));
+        #endregion
 
-        UpdateMoveDir(nearestEnemy, ref moveDir,0.5f,2.5f);
+        switch (ennemyState)
+        {
+            case EnnemyState.IDLE:
+                {
+                    // idle move
+                    UpdateMoveDir(nearestEnemy, ref moveDir, 2f, 5f);
+                    SetVelocity(moveDir * speed, 0.1f);
 
-        if(nearestEnemy)
-            Debug.DrawLine(transform.position, enemyTargetPos);
+                    // shield player or bullet
+                    if (shield)
+                    {
+                        DetectBullet(transform.position,distToShield,bulletMask);
+                        if(bulletTimer <= 0)
+                        {
+                            if (targetDist <= distToShield)
+                                shieldAngle = (Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg) % 360;
+                            else if (targetDist > distToShield + approxToShield)
+                                RotateShield(ref shield, shieldSpeed);
+                        }
+                        bulletTimer -= Time.deltaTime;
 
-        Debug.DrawRay(transform.position, moveDir*2f, Color.red);
+                        if (bulletToFocus != null)
+                        {
+                            bulletTimer = bulletDelay;
+                            Vector2 dir = bulletToFocus.transform.position - (transform.position + (Vector3)shieldOrigin);
+                            shieldAngle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg) % 360;
+                        }   
+                    }
+                    
+                    // aggro cond
+                    if (targetDist < minCacRadius && targetVisible)
+                        ennemyState = EnnemyState.AGGRO;
+                    break;
+                }
+            case EnnemyState.AGGRO:
+                {
+                    // aggro
+                    SetVelocity(Vector2.zero, 0.2f);
+                    loadAttackTimer += Time.deltaTime;
 
-        SetVelocity(moveDir * speed, 0.1f);
+                    //idle cond
+                    if (targetDist > maxCacRadius)
+                    {
+                        ennemyState = EnnemyState.IDLE;
+                        loadAttackTimer = 0;
+                    }
+
+                    // attack cond
+                    if(loadAttackTimer >= timeToAttack)
+                    {
+                        ennemyState = EnnemyState.ATTACK;
+                        attackDir = targetDir.normalized;
+
+                        moveDir = attackDir;
+
+                        StartCoroutine(AttackDuration());
+                        loadAttackTimer = 0;
+                    }
+
+                    break;
+                }
+            case EnnemyState.ATTACK:
+                {
+                    SetVelocity(attackDir *attackSpeed, 0.2f);
+                    break;
+                }
+        }
+
+        // shield
+        UpdateShieldPos();
+        //shield.transform.position = transform.position
     }
 
-    public Collider2D[] EnemyList( Vector2 origin, float detectRadius, LayerMask detectMask)
+
+    // Move
+    public void EnemyList( ref List<Collider2D> enemyList, Vector2 origin, float detectRadius, LayerMask detectMask)
     {
-        return Physics2D.OverlapCircleAll(origin, detectRadius, detectMask);
+        Collider2D[] enemyArray = Physics2D.OverlapCircleAll(origin, detectRadius, detectMask);
+
+        enemyList.Clear();
+        foreach (Collider2D e in enemyArray)
+        {
+           //float dist = Vector2.Distance(e.transform.position, transform.position);
+           //Vector2 dir = (e.transform.position - transform.position).normalized;
+
+            Transform parent = e.transform.parent;
+            if (parent? parent.tag != tag : e.tag != tag)
+                enemyList.Add(e);
+        }
     }
-    public void ClosestEnemy( Vector2 origin, Collider2D[] enemyList, ref float nearestDist)
+    public void ClosestEnemy( Vector2 origin, List<Collider2D> enemyList, ref float nearestDist)
     {
-        if (enemyList.Length <= 2)
+        if (enemyList.Count == 0)
         {
             nearestDist = Mathf.Infinity;
             nearestEnemy = null;
         }
         else
         {
-            for (int i = 0; i < enemyList.Length; i++)
+            for (int i = 0; i < enemyList.Count; i++)
             {
                 if(enemyList[i] != null && enemyList[i].transform.parent != transform && enemyList[i] != cC2D)
                 {
@@ -97,6 +223,15 @@ public class EnnemiTank : EnnemiBehaviour
             float tDir = Mathf.Clamp(currentDist / bornDist, 0, 1);
             moveDir = (enemyDir * tDir + (1 - tDir) * followDir).normalized;
         }
+        else
+        {
+            float detectLength = cC2D.radius +0.1f;
+
+            Vector2 currentDir = new Vector2((DetectBlock(detectLength, Vector2.right * moveDir.x, obstructMask)) ? -moveDir.x : moveDir.x,
+                                             (DetectBlock(detectLength, Vector2.up * moveDir.y, obstructMask)) ? -moveDir.y : moveDir.y);
+            SetVelocity(currentDir * speed, 0.1f);
+            moveDir = currentDir;
+        }
             
 
     }
@@ -110,5 +245,50 @@ public class EnnemiTank : EnnemiBehaviour
             enemyTargetPos = nearestEnemy.transform.position;
         }
         updatingPos = true;
+    }
+    // shield
+    public void UpdateShieldPos()
+    {
+        if(shield != null)
+        {
+            shieldDir = new Vector2(Mathf.Cos(shieldAngle * Mathf.Deg2Rad), Mathf.Sin(shieldAngle * Mathf.Deg2Rad)).normalized;
+            shield.transform.position = transform.position + (Vector3)shieldOrigin + (Vector3)shieldDir * shieldRadius;
+
+            EnnemiShield shieldEffect = shield.GetComponent<EnnemiShield>();
+            Vector2 testDir = new Vector2(Mathf.Cos((shieldAngle * Mathf.Deg2Rad)), Mathf.Sin((shieldAngle * Mathf.Deg2Rad)));
+            shieldEffect.shieldDir = testDir;
+            Debug.DrawRay(transform.position + (Vector3)shieldOrigin, testDir, Color.blue);
+            shieldEffect.shieldPoint = shieldPoint;
+        }
+       
+    }
+    public void RotateShield( ref GameObject shield, float rotateSpeed )
+    {
+        if (shield != null)
+        {
+            float nextdAngle = (shieldAngle + rotateSpeed * Time.deltaTime) % 360;
+            shieldAngle = nextdAngle;
+
+        }
+    }
+    public void DetectBullet(Vector2 origin, float detectRadius, LayerMask detectMask)
+    {
+        Collider2D[] bulletArray = Physics2D.OverlapCircleAll(origin, detectRadius, detectMask);
+
+        Collider2D bullet = null;
+        foreach (Collider2D b in bulletArray)
+        {
+            if (b.tag == "BulletAlly" && bullet == null)
+                bullet = b;
+        }
+
+        bulletToFocus = (bullet)? bullet.gameObject : null;
+    }
+    //attack
+    IEnumerator AttackDuration()
+    {
+        yield return new WaitForSeconds(attackDuration);
+        if (ennemyState == EnnemyState.ATTACK)
+            ennemyState = EnnemyState.IDLE;
     }
 }

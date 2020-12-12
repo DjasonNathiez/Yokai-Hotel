@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class Bullet : MonoBehaviour
 {
 
@@ -18,18 +19,19 @@ public class Bullet : MonoBehaviour
     public LayerMask blockMask;
 
     public Collider2D hitBox;
-
+    CircleCollider2D cC2D;
     PlayerController player;
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        
+        cC2D = GetComponent<CircleCollider2D>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>(); // TES GARDES FOUS !!!
     }
 
     private void Update()
     {
+
         #region SwitchState
         if (CompareTag("BulletAlly"))
         {
@@ -50,14 +52,15 @@ public class Bullet : MonoBehaviour
     private void FixedUpdate()
     {
         rb2D.velocity = dir.normalized * speed;
+        
     }
 
-    private void OnTriggerEnter2D(Collider2D hitbox)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         // hurt player
-        if (hitbox.CompareTag("PHurtBox") && (tag == "BulletEnemy"))
+        if (collision.CompareTag("PHurtBox") && (tag == "BulletEnemy"))
         {
-            PlayerController player = hitbox.GetComponentInParent<PlayerController>();
+            PlayerController player = collision.GetComponentInParent<PlayerController>();
             if (player)
             {
                 player.hurtDamage = damage;
@@ -68,22 +71,34 @@ public class Bullet : MonoBehaviour
         }
 
         //hurt ennemy
-        if(hitbox.CompareTag("Ennemi") && (tag == "BulletAlly"))
+        if (tag == "BulletAlly")
         {
-            EnnemiBehaviour ennemi = hitbox.GetComponentInParent<EnnemiBehaviour>();
-            if (ennemi)
+            if (collision.CompareTag("Ennemi"))
             {
-                ennemi.healthDamage = damage;
-                Debug.Log("EnnemyDistHit");
-                Destroy(gameObject);
+                EnnemiBehaviour ennemi = collision.GetComponentInParent<EnnemiBehaviour>();
+                if (ennemi)
+                {
+                    ennemi.healthDamage = damage;
+                    Debug.Log("EnnemyDistHit");
+                    Destroy(gameObject);
+                }
+            }
+            if (collision.CompareTag("Shield"))
+            {
+                EnnemiShield shield = collision.GetComponent<EnnemiShield>();
+                if (shield)
+                {
+                    dir = shield.shieldDir.normalized;
+                    tag = "BulletEnemy";
+                }
             }
         }
 
-        // destroy on wall
-        if (hitbox.gameObject.layer == blockMask)
-            Destroy(gameObject);
-
-
+        Collider2D hit = Physics2D.OverlapCircle(transform.position, cC2D.radius, blockMask);
+        if (hit)
+            GameObject.Destroy(gameObject);
     }
+
+    
 
 }

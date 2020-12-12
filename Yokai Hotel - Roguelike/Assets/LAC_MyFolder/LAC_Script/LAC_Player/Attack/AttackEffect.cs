@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class AttackEffect : MonoBehaviour
 {
@@ -11,7 +12,11 @@ public class AttackEffect : MonoBehaviour
 
     public LayerMask detectMask;
     public GameObject bulletPrefab;
-   
+    [Header("Cam")]
+    public GameObject cam;
+    public CinemachineBrain camBrain;
+    public CinemachineVirtualCamera virtualCam;
+    float screenShakeCount;
 
 
     // Start is called before the first frame update
@@ -20,7 +25,12 @@ public class AttackEffect : MonoBehaviour
         player = GetComponentInParent<PlayerController>();
         attackM = GetComponent<AttackManager>();
         col2D = GetComponent<BoxCollider2D>();
-       
+
+        cam = GameObject.FindGameObjectWithTag("MainCamera");
+        camBrain = cam.GetComponent<CinemachineBrain>();
+        
+
+
     }
 
     private void OnDrawGizmos()
@@ -37,16 +47,55 @@ public class AttackEffect : MonoBehaviour
         if(collider.tag == "Ennemi" && player.attackChoose != -1)
         {
 
-            EnnemiBehaviour ennemiB = collider.GetComponentInParent<EnnemiBehaviour>();
-            if (ennemiB)
+            EnnemiBehaviour ennemi = collider.GetComponentInParent<EnnemiBehaviour>();
+            if (ennemi)
             {
-                Debug.Log("Hit ennemy");
-                Vector2 repulseDir = (ennemiB.transform.position - player.transform.position).normalized;
+                EnnemiTank eTank = ennemi.GetComponentInParent<EnnemiTank>();
+                bool deflectShield = false;
 
-                ennemiB.healthDamage = attackM.attack[player.attackChoose].damage;
+                int damage = attackM.attack[player.attackChoose].damage;
+                Vector2 repulseDir = (ennemi.transform.position - player.transform.position).normalized;
+                if (eTank)
+                {
+                    if(eTank.shield != null)
+                    {
+                        Debug.Log("Hit shield");
+                        Vector2 enemyDir = (collider.transform.position - transform.position).normalized;
+                        float enemyAngle = ((Mathf.Atan2(enemyDir.y, enemyDir.x) * Mathf.Rad2Deg)+ 180) % 360;
+                        if (Mathf.Sign(enemyAngle) != Mathf.Sign(eTank.shieldAngle))
+                            enemyAngle = (Mathf.Sign(enemyAngle) < 0) ? (enemyAngle + 360) % 360 : (enemyAngle - 360) % 360;
 
-                ennemiB.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
-                ennemiB.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
+                        Debug.Log("ennemyAngle" + enemyAngle);
+                        Debug.Log("shieldAngle" + eTank.shieldAngle);
+                        if (Mathf.Abs(enemyAngle - eTank.shieldAngle) < eTank.defelectDegree)
+                            deflectShield = true;
+                    }
+                }
+
+                if(deflectShield)
+                {
+                    if (player.attackChoose == 3)
+                        damage += 1;
+
+                    eTank.shieldPoint -= damage;
+                    damage = 0;
+
+                    Debug.Log("damage shield");
+                }
+                else if (damage > 0) 
+                {
+                    // apply damage & recoil
+                    Debug.Log("Hit ennemy");
+                    ennemi.healthDamage = damage;
+                    ennemi.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
+                    ennemi.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
+
+                    // feedBack
+                    ScreenShake(attackM.attack[player.attackChoose].screenShakeAmp, attackM.attack[player.attackChoose].screenShakeFreq, attackM.attack[player.attackChoose].screenShakeTime);
+                    if(ennemi.healthPoints <= damage) { SlowTime(0.3f, 0.1f); }
+                    damage = 0;
+                }
+
             }
         }
 
@@ -137,4 +186,45 @@ public class AttackEffect : MonoBehaviour
         player.combo = 0;
     }*/
     #endregion
+
+    IEnumerator InitializeCam()
+    {
+        yield return null;
+        virtualCam = camBrain.ActiveVirtualCamera as CinemachineVirtualCamera;
+    }
+    public void ScreenShake(float amp, float freq,  float time)
+    {
+        virtualCam = camBrain.ActiveVirtualCamera as CinemachineVirtualCamera;
+        if (virtualCam)
+        {
+            screenShakeCount++;
+            CinemachineBasicMultiChannelPerlin basicPerlin = virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            basicPerlin.m_AmplitudeGain = amp;
+            basicPerlin.m_FrequencyGain = freq;
+            StartCoroutine(shakeTime(basicPerlin, time));
+        }
+        
+    }
+    public IEnumerator shakeTime(CinemachineBasicMultiChannelPerlin basicPerlin, float time)
+    {
+        
+        yield return new WaitForSeconds(time);
+        screenShakeCount--;
+        if (screenShakeCount <= 0)
+        {
+            basicPerlin.m_AmplitudeGain = 0;
+            basicPerlin.m_FrequencyGain = 0;
+        }
+            
+    }
+    public void SlowTime( float slowFactor, float slowDelay)
+    {
+        Time.timeScale = slowFactor;
+        StartCoroutine(SlowDuration(slowDelay));
+    }
+    public IEnumerator SlowDuration( float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        Time.timeScale = 1;
+    }
 }
