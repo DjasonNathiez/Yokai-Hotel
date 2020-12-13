@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
+    public bool allowSpawn;
+
     public Wave[] waves;
     public float timeToWave;
 
@@ -23,6 +25,7 @@ public class WaveManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // update wave index 
         bool waveEnd = (activeEnemy.Length > 0);
         for (int i = 0; i < activeEnemy.Length; i++)
         {
@@ -35,7 +38,8 @@ public class WaveManager : MonoBehaviour
             activeEnemy = new EnnemiBehaviour[0];
         }
 
-        if(waveIndex < waves.Length - 1)
+        //apply spawn
+        if(waveIndex < waves.Length - 1 && allowSpawn)
         {
             if (waves[waveIndex].gameObject.activeSelf == false)
             {
@@ -43,15 +47,22 @@ public class WaveManager : MonoBehaviour
                 StartCoroutine(DelayToWave(waves[waveIndex], timeToWave));
             }
         }
-        else
+
+        if(waveIndex >= waves.Length)
         {
             Debug.Log("all wave End");
-            GameObject.Destroy(gameObject);
+            Destroy(gameObject);
         }
         
 
        
     }
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+            allowSpawn = true;
+    }
+
     IEnumerator DelayToWave(Wave wave, float delay)
     {
         yield return new WaitForSeconds(delay);
