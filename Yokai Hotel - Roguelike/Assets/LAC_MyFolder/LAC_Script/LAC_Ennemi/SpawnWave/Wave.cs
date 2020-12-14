@@ -29,7 +29,7 @@ public class Wave : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         foreach (EnnemiBehaviour e in enemyArray)
         {
-            float dist = Vector2.Distance(player.transform.position, e.transform.position);
+            float dist = (Vector2.Distance(player.transform.position, e.transform.position));
             float delay = dist * delayPerMeter;
             StartCoroutine(DelayToSpawn(e.gameObject, delay));
         }

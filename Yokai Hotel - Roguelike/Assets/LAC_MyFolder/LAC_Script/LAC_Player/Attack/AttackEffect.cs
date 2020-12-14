@@ -199,9 +199,15 @@ public class AttackEffect : MonoBehaviour
         {
             screenShakeCount++;
             CinemachineBasicMultiChannelPerlin basicPerlin = virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-            basicPerlin.m_AmplitudeGain = amp;
-            basicPerlin.m_FrequencyGain = freq;
-            StartCoroutine(shakeTime(basicPerlin, time));
+            if (basicPerlin)
+            {
+                basicPerlin.m_AmplitudeGain = amp;
+                basicPerlin.m_FrequencyGain = freq;
+                StartCoroutine(shakeTime(basicPerlin, time));
+            }
+            else
+                Debug.Log("can't shake");
+            
         }
         
     }
