@@ -14,6 +14,9 @@ public class KF_LevelManager : MonoBehaviour
     public KF_LevelExit endTrigger;
     public GameObject fadecanvas;
 
+    public GameObject postProcess1;
+    public GameObject postProcess2;
+    public int postProcessChangeLevel;
 
     // Start is called before the first frame update
     void Awake()
@@ -29,6 +32,9 @@ public class KF_LevelManager : MonoBehaviour
                 playerPosition.position = child.position;
         checkTriggers = currentLevel.GetComponent<KF_CheckTriggers>();
         fadecanvas.SetActive(true);
+
+        postProcess1.SetActive(true);
+        postProcess2.SetActive(false);
     }
 
     public void Update()
@@ -57,6 +63,11 @@ public class KF_LevelManager : MonoBehaviour
                 foreach (Transform child in levelpos1) if (child.CompareTag("StartPoint"))
                         playerPosition.position = child.position;
             }*/
+        }
+        if (levelCount == postProcessChangeLevel)
+        {
+            postProcess1.SetActive(false);
+            postProcess2.SetActive(true);
         }
     }
     private IEnumerator MoveLevelHub()
