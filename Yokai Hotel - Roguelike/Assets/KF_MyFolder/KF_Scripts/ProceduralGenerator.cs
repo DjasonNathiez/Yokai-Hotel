@@ -252,11 +252,11 @@ public class ProceduralGenerator : MonoBehaviour
             }
 
             // destroy Room
-            //Destroy(shopRoomData.room.gameObject);
+            Destroy(shopRoomData.room.gameObject);
 
             // Replace
-            //GameObject shopRoom = Instantiate(shopPrefab, new Vector2(shopRoomData.posX * resolutionX, shopRoomData.posY * resolutionY), transform.rotation);
-            //roomsGrid[shopRoomData.posX, shopRoomData.posY].room = shopRoomData.room = shopRoom.GetComponent<Room>();
+            GameObject shopRoom = Instantiate(shopPrefab, new Vector2(shopRoomData.posX * resolutionX, shopRoomData.posY * resolutionY), transform.rotation);
+            roomsGrid[shopRoomData.posX, shopRoomData.posY].room = shopRoomData.room = shopRoom.GetComponent<Room>();
 
             shopRoomData.type = Room.RoomType.SHOP;
             shopRoomData.room.UpdateRoom((int)shopRoomData.type);
