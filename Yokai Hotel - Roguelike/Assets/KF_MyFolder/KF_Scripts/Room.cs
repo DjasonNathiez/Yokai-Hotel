@@ -10,6 +10,8 @@ public class Room : MonoBehaviour
     public Vector2 roomPos;
     public Door[] doors;
     public SpriteRenderer sprite;
+
+    public bool keyToSpawn;
     private void Awake()
     {
         doors = GetComponentsInChildren<Door>();

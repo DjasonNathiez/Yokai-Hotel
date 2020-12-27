@@ -13,6 +13,7 @@ public class ProceduralGenerator : MonoBehaviour
     public float resolutionY;
     public RoomData[,] roomsGrid;
     public List<RoomData> validRooms = new List<RoomData>();
+    public List<RoomData> validKeyRooms = new List<RoomData>();
 
     public GameObject keyPrefab, shopPrefab, startPrefab, preparePrefab, endPrefab;
     public List<GameObject> rooms;
@@ -29,6 +30,9 @@ public class ProceduralGenerator : MonoBehaviour
 
     int roomQ;
     int currentRoomQ;
+
+    public int keyNumber;
+
 
     bool UpdateRoom = true;
 
@@ -159,7 +163,8 @@ public class ProceduralGenerator : MonoBehaviour
                             }
 
                             // archive room in valid list
-                            validRooms.Add(roomsGrid[x, y]);
+                            if(roomsGrid[x, y].type != Room.RoomType.START)
+                                validRooms.Add(roomsGrid[x, y]);
 
                             // update special room condition
                             float powDistOrgn = Mathf.Pow((x - walkOrigin.posX), 2) + Mathf.Pow((y - walkOrigin.posY), 2);
@@ -219,6 +224,9 @@ public class ProceduralGenerator : MonoBehaviour
 
             // destroyRoom
             Destroy(keyRoomData.room.gameObject);
+            validRooms.Remove(keyRoomData);
+
+            GenerateKey(validRooms, keyNumber);
 
             // replace Room
             GameObject  keyRoom = Instantiate(keyPrefab, new Vector2(keyRoomData.posX * resolutionX, keyRoomData.posY * resolutionY), transform.rotation);
@@ -253,6 +261,7 @@ public class ProceduralGenerator : MonoBehaviour
 
             // destroy Room
             Destroy(shopRoomData.room.gameObject);
+            validRooms.Remove(shopRoomData);
 
             // Replace
             GameObject shopRoom = Instantiate(shopPrefab, new Vector2(shopRoomData.posX * resolutionX, shopRoomData.posY * resolutionY), transform.rotation);
@@ -261,6 +270,7 @@ public class ProceduralGenerator : MonoBehaviour
             shopRoomData.type = Room.RoomType.SHOP;
             shopRoomData.room.UpdateRoom((int)shopRoomData.type);
 
+            
             // link door
             for (int x = 0; x < gridSizeX; x++)
             {
@@ -326,6 +336,7 @@ public class ProceduralGenerator : MonoBehaviour
         public Door[] doors;
 
         public int posX, posY;
+
         public RoomData (Room.RoomType roomType, Room roomScrpt, Door[] doorArray, int roomPosX, int roomPosY)
         {
             type = roomType;
@@ -334,6 +345,7 @@ public class ProceduralGenerator : MonoBehaviour
 
             posX = roomPosX;
             posY = roomPosY;
+
         }
     }
 
@@ -459,4 +471,25 @@ public class ProceduralGenerator : MonoBehaviour
         }
     }
 
+    public void GenerateKey(List<RoomData> validRoom, int keyNumber)
+    {
+        
+
+        if(validRoom.Count >= keyNumber)
+        {
+            List<RoomData> validKeyRooms = validRoom;
+            for (int i = 0; i < keyNumber; i++)
+            {
+                int rIndex = (int)Mathf.Floor(Random.Range(0, validKeyRooms.Count));
+                RoomData chooseRoom = validKeyRooms[rIndex];
+                chooseRoom.room.keyToSpawn = true;
+                validKeyRooms.Remove(chooseRoom);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("not enough room for key");
+        }
+        
+    }
 }

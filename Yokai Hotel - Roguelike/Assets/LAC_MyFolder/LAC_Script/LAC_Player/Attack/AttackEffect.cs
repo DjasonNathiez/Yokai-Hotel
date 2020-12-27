@@ -92,7 +92,14 @@ public class AttackEffect : MonoBehaviour
 
                     // feedBack
                     ScreenShake(attackM.attack[player.attackChoose].screenShakeAmp, attackM.attack[player.attackChoose].screenShakeFreq, attackM.attack[player.attackChoose].screenShakeTime);
-                    if(ennemi.healthPoints <= damage) { SlowTime(0.3f, 0.1f); }
+                    if(ennemi.healthPoints <= damage) 
+                    {
+                        if (attackM.attack[player.attackChoose].screenShakeAmp == 0)
+                            ScreenShake(0.5f, 4, 0.3f);
+
+                        SlowTime(0.2f, 0.3f);
+
+                    }
                     damage = 0;
                 }
 
