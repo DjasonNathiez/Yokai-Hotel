@@ -13,7 +13,7 @@ public class KF_KeyActivate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        inventoryM = player.GetComponent<InventoryManager>();
+       
         if (thisRoom.keyToSpawn == true)
         {
             this.gameObject.SetActive(true);
@@ -27,21 +27,20 @@ public class KF_KeyActivate : MonoBehaviour
             
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
+
 
     public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            if (!inventoryM)
+                inventoryM = collision.gameObject.GetComponent<InventoryManager>();
+
             if (Input.GetButtonDown("Interact"))
             {
-                inventoryM.keys = inventoryM.keys + keysinroom;
+                inventoryM.keys ++;
                 Debug.Log("Key Added");
-                this.gameObject.SetActive(false);
+                //this.gameObject.SetActive(false);
             }
         }
     }

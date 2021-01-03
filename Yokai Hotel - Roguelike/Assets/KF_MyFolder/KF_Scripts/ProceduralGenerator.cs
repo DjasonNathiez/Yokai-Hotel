@@ -223,8 +223,9 @@ public class ProceduralGenerator : MonoBehaviour
             }
 
             // destroyRoom
-            Destroy(keyRoomData.room.gameObject);
             validRooms.Remove(keyRoomData);
+            Destroy(keyRoomData.room.gameObject);
+            
 
             // replace Room
             GameObject  keyRoom = Instantiate(keyPrefab, new Vector2(keyRoomData.posX * resolutionX, keyRoomData.posY * resolutionY), transform.rotation);
@@ -258,8 +259,9 @@ public class ProceduralGenerator : MonoBehaviour
             }
 
             // destroy Room
-            Destroy(shopRoomData.room.gameObject);
             validRooms.Remove(shopRoomData);
+            Destroy(shopRoomData.room.gameObject);
+           
 
             // Replace
             GameObject shopRoom = Instantiate(shopPrefab, new Vector2(shopRoomData.posX * resolutionX, shopRoomData.posY * resolutionY), transform.rotation);
@@ -268,7 +270,7 @@ public class ProceduralGenerator : MonoBehaviour
             shopRoomData.type = Room.RoomType.SHOP;
             shopRoomData.room.UpdateRoom((int)shopRoomData.type);
 
-            GenerateKey(validRooms, keyNumber);
+            
 
             // link door
             for (int x = 0; x < gridSizeX; x++)
@@ -307,6 +309,7 @@ public class ProceduralGenerator : MonoBehaviour
                 }
             }
             // end update room 
+            GenerateKey(ref validRooms, keyNumber);
             UpdateRoom = false;
         }
     }
@@ -470,7 +473,7 @@ public class ProceduralGenerator : MonoBehaviour
         }
     }
 
-    public void GenerateKey(List<RoomData> validRoom, int keyNumber)
+    public void GenerateKey(ref List<RoomData> validRoom, int keyNumber)
     {
         
 
@@ -482,6 +485,7 @@ public class ProceduralGenerator : MonoBehaviour
                 int rIndex = (int)Mathf.Floor(Random.Range(0, validKeyRooms.Count));
                 RoomData chooseRoom = validKeyRooms[rIndex];
                 chooseRoom.room.keyToSpawn = true;
+                Debug.Log("keyGenerate in " + chooseRoom.room.gameObject);
                 validKeyRooms.Remove(chooseRoom);
             }
         }

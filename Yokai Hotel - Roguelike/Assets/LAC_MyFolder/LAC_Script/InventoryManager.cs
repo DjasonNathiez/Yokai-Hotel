@@ -11,7 +11,7 @@ public class InventoryManager : MonoBehaviour
     {
         player = GetComponent<PlayerController>();
         maxHealth = player.health;
-        keys = 0;
+
     }
 
     // Update is called once per frame
