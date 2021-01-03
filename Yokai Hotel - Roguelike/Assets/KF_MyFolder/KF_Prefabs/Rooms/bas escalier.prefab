@@ -111,6 +111,7 @@ MonoBehaviour:
   roomPos: {x: 0, y: 0}
   doors: []
   sprite: {fileID: 0}
+  keyToSpawn: 0
 --- !u!114 &7894688779713135649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,7 +525,7 @@ MonoBehaviour:
   m_ConfineMode: 0
   m_BoundingVolume: {fileID: 0}
   m_BoundingShape2D: {fileID: 723995388046502615}
-  m_ConfineScreenEdges: 1
+  m_ConfineScreenEdges: 0
   m_Damping: 0
 --- !u!1 &4304691591938600407
 GameObject:
@@ -1327,6 +1328,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: door (2) Right
       objectReference: {fileID: 0}
+    - target: {fileID: 8265100783434588698, guid: 95833b297c830834baa5759c1f861596,
+        type: 3}
+      propertyPath: m_TagString
+      value: Door
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95833b297c830834baa5759c1f861596, type: 3}
 --- !u!4 &5547284284432846321 stripped
@@ -1481,6 +1487,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: door (3) Down
+      objectReference: {fileID: 0}
+    - target: {fileID: 6912776841129170390, guid: 2638d7d89834f59489a5bbfd4bdf6b3e,
+        type: 3}
+      propertyPath: m_TagString
+      value: EndDoor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2638d7d89834f59489a5bbfd4bdf6b3e, type: 3}

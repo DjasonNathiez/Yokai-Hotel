@@ -441,6 +441,7 @@ MonoBehaviour:
   maxHealth: 0
   currentHealth: 0
   attackBoost: 0
+  keys: 0
 --- !u!50 &164523393
 Rigidbody2D:
   serializedVersion: 4
@@ -900,7 +901,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 440582569}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 380.72415, y: 110.54983, z: -1}
+  m_LocalPosition: {x: -0.01, y: 0.03, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1002,6 +1003,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'MyPlayer '
       objectReference: {fileID: 0}
+    - target: {fileID: 3867148610447654504, guid: 6766e3eeb39b875408120eeb37285d42,
+        type: 3}
+      propertyPath: keys
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3867148610447654505, guid: 6766e3eeb39b875408120eeb37285d42,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1061,7 +1067,13 @@ PrefabInstance:
         type: 3}
       propertyPath: attack.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: ec672fda4cac6fb48989a0f53cc3f0b9,
+      objectReference: {fileID: 11400000, guid: b051eba4f5863884e9e25b874cebe7e1,
+        type: 2}
+    - target: {fileID: 3867148611082786488, guid: 6766e3eeb39b875408120eeb37285d42,
+        type: 3}
+      propertyPath: attack.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: debb57419c4bc8e46bd44ac92eda4e7f,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6766e3eeb39b875408120eeb37285d42, type: 3}
@@ -1108,7 +1120,7 @@ GameObject:
   - component: {fileID: 778592102}
   m_Layer: 0
   m_Name: Floor 1 Manager
-  m_TagString: Untagged
+  m_TagString: LevelManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1135,7 +1147,7 @@ MonoBehaviour:
     type: 3}
   startPrefab: {fileID: 4582611198287507410, guid: 9a717e161c44dd844a95b72a0db91fef,
     type: 3}
-  preparePrefab: {fileID: 4336716253289620013, guid: 651d627c6572eae46af185df2719b6e0,
+  preparePrefab: {fileID: 8370531223476974004, guid: cb62bed6b5f658e40b61cc7c39c782d5,
     type: 3}
   endPrefab: {fileID: 1065584224371892795, guid: 843854470da86ba49b4ca6f4bd12bd86,
     type: 3}
@@ -1151,10 +1163,11 @@ MonoBehaviour:
   - {fileID: 34504956800726152, guid: 44dc2b98caf8a2e43854700605806cea, type: 3}
   - {fileID: 5222694042393211587, guid: 3fcb8feb2e2758e4db59fb78500489c6, type: 3}
   - {fileID: 5931054625878209206, guid: c60be72f4cbd71f43a7087b7c20d4d0b, type: 3}
-  maxRoomQ: 13
-  minRoomQ: 9
-  maxRareRoomQ: 2
+  maxRoomQ: 6
+  minRoomQ: 4
+  maxRareRoomQ: 0
   rareRoomP: 0.1
+  keyNumber: 1
   maxWalkCycle: 23
   maxWalkers: 10
   currentWalkers: 0
@@ -1335,7 +1348,7 @@ GameObject:
   - component: {fileID: 1029490442}
   m_Layer: 0
   m_Name: 'Floor 4 Manager '
-  m_TagString: Untagged
+  m_TagString: LevelManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1373,13 +1386,13 @@ MonoBehaviour:
   gridSizeY: 30
   resolutionX: 22
   resolutionY: 13
-  keyPrefab: {fileID: 3826932417770784365, guid: a725ae4d4e856c54d8e5d72dda6fdfd9,
+  keyPrefab: {fileID: 1847664137750088318, guid: d3bda4c04162b1f46a012bb02023d013,
     type: 3}
   shopPrefab: {fileID: 676889434553521318, guid: e8e31b0f5c1ff2a46842d8a9ecf5f020,
     type: 3}
   startPrefab: {fileID: 4582611198287507410, guid: 9a717e161c44dd844a95b72a0db91fef,
     type: 3}
-  preparePrefab: {fileID: 4336716253289620013, guid: 651d627c6572eae46af185df2719b6e0,
+  preparePrefab: {fileID: 4524642346497952317, guid: 1061a5dd9dd891745a5f9c592886db14,
     type: 3}
   endPrefab: {fileID: 1065584224371892795, guid: 843854470da86ba49b4ca6f4bd12bd86,
     type: 3}
@@ -1394,6 +1407,7 @@ MonoBehaviour:
   minRoomQ: 9
   maxRareRoomQ: 2
   rareRoomP: 0.1
+  keyNumber: 2
   maxWalkCycle: 23
   maxWalkers: 10
   currentWalkers: 0
@@ -1617,7 +1631,7 @@ GameObject:
   - component: {fileID: 1364674910}
   m_Layer: 0
   m_Name: 'Floor 2 Manager '
-  m_TagString: Untagged
+  m_TagString: LevelManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1661,7 +1675,7 @@ MonoBehaviour:
     type: 3}
   startPrefab: {fileID: 4582611198287507410, guid: 9a717e161c44dd844a95b72a0db91fef,
     type: 3}
-  preparePrefab: {fileID: 4336716253289620013, guid: 651d627c6572eae46af185df2719b6e0,
+  preparePrefab: {fileID: 8370531223476974004, guid: cb62bed6b5f658e40b61cc7c39c782d5,
     type: 3}
   endPrefab: {fileID: 1065584224371892795, guid: 843854470da86ba49b4ca6f4bd12bd86,
     type: 3}
@@ -1677,10 +1691,11 @@ MonoBehaviour:
   - {fileID: 34504956800726152, guid: 44dc2b98caf8a2e43854700605806cea, type: 3}
   - {fileID: 5222694042393211587, guid: 3fcb8feb2e2758e4db59fb78500489c6, type: 3}
   - {fileID: 5931054625878209206, guid: c60be72f4cbd71f43a7087b7c20d4d0b, type: 3}
-  maxRoomQ: 7
-  minRoomQ: 4
+  maxRoomQ: 8
+  minRoomQ: 5
   maxRareRoomQ: 2
   rareRoomP: 0.1
+  keyNumber: 1
   maxWalkCycle: 23
   maxWalkers: 10
   currentWalkers: 0
@@ -1716,7 +1731,7 @@ GameObject:
   - component: {fileID: 1421191409}
   m_Layer: 0
   m_Name: Floor 3 Manager
-  m_TagString: Untagged
+  m_TagString: LevelManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1754,13 +1769,13 @@ MonoBehaviour:
   gridSizeY: 30
   resolutionX: 22
   resolutionY: 13
-  keyPrefab: {fileID: 3826932417770784365, guid: a725ae4d4e856c54d8e5d72dda6fdfd9,
+  keyPrefab: {fileID: 3826932417770784365, guid: 14466d41be967a540ac77d8696b3f605,
     type: 3}
   shopPrefab: {fileID: 676889434553521318, guid: e8e31b0f5c1ff2a46842d8a9ecf5f020,
     type: 3}
   startPrefab: {fileID: 4582611198287507410, guid: 9a717e161c44dd844a95b72a0db91fef,
     type: 3}
-  preparePrefab: {fileID: 4336716253289620013, guid: 651d627c6572eae46af185df2719b6e0,
+  preparePrefab: {fileID: 8131852432581775605, guid: fd72c3ed13c2b1548a4e8642edf5e788,
     type: 3}
   endPrefab: {fileID: 1065584224371892795, guid: 843854470da86ba49b4ca6f4bd12bd86,
     type: 3}
@@ -1780,6 +1795,7 @@ MonoBehaviour:
   minRoomQ: 6
   maxRareRoomQ: 2
   rareRoomP: 0.1
+  keyNumber: 2
   maxWalkCycle: 23
   maxWalkers: 10
   currentWalkers: 0
@@ -1956,7 +1972,7 @@ GameObject:
   - component: {fileID: 1749997333}
   m_Layer: 0
   m_Name: Floor 5 Manager
-  m_TagString: Untagged
+  m_TagString: LevelManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1994,13 +2010,13 @@ MonoBehaviour:
   gridSizeY: 30
   resolutionX: 22
   resolutionY: 13
-  keyPrefab: {fileID: 3826932417770784365, guid: a725ae4d4e856c54d8e5d72dda6fdfd9,
+  keyPrefab: {fileID: 4686366989978804765, guid: 71fa1c70a58851341a69b50f97962bdd,
     type: 3}
   shopPrefab: {fileID: 676889434553521318, guid: e8e31b0f5c1ff2a46842d8a9ecf5f020,
     type: 3}
   startPrefab: {fileID: 4582611198287507410, guid: 9a717e161c44dd844a95b72a0db91fef,
     type: 3}
-  preparePrefab: {fileID: 4336716253289620013, guid: 651d627c6572eae46af185df2719b6e0,
+  preparePrefab: {fileID: 3401893008866082439, guid: 6aa812f9181264e4080693905e5c735b,
     type: 3}
   endPrefab: {fileID: 1065584224371892795, guid: 843854470da86ba49b4ca6f4bd12bd86,
     type: 3}
@@ -2015,6 +2031,7 @@ MonoBehaviour:
   minRoomQ: 12
   maxRareRoomQ: 2
   rareRoomP: 0.1
+  keyNumber: 3
   maxWalkCycle: 23
   maxWalkers: 10
   currentWalkers: 0
