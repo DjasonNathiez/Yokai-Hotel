@@ -226,8 +226,6 @@ public class ProceduralGenerator : MonoBehaviour
             Destroy(keyRoomData.room.gameObject);
             validRooms.Remove(keyRoomData);
 
-            GenerateKey(validRooms, keyNumber);
-
             // replace Room
             GameObject  keyRoom = Instantiate(keyPrefab, new Vector2(keyRoomData.posX * resolutionX, keyRoomData.posY * resolutionY), transform.rotation);
             roomsGrid[keyRoomData.posX, keyRoomData.posY].room = keyRoomData.room = keyRoom.GetComponent<Room>();
@@ -270,7 +268,8 @@ public class ProceduralGenerator : MonoBehaviour
             shopRoomData.type = Room.RoomType.SHOP;
             shopRoomData.room.UpdateRoom((int)shopRoomData.type);
 
-            
+            GenerateKey(validRooms, keyNumber);
+
             // link door
             for (int x = 0; x < gridSizeX; x++)
             {
