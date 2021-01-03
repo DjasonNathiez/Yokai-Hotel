@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class KF_KeyDesactivate : MonoBehaviour
 {
-    public GameObject player;
     public InventoryManager inventoryM;
     public GameObject prepareEnd;
     public KF_ActivateUnlock actlock;
@@ -13,7 +12,6 @@ public class KF_KeyDesactivate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        inventoryM = player.GetComponent<InventoryManager>();
         prepareEnd = GameObject.FindGameObjectWithTag("PrepareEndRoom");
         actlock = prepareEnd.GetComponent<KF_ActivateUnlock>();
     }
@@ -24,21 +22,25 @@ public class KF_KeyDesactivate : MonoBehaviour
        
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if ((inventoryM.keys > 1) && (Input.GetButtonDown("Interact")))
+            if (!inventoryM)
+                inventoryM = collision.gameObject.GetComponent<InventoryManager>();
+
+            if ((inventoryM.keys >= 1) && (Input.GetButtonDown("Interact")))
             {
                 inventoryM.keys = inventoryM.keys - 1;
                 Debug.Log("Key Removed");
                 this.gameObject.SetActive(false);
                 actlock.keycount = actlock.keycount - 1;
             }
-            if ((inventoryM.keys < 1) && (Input.GetButtonDown("Interact")))
-            {
-                Debug.Log("Not enough Keys");
-            }
+            else 
+                if ((inventoryM.keys == 0) && (Input.GetButtonDown("Interact")))
+                {
+                    Debug.Log("Not enough Keys");
+                }
         }
     }
 }
