@@ -6,7 +6,12 @@ public class InventoryManager : MonoBehaviour
 {
     public PlayerController player;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     public int money, health, maxHealth,currentHealth, attackBoost, keys;
+=======
+    public float money, health, maxHealth,currentHealth, attackBoost;
+    public Enchantement[] enchantements;
+>>>>>>> Stashed changes
 =======
     public float money, health, maxHealth,currentHealth, attackBoost;
     public Enchantement[] enchantements;

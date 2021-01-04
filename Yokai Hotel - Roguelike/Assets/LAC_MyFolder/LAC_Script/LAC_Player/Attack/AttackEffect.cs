@@ -54,7 +54,11 @@ public class AttackEffect : MonoBehaviour
                 bool deflectShield = false;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 int damage = attackM.attack[player.attackChoose].damage;
+=======
+                float damage = attackM.attack[player.attackChoose].damage;
+>>>>>>> Stashed changes
 =======
                 float damage = attackM.attack[player.attackChoose].damage;
 >>>>>>> Stashed changes
@@ -97,6 +101,7 @@ public class AttackEffect : MonoBehaviour
                     // feedBack
                     ScreenShake(attackM.attack[player.attackChoose].screenShakeAmp, attackM.attack[player.attackChoose].screenShakeFreq, attackM.attack[player.attackChoose].screenShakeTime);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     if(ennemi.healthPoints <= damage) 
                     {
                         if (attackM.attack[player.attackChoose].screenShakeAmp == 0)
@@ -105,6 +110,9 @@ public class AttackEffect : MonoBehaviour
                         SlowTime(0.2f, 0.3f);
 
                     }
+=======
+                    if(ennemi.healthPoints <= damage) { SlowTime(0.3f, 0.1f); }
+>>>>>>> Stashed changes
 =======
                     if(ennemi.healthPoints <= damage) { SlowTime(0.3f, 0.1f); }
 >>>>>>> Stashed changes
