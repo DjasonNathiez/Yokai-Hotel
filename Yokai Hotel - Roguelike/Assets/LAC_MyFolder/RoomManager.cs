@@ -39,11 +39,6 @@ public class RoomManager : MonoBehaviour
         #endregion
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public struct DataRoom
     {

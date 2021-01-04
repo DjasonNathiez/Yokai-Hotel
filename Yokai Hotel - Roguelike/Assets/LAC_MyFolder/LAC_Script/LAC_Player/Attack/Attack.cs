@@ -12,9 +12,16 @@ public class Attack : ScriptableObject
 
     public int damage;
 
-    public float inertness, inertnessTime;
+    public float inertness,inertnessTime;
 
-    public float knockBackValue, knockBackModifier;
+    [Header("KnockBack")]
+    public float knockBackValue; 
+    public float knockBackModifier;
+
+    [Header("Screen")]
+    public float screenShakeAmp;
+    public float screenShakeFreq; 
+    public float screenShakeTime;
 
 
 

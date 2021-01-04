@@ -47,6 +47,7 @@ public class EnnemiBehaviour : MonoBehaviour
     [Header("move")]
     public float speed;
     Vector2 velocitySmoothing;
+    [HideInInspector]
     public Vector2 velocity;
     #endregion
     #region target

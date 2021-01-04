@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1926813741359163610}
   m_Layer: 0
   m_Name: door (1) Up
-  m_TagString: Room
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,6 +31,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children:
   - {fileID: 5016691030026009637}
+  - {fileID: 2621224532874360935}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -102,7 +103,7 @@ MonoBehaviour:
   doorLink: {fileID: 0}
   playerObj: {fileID: 0}
   doorTriggerZone: {fileID: 0}
-  temporaryShow: {fileID: 5112218991677572912}
+  temporaryShow: {fileID: 2621224532874360932}
   sprite: {fileID: 0}
 --- !u!61 &1926813741359163610
 BoxCollider2D:
@@ -146,7 +147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5016691030026009637
 Transform:
   m_ObjectHideFlags: 0
@@ -202,3 +203,104 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1001 &2239942971694139010
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1605008242067701003}
+    m_Modifications:
+    - target: {fileID: 4284495070489853668, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_LightVolumeOpacity
+      value: 0.142
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853668, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_ShadowVolumeIntensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.063
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.00008789286
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 179.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.06375226
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284495070489853670, guid: 84746d3647112334487c7f3b56f90ec2,
+        type: 3}
+      propertyPath: m_Name
+      value: OpenDoorLight
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 84746d3647112334487c7f3b56f90ec2, type: 3}
+--- !u!1 &2621224532874360932 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4284495070489853670, guid: 84746d3647112334487c7f3b56f90ec2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2239942971694139010}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2621224532874360935 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4284495070489853669, guid: 84746d3647112334487c7f3b56f90ec2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2239942971694139010}
+  m_PrefabAsset: {fileID: 0}
