@@ -54,6 +54,11 @@ public class Enchantement : MonoBehaviour
     public bool cooldown;
     public float CDTime;
 
+    public bool haveGCD;
+    public float gcdValue;
+    public float GCD;
+    bool inGCD = false;
+
     public float valueBackup;
     public bool isTrue;
     public bool isActivated = false;
@@ -66,18 +71,36 @@ public class Enchantement : MonoBehaviour
         playerC = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         attackM = GameObject.FindGameObjectWithTag("Player").GetComponent<AttackManager>();
 
+        GCD = gcdValue;
+    }
+
+    private void Update()
+    {
         if (isActivated == true)
         {
             CheckCondition();
 
-            if (isTrue == true)
+            if (isTrue == true && inGCD == false)
             {
                 StartCoroutine(ChangeTheValue());
+                isActivated = false;
+                isTrue = false;
+            }
+        }
+
+        if (inGCD == true)
+        {
+            GCD -= Time.deltaTime;
+
+            if(GCD <= 0)
+            {
+                inGCD = false;
+                GCD = gcdValue;
+                isActivated = true;
             }
         }
 
     }
-
     void CheckCondition() ///the action to do for use the enchant
     {
 
@@ -87,7 +110,7 @@ public class Enchantement : MonoBehaviour
             //if None
             ///the enchant don't need any condition -> passive effect
 
-            if (enchant.condition1 == Enchantement.Condition1.None)
+            if (condition1 == Condition1.None)
             {
                 isTrue = true;
             }
@@ -96,9 +119,9 @@ public class Enchantement : MonoBehaviour
             //if LightAttack
             ///when LightAttack hit something -> bool
 
-            if (enchant.condition1 == Enchantement.Condition1.LightAttack)
+            if (condition1 == Condition1.LightAttack)
             {
-                if (enchant.playerC.attackChoose != -1 && enchant.playerC.attackChoose > 3)
+                if (enchant.playerC.attackChoose == 0 || playerC.attackChoose == 1 || playerC.attackChoose == 2)
                 {
                     isTrue = true;
                 }
@@ -129,9 +152,9 @@ public class Enchantement : MonoBehaviour
             //if Dash
             ///when dash is used -> bool
 
-            if (enchant.condition1 == Enchantement.Condition1.Dash)
+            if (condition1 == Condition1.Dash)
             {
-                if (enchant.playerC.playerState == PlayerController.PlayerState.DASH)
+                if (playerC.playerState == PlayerController.PlayerState.DASH)
                 {
                     isTrue = true;
                 }
@@ -140,13 +163,14 @@ public class Enchantement : MonoBehaviour
             //if Health
             ///when health is at an special amount -> value
 
-            if (enchant.condition1 == Enchantement.Condition1.Health)
+            if (condition1 == Condition1.Health)
             {
                 if (enchant.playerC.health == enchant.value)
                 {
                     isTrue = true;
                 }
             }
+
         }
        
 
@@ -155,17 +179,19 @@ public class Enchantement : MonoBehaviour
     IEnumerator ChangeTheValue() ///the value which will be change by the enchant
     {
 
-            //if ValueToChange = DropRate
-            ///Select the ennemy -> value
+        #region value DropRate
 
-            if (enchant.valueToChange == Enchantement.ValueToChange.DropRate)
+        //if ValueToChange = DropRate
+        ///Select the ennemy -> value
+
+        if (enchant.valueToChange == Enchantement.ValueToChange.DropRate)
             {
                 if (enchant.affected == Enchantement.Affected.Shop)
                 {
                     enchant.valueBackup = enchant.shopDropRate;
                     yield return new WaitForEndOfFrame();
                     enchant.shopDropRate += enchant.value;
-
+                
                     if (enchant.cooldown == true)
                     {
                         yield return new WaitForSeconds(enchant.CDTime);
@@ -174,10 +200,14 @@ public class Enchantement : MonoBehaviour
                 }
             }
 
-            //if ValueToChange = Damage
-            ///Select the good attack -> value
+#endregion
 
-            if (enchant.valueToChange == Enchantement.ValueToChange.Damage)
+        #region change Damage
+
+        //if ValueToChange = Damage
+        ///Select the good attack -> value
+
+        if (enchant.valueToChange == Enchantement.ValueToChange.Damage)
             {
                 if (enchant.affected == Enchantement.Affected.LightAttack)
                 {
@@ -219,9 +249,12 @@ public class Enchantement : MonoBehaviour
                 }
             }
 
-            //if ValueToChange = Speed
-            ///Change into character script -> value
-            if (enchant.valueToChange == Enchantement.ValueToChange.Speed)
+#endregion
+
+        #region change Speed
+        //if ValueToChange = Speed
+        ///Change into character script -> value
+        if (enchant.valueToChange == Enchantement.ValueToChange.Speed)
             {
                 if (enchant.affected == Enchantement.Affected.Player)
                 {
@@ -258,10 +291,13 @@ public class Enchantement : MonoBehaviour
                 }
             }
 
-            //if ValueToChange = DistanceGaugeValue
-            ///Change into character script -> value
+#endregion
 
-            if (enchant.valueToChange == Enchantement.ValueToChange.DistanceGaugeValue)
+        #region change Distance Gauge Value
+        //if ValueToChange = DistanceGaugeValue
+        ///Change into character script -> value
+
+        if (enchant.valueToChange == Enchantement.ValueToChange.DistanceGaugeValue)
             {
                 enchant.valueBackup = enchant.playerC.shootGaugeMax;
                 yield return new WaitForEndOfFrame();
@@ -274,10 +310,13 @@ public class Enchantement : MonoBehaviour
                 }
             }
 
-            //if ValueToChange = Health
-            ///Change into character script -> value
+        #endregion
 
-            if (valueToChange == ValueToChange.Health)
+        #region change Health
+        //if ValueToChange = Health
+        ///Change into character script -> value
+
+        if (valueToChange == ValueToChange.Health)
             {
                 if (affected == Affected.Player)
                 {
@@ -285,6 +324,7 @@ public class Enchantement : MonoBehaviour
                     yield return new WaitForEndOfFrame();
                     playerC.health += value;
 
+                
                 Debug.Log("Add Health Enchant");
                     if (cooldown == true)
                     {
@@ -293,6 +333,13 @@ public class Enchantement : MonoBehaviour
 
                     Debug.Log("BackToNormal");
                     }
+
+                if (haveGCD == true)
+                {
+                    inGCD = true;
+                }
+
+                    StopCoroutine(ChangeTheValue());
 
                 }
 
@@ -320,6 +367,9 @@ public class Enchantement : MonoBehaviour
 
         }
 
+        #endregion
+
+        #region change Item Cost
         //if ValueToChange = ItemCost
         ///Change into self script -> value
 
@@ -341,4 +391,6 @@ public class Enchantement : MonoBehaviour
             }
         }
 
-    }
+    #endregion
+
+}
