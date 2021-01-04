@@ -5,7 +5,12 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     public PlayerController player;
+<<<<<<< Updated upstream
     public int money, health, maxHealth,currentHealth, attackBoost, keys;
+=======
+    public float money, health, maxHealth,currentHealth, attackBoost;
+    public Enchantement[] enchantements;
+>>>>>>> Stashed changes
     // Start is called before the first frame update
     void Start()
     {

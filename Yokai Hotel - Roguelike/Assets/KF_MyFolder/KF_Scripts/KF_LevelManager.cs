@@ -97,9 +97,12 @@ public class KF_LevelManager : MonoBehaviour
         GameObject[] currentrooms = GameObject.FindGameObjectsWithTag("Room");
         foreach (GameObject room in currentrooms)
             GameObject.Destroy(room);
+<<<<<<< Updated upstream
         GameObject[] prepareEndRooms = GameObject.FindGameObjectsWithTag("PrepareEndRoom");
         foreach (GameObject proom in prepareEndRooms)
             GameObject.Destroy(proom);
+=======
+>>>>>>> Stashed changes
         previouslevel.SetActive(false);
         levels[levelCount].SetActive(true);
         Transform levelpos1 = currentLevel.transform;

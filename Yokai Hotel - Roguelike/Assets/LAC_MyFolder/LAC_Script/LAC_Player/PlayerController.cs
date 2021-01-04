@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     public AttackManager attackM;
 
     [Header("HURT")]
-    public int health;
+    public float health;
     public int hurtDamage;
     public bool isHurt;
 

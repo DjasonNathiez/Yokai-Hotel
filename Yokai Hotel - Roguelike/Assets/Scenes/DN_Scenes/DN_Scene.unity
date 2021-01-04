@@ -121,6 +121,82 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &454452293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 454452295}
+  - component: {fileID: 454452294}
+  - component: {fileID: 454452296}
+  m_Layer: 0
+  m_Name: Shop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &454452294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454452293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d378771bf97b6248935dedae77414c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemFolder: []
+  selectItem: 0
+--- !u!4 &454452295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454452293}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.1987698, y: -1.071462, z: -1.2317741}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &454452296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454452293}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4b7204c33173eb49a41e79fff1b3c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerC: {fileID: 0}
+  attackM: {fileID: 0}
+  enchantementName: 
+  description: 
+  icon: {fileID: 0}
+  shopDropRate: 0
+  itemCost: 0
+  valueToChange: 0
+  affected: 0
+  value: 0
+  condition1: 0
+  condition1Value: 0
+  condition1State: 0
+  cooldown: 0
+  CDTime: 0
+  valueBackup: 0
+  isTrue: 0
+  isActivated: 0
 --- !u!1001 &672153746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -431,3 +507,72 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6766e3eeb39b875408120eeb37285d42, type: 3}
+--- !u!1001 &8841777818863273661
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8841777819532630976, guid: 9359588e0937f4747b3807e5790433ea,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.1987698
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841777819532630976, guid: 9359588e0937f4747b3807e5790433ea,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.071462
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841777819532630976, guid: 9359588e0937f4747b3807e5790433ea,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.2317741
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841777819532630976, guid: 9359588e0937f4747b3807e5790433ea,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841777819532630976, guid: 9359588e0937f4747b3807e5790433ea,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841777819532630976, guid: 9359588e0937f4747b3807e5790433ea,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841777819532630976, guid: 9359588e0937f4747b3807e5790433ea,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841777819532630976, guid: 9359588e0937f4747b3807e5790433ea,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841777819532630976, guid: 9359588e0937f4747b3807e5790433ea,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841777819532630976, guid: 9359588e0937f4747b3807e5790433ea,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841777819532630976, guid: 9359588e0937f4747b3807e5790433ea,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841777819532630982, guid: 9359588e0937f4747b3807e5790433ea,
+        type: 3}
+      propertyPath: m_Name
+      value: EnchantementGenerator
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9359588e0937f4747b3807e5790433ea, type: 3}

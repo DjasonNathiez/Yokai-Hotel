@@ -259,9 +259,13 @@ public class ProceduralGenerator : MonoBehaviour
             }
 
             // destroy Room
+<<<<<<< Updated upstream
             validRooms.Remove(shopRoomData);
             Destroy(shopRoomData.room.gameObject);
            
+=======
+            Destroy(shopRoomData.room.gameObject);
+>>>>>>> Stashed changes
 
             // Replace
             GameObject shopRoom = Instantiate(shopPrefab, new Vector2(shopRoomData.posX * resolutionX, shopRoomData.posY * resolutionY), transform.rotation);
