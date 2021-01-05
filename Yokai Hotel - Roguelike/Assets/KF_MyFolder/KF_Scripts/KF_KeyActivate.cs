@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class KF_KeyActivate : MonoBehaviour
 {
-    public GameObject player;
     public InventoryManager inventoryM;
     public Room thisRoom;
     public int keysinroom;
@@ -40,7 +39,7 @@ public class KF_KeyActivate : MonoBehaviour
             {
                 inventoryM.keys ++;
                 Debug.Log("Key Added");
-                //this.gameObject.SetActive(false);
+                this.gameObject.SetActive(false);
             }
         }
     }
