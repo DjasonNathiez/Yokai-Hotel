@@ -163,7 +163,7 @@ public class ProceduralGenerator : MonoBehaviour
                             }
 
                             // archive room in valid list
-                            if(roomsGrid[x, y].type != Room.RoomType.START)
+                            if(roomsGrid[x, y].type != Room.RoomType.START && roomsGrid[x,y].type != Room.RoomType.NULL)
                                 validRooms.Add(roomsGrid[x, y]);
 
                             // update special room condition
@@ -186,6 +186,7 @@ public class ProceduralGenerator : MonoBehaviour
             // apply special room change
 
             // destroyRoom
+            validRooms.Remove(roomsGrid[preparendRX, preparendRY]);
             Destroy(roomsGrid[preparendRX, preparendRY].room.gameObject);
 
             // replace room 
@@ -223,16 +224,16 @@ public class ProceduralGenerator : MonoBehaviour
             }
 
             // destroyRoom
-            validRooms.Remove(keyRoomData);
-            Destroy(keyRoomData.room.gameObject);
+            //validRooms.Remove(keyRoomData);
+            //Destroy(keyRoomData.room.gameObject);
             
 
             // replace Room
-            GameObject  keyRoom = Instantiate(keyPrefab, new Vector2(keyRoomData.posX * resolutionX, keyRoomData.posY * resolutionY), transform.rotation);
-            roomsGrid[keyRoomData.posX, keyRoomData.posY].room = keyRoomData.room = keyRoom.GetComponent<Room>();
+            //GameObject  keyRoom = Instantiate(keyPrefab, new Vector2(keyRoomData.posX * resolutionX, keyRoomData.posY * resolutionY), transform.rotation);
+            //roomsGrid[keyRoomData.posX, keyRoomData.posY].room = keyRoomData.room = keyRoom.GetComponent<Room>();
 
-            keyRoomData.type = Room.RoomType.KEY;
-            keyRoomData.room.UpdateRoom((int)keyRoomData.type);
+           //keyRoomData.type = Room.RoomType.KEY;
+            //keyRoomData.room.UpdateRoom((int)keyRoomData.type);
 
             // generate shop room
             float maximisDist = 0;
@@ -486,6 +487,7 @@ public class ProceduralGenerator : MonoBehaviour
                 RoomData chooseRoom = validKeyRooms[rIndex];
                 chooseRoom.room.keyToSpawn = true;
                 Debug.Log("keyGenerate in " + chooseRoom.room.gameObject);
+                Debug.Log("KeyPos " + chooseRoom.posX + " " + chooseRoom.posY);
                 validKeyRooms.Remove(chooseRoom);
             }
         }
