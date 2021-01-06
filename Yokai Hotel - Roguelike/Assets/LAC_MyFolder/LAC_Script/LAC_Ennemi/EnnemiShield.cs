@@ -8,7 +8,7 @@ public class EnnemiShield : MonoBehaviour
 {
     [HideInInspector]
     public GameObject objShielded;
-    public float shieldPoint;
+    public int shieldPoint;
     public Vector2 shieldDir;
 
 

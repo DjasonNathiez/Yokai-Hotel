@@ -53,8 +53,7 @@ public class AttackEffect : MonoBehaviour
                 EnnemiTank eTank = ennemi.GetComponentInParent<EnnemiTank>();
                 bool deflectShield = false;
 
-                float damage = attackM.attack[player.attackChoose].damage;
-
+                int damage = attackM.attack[player.attackChoose].damage;
                 Vector2 repulseDir = (ennemi.transform.position - player.transform.position).normalized;
                 if (eTank)
                 {
@@ -93,7 +92,6 @@ public class AttackEffect : MonoBehaviour
 
                     // feedBack
                     ScreenShake(attackM.attack[player.attackChoose].screenShakeAmp, attackM.attack[player.attackChoose].screenShakeFreq, attackM.attack[player.attackChoose].screenShakeTime);
-
                     if(ennemi.healthPoints <= damage) 
                     {
                         if (attackM.attack[player.attackChoose].screenShakeAmp == 0)
@@ -102,7 +100,6 @@ public class AttackEffect : MonoBehaviour
                         SlowTime(0.2f, 0.3f);
 
                     }
-
                     damage = 0;
                 }
 

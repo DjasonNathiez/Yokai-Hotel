@@ -5,9 +5,7 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     public PlayerController player;
-
-    public float money, health, maxHealth,currentHealth, attackBoost, keys;
-
+    public int money, health, maxHealth,currentHealth, attackBoost, keys;
     // Start is called before the first frame update
     void Start()
     {

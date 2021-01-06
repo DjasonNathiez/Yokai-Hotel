@@ -258,8 +258,10 @@ public class ProceduralGenerator : MonoBehaviour
                 }
             }
 
+            // destroy Room
             validRooms.Remove(shopRoomData);
             Destroy(shopRoomData.room.gameObject);
+           
 
             // Replace
             GameObject shopRoom = Instantiate(shopPrefab, new Vector2(shopRoomData.posX * resolutionX, shopRoomData.posY * resolutionY), transform.rotation);

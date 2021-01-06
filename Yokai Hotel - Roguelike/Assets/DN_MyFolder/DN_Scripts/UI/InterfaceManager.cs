@@ -18,14 +18,14 @@ public class InterfaceManager : MonoBehaviour
     public Texture hpDown;
     /// Texture hpNotActive;
 
-    float currentHealth;
-    float maxHealth;
+    int currentHealth;
+    int maxHealth;
 
     float shootValue;
 
     [Header("Money")]
     TextMeshProUGUI moneyText;
-    float currentMoney;
+    int currentMoney;
 
     private void Start()
     {
