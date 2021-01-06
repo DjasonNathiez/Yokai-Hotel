@@ -10,6 +10,8 @@ public class Room : MonoBehaviour
     public Vector2 roomPos;
     public Door[] doors;
     public SpriteRenderer sprite;
+
+    public bool keyToSpawn;
     private void Awake()
     {
         doors = GetComponentsInChildren<Door>();
@@ -47,12 +49,14 @@ public class Room : MonoBehaviour
 
             case RoomType.SHOP:
                 {
-                    roomColor = new Color(0, 0.5f, 0);
+                    //roomColor = new Color(0, 0.5f, 0);
+                    roomColor = Color.white;
                     break;
                 }
             case RoomType.KEY:
                 {
-                    roomColor = Color.cyan;
+                    //roomColor = Color.cyan;
+                    roomColor = Color.white;
                     break;
                 }
             case RoomType.PREPAREND:

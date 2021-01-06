@@ -8,6 +8,7 @@ public class PlayerAnimator : MonoBehaviour
 {
     PlayerController player;
     Animator animator;
+    public GhostController ghost;
 
     [Header("Displacement")]
     public float moveSensibility;
@@ -19,6 +20,7 @@ public class PlayerAnimator : MonoBehaviour
         player = GetComponentInParent<PlayerController>();
         animator = GetComponent<Animator>();
 
+
         // initialize animator state
         animatorState = AnimatorState.IDLE;
     }
@@ -28,6 +30,12 @@ public class PlayerAnimator : MonoBehaviour
     {
         UpdateAnimatorState();
         UpdateAnimatorValue();
+
+        // active ghost trail
+        if(ghost)
+            ghost.enabled = (animatorState == AnimatorState.DASH);
+             
+
     }
 
     void UpdateAnimatorState()

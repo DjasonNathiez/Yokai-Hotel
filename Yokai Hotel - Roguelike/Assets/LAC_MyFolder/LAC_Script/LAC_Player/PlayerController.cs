@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     public AttackManager attackM;
 
     [Header("HURT")]
-    public int health;
+    public float health;
     public int hurtDamage;
     public bool isHurt;
 
@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
                     if (dash && dashable)
                     {
                         //dashDir = lastDir.normalized;
-                        dashVelocity = velocity.normalized *(dashDistance / dashTime);
+                        dashVelocity = lastDir.normalized *(dashDistance / dashTime);
                         StartCoroutine(LoadDash());
                         dashable = false;
 

@@ -5,12 +5,15 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     public PlayerController player;
-    public int money, health, maxHealth,currentHealth, attackBoost;
+
+    public float money, health, maxHealth,currentHealth, attackBoost, keys;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GetComponent<PlayerController>();
         maxHealth = player.health;
+
     }
 
     // Update is called once per frame
@@ -22,5 +25,6 @@ public class InventoryManager : MonoBehaviour
             health = 0;
         }
         currentHealth = player.health;
+
     }
 }

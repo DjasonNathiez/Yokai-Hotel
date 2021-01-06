@@ -46,7 +46,7 @@ public class EnnemiTank : EnnemiBehaviour
     public float bulletDelay;
     float bulletTimer;
 
-    public int shieldPoint;
+    public float shieldPoint;
     public float shieldRadius, shieldSpeed, shieldAngle, defelectDegree;
     public Vector2 shieldOrigin;
     Vector2 shieldDir;
