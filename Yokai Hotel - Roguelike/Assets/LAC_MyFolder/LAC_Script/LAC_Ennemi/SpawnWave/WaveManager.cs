@@ -32,14 +32,14 @@ public class WaveManager : MonoBehaviour
             if (activeEnemy[i] != null)
                 waveEnd = false;
         }
-        if (waveEnd && waveIndex < waves.Length - 1)
+        if (waveEnd && waveIndex <= waves.Length - 1)
         {
             waveIndex++;
             activeEnemy = new EnnemiBehaviour[0];
         }
 
         //apply spawn
-        if(waveIndex < waves.Length - 1 && allowSpawn)
+        if(waveIndex <= waves.Length - 1 && allowSpawn)
         {
             if (waves[waveIndex].gameObject.activeSelf == false)
             {
