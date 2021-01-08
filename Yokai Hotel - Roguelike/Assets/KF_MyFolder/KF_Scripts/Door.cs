@@ -32,6 +32,14 @@ public class Door : MonoBehaviour
             doorTriggerZone.isTrigger = false;
             temporaryShow.SetActive(false);
         }
+        if (doorTriggerZone.isTrigger == false)
+        {
+            temporaryShow.SetActive(false);
+        }
+        if (doorTriggerZone.isTrigger == true)
+        {
+            temporaryShow.SetActive(true);
+        }
     }             
 
 
