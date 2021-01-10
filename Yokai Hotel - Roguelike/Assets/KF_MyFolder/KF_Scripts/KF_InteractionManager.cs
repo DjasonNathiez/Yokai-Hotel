@@ -59,6 +59,7 @@ public class KF_InteractionManager : MonoBehaviour
     public void EndInteraction()
     {
         dialogueAnim.SetBool("isOpen", false);
+        Debug.Log("Dialogue End");
         KF_ResetInteract.dialogueReset = 0;
     }
 

@@ -10,7 +10,6 @@ public class KF_Interaction : MonoBehaviour
     public UnityEvent interactAction;
     public UnityEvent interactContinue;
     public KF_InteractionManager intM;
-    private Animator dialogueAnim;
     public GameObject thisInteract;
     public bool inRange;
 
@@ -24,7 +23,6 @@ public class KF_Interaction : MonoBehaviour
                 thisInteract = interact;
         }
         interactionIcon.SetActive(false);
-        dialogueAnim = GameObject.FindGameObjectWithTag("DialogueAnim").GetComponent<Animator>();
     }
 
     private void Update()
@@ -40,13 +38,6 @@ public class KF_Interaction : MonoBehaviour
             }
             else if (Input.GetButtonDown("Interact") && (KF_ResetInteract.dialogueReset == 1))
             {
-                if (intM.sentences.Count == 0)
-                {
-                    KF_ResetInteract.dialogueReset = 0;
-                    Debug.Log("Dialogue End");
-                    dialogueAnim.SetBool("isOpen", false);
-                    return;
-                }
                 Debug.Log("Dialogue Next Line");
                 interactContinue.Invoke();
                 return;
