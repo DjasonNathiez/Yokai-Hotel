@@ -57,6 +57,7 @@ public class MenuManager : MonoBehaviour
                 paused = false;
             }
 
+
             if(HUD && paused == true)
             {
                 HUD.enabled = false;
