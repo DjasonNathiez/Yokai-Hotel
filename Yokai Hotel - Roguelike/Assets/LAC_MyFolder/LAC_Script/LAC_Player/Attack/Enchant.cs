@@ -8,6 +8,28 @@ public class Enchant : ScriptableObject
 {
     public Sprite icon;
     public EnchantEffect[] enchantEffects;
+
+    public string GenerateDescription()
+    {
+        // initialize
+        string sentence = "";
+
+        string[] actions = { "light attack", "heavy attack", "shoot", "dash" };
+        string[] boostChange = { "increase", "decrease" };
+
+        foreach(EnchantEffect e in enchantEffects)
+        {
+            float boostState = Mathf.Abs(e.boostValue - 1) * 100;
+            if (sentence != "") // line return
+                sentence += "\n and ";
+
+            sentence += "After "+actions[(int)e.actionType]+": " +((e.boostValue < 1)?boostChange[1] : boostChange[0])+ " " +actions[(int)e.effectType] +" damage by " +boostState+" % " +
+                        " during :" + e.effectDuration + " secondes";
+        }
+
+        return sentence;
+    }
+
 }
 
 [Serializable]
@@ -27,3 +49,5 @@ public struct EnchantEffect
 
 
 }
+
+
