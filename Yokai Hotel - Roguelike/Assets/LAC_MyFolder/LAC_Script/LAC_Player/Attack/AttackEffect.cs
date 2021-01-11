@@ -18,6 +18,7 @@ public class AttackEffect : MonoBehaviour
     public CinemachineVirtualCamera virtualCam;
     float screenShakeCount;
 
+    AudioManager audioM;
 
     // Start is called before the first frame update
     void Start()
@@ -28,8 +29,8 @@ public class AttackEffect : MonoBehaviour
 
         cam = GameObject.FindGameObjectWithTag("MainCamera");
         camBrain = cam.GetComponent<CinemachineBrain>();
-        
 
+        audioM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
 
     }
 
@@ -44,7 +45,7 @@ public class AttackEffect : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collider.tag == "Ennemi" && player.attackChoose != -1)
+        if (collider.tag == "Ennemi" && player.attackChoose != -1)
         {
 
             EnnemiBehaviour ennemi = collider.GetComponentInParent<EnnemiBehaviour>();
@@ -53,15 +54,15 @@ public class AttackEffect : MonoBehaviour
                 EnnemiTank eTank = ennemi.GetComponentInParent<EnnemiTank>();
                 bool deflectShield = false;
 
-                int damage = attackM.attack[player.attackChoose].damage;
+                float damage = attackM.attack[player.attackChoose].damage;
                 Vector2 repulseDir = (ennemi.transform.position - player.transform.position).normalized;
                 if (eTank)
                 {
-                    if(eTank.shield != null)
+                    if (eTank.shield != null)
                     {
                         Debug.Log("Hit shield");
                         Vector2 enemyDir = (collider.transform.position - transform.position).normalized;
-                        float enemyAngle = ((Mathf.Atan2(enemyDir.y, enemyDir.x) * Mathf.Rad2Deg)+ 180) % 360;
+                        float enemyAngle = ((Mathf.Atan2(enemyDir.y, enemyDir.x) * Mathf.Rad2Deg) + 180) % 360;
                         if (Mathf.Sign(enemyAngle) != Mathf.Sign(eTank.shieldAngle))
                             enemyAngle = (Mathf.Sign(enemyAngle) < 0) ? (enemyAngle + 360) % 360 : (enemyAngle - 360) % 360;
 
@@ -72,7 +73,7 @@ public class AttackEffect : MonoBehaviour
                     }
                 }
 
-                if(deflectShield)
+                if (deflectShield)
                 {
                     if (player.attackChoose == 3)
                         damage += 1;
@@ -82,7 +83,7 @@ public class AttackEffect : MonoBehaviour
 
                     Debug.Log("damage shield");
                 }
-                else if (damage > 0) 
+                else if (damage > 0)
                 {
                     // apply damage & recoil
                     Debug.Log("Hit ennemy");
@@ -92,7 +93,7 @@ public class AttackEffect : MonoBehaviour
 
                     // feedBack
                     ScreenShake(attackM.attack[player.attackChoose].screenShakeAmp, attackM.attack[player.attackChoose].screenShakeFreq, attackM.attack[player.attackChoose].screenShakeTime);
-                    if(ennemi.healthPoints <= damage) 
+                    if (ennemi.healthPoints <= damage)
                     {
                         if (attackM.attack[player.attackChoose].screenShakeAmp == 0)
                             ScreenShake(0.5f, 4, 0.3f);
@@ -104,6 +105,8 @@ public class AttackEffect : MonoBehaviour
                 }
 
             }
+
+            audioM.PlaySound("Ennemy hurt", 0);
         }
 
         if (collider.tag == "BulletEnemy" && player.attackChoose == 3)

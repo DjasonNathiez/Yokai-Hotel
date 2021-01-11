@@ -10,7 +10,7 @@ public class Attack : ScriptableObject
     public enum AttackType { LIGHT, HEAVY, SPECIAL}
     public AttackType attackType;
 
-    public int damage;
+    public float damage;
 
     public float inertness,inertnessTime;
 

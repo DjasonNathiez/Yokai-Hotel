@@ -1,5 +1,5 @@
 
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -84,9 +84,20 @@ public class PlayerController : MonoBehaviour
     public float shootGaugeMax;
 
     [Header("Aim Assist")]
+    public Collider2D[] hit;
+    public GameObject currentTarget;
     public float radius;
-    public float distance;
-    Vector2 nearEnnemyPos;
+    public float detectFreq;
+    float detectTimer;
+    public LayerMask ennemyLayer;
+    public Vector2 aimDirection;
+
+    [Header("FielOfView")] //angle de vision du personnage
+    public GameObject up;
+    public GameObject down;
+    public GameObject right;
+    public GameObject left;
+    public bool ennemyDetected;
 
     SpriteRenderer spriteT;
 
@@ -104,7 +115,7 @@ public class PlayerController : MonoBehaviour
 
         gameManager = GameObject.FindGameObjectWithTag("GameManager");
         GameObject cam = GameObject.FindGameObjectWithTag("VirtualCam");
-        if(cam)
+        if (cam)
             screenShake = cam.GetComponent<ScreenShake>();
 
         if (gameManager)
@@ -113,11 +124,14 @@ public class PlayerController : MonoBehaviour
         // set dash value
         currentRecoilDash = recoilDashTime;
         currentRecoilReset = recoilResetTime;
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        FielOfView();
 
         #region Input
         // movement
@@ -131,7 +145,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Attack1"))
             lA_Time = Time.time;
 
-            
+
         if (Input.GetButtonDown("Attack2"))
             hA_Time = Time.time;
 
@@ -139,7 +153,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Shoot") && shootGaugeState == shootGaugeMax)
             sA_Time = Time.time;
 
-            
+
 
         lightAttack = (Time.time - lA_Time < lA_Buffer);
         heavyAttack = (Time.time - hA_Time < hA_Buffer);
@@ -151,7 +165,7 @@ public class PlayerController : MonoBehaviour
         #endregion
 
         // take damage
-        if(hurtDamage != 0 )
+        if (hurtDamage != 0)
         {
             if (!invincible)
             {
@@ -173,22 +187,22 @@ public class PlayerController : MonoBehaviour
                 {
                     // displacement
                     Vector2 targetVelocity = inputAxis.normalized * speed;
-                    velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocity.x, ref velocitySmoothing.x, 
+                    velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocity.x, ref velocitySmoothing.x,
                                                  (Mathf.Abs(velocity.x) <= Mathf.Abs(targetVelocity.x)) ? acceleration : deceleration);
-                    velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocity.y, ref velocitySmoothing.y, 
+                    velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocity.y, ref velocitySmoothing.y,
                                                  (Mathf.Abs(velocity.y) <= Mathf.Abs(targetVelocity.y)) ? acceleration : deceleration);
                     // dash
                     if (dash && dashable)
                     {
                         //dashDir = lastDir.normalized;
-                        dashVelocity = lastDir.normalized *(dashDistance / dashTime);
+                        dashVelocity = lastDir.normalized * (dashDistance / dashTime);
                         StartCoroutine(LoadDash());
                         dashable = false;
 
-                        if(audioManager)
+                        if (audioManager)
                             audioManager.PlaySound("Player dash", 0);
                     }
-                        
+
 
 
                     // attack
@@ -197,10 +211,10 @@ public class PlayerController : MonoBehaviour
 
                     if (!lightAttack && !heavyAttack)
                         attackable = true;
-                   
-                    if ((lightAttack || heavyAttack|| shootAttack )&& attackable)
+
+                    if ((lightAttack || heavyAttack || shootAttack) && attackable)
                     {
-                       
+
                         comboUpdate = true;
 
                         attackDir = lastDir.normalized;
@@ -209,15 +223,15 @@ public class PlayerController : MonoBehaviour
 
                         if (attackChoose != -1)
                         {
-                            if ((int)attackM.attack[attackChoose].attackType == 0) 
+                            if ((int)attackM.attack[attackChoose].attackType == 0)
                                 attackVelocity = lastDir * attackM.attack[attackChoose].inertness;
 
-                            if(attackChoose == 4)
+                            if (attackChoose == 4)
                             {
-                                
+
                                 firePoint = lastDir.normalized * firePointRadius + (Vector2)transform.position;
                                 firePoint.y += 0.5f;
-                                bulletDir = lastDir.normalized;
+                                bulletDir = aimDirection.normalized;
                             }
 
                             playerState = PlayerState.ATTACK;
@@ -242,13 +256,13 @@ public class PlayerController : MonoBehaviour
                         float acceleration = attackM.attack[attackChoose].inertnessTime + 0.001f;
                         float distance = attackM.attack[attackChoose].inertness;
 
-                        attackVelocity.x -= (distance/ acceleration) * Time.deltaTime * Mathf.Sign(attackVelocity.x);
+                        attackVelocity.x -= (distance / acceleration) * Time.deltaTime * Mathf.Sign(attackVelocity.x);
                         attackVelocity.y -= (distance / acceleration) * Time.deltaTime * Mathf.Sign(attackVelocity.y);
 
                         velocity = attackVelocity;
                     }
                     else
-                    velocity = Vector2.zero;
+                        velocity = Vector2.zero;
 
                     // set up combo
                     bool combo1 = ((Time.time - lA_Time < lA_ComboDuration[1]) && attackChoose == 1);
@@ -260,7 +274,7 @@ public class PlayerController : MonoBehaviour
                         comboUpdate = false;
                     }
 
-                    if(attackChoose == 2)
+                    if (attackChoose == 2)
                         combo = 0;
 
                     break;
@@ -278,11 +292,28 @@ public class PlayerController : MonoBehaviour
         }
 
         //maximize shoot gauge
-        if(shootGaugeState > shootGaugeMax)
+        if (shootGaugeState > shootGaugeMax)
         {
             shootGaugeState = shootGaugeMax;
         }
-        
+
+        //timer detection cible
+        if (detectTimer > detectFreq)
+        {
+            CheckTarget();
+            detectTimer = 0;
+        }
+
+        detectTimer += Time.deltaTime;
+
+        if (currentTarget && ennemyDetected == true)
+        {
+            aimDirection = (currentTarget.transform.position - transform.position).normalized;
+        }
+        else
+        {
+            aimDirection = lastDir.normalized;
+        }
     }
 
     private void FixedUpdate()
@@ -315,34 +346,35 @@ public class PlayerController : MonoBehaviour
         {
             attackChoose = combo;
             shootGaugeState += lAFillAmount;
-        
+
 
             if (audioManager)
                 audioManager.PlaySound("Player fast attack", 0);
         }
-            
+
 
         if (heavyAttack)
         {
             attackChoose = 3;
             shootGaugeState += hAFillAmount;
 
-            if(screenShake)
+            if (screenShake)
                 screenShake.isShaking = true;
 
             if (audioManager)
                 audioManager.PlaySound("Player heavy attack", 0);
         }
-          
+
 
         if (shootAttack)
         {
             attackChoose = 4;
+
             if (audioManager)
                 audioManager.PlaySound("Player distance attack", 0);
         }
 
-           
+
 
         if (lastAttackChoose != attackChoose && attackChoose != -1)
             attackable = false;
@@ -363,6 +395,76 @@ public class PlayerController : MonoBehaviour
 
     #region Aiming Aid
 
+    void CheckTarget()
+    {
+        float minDist = Mathf.Infinity;
+        hit = Physics2D.OverlapCircleAll(transform.position, radius, ennemyLayer);
+
+        if (hit.Length > 0)
+        {
+            foreach (Collider2D e in hit)
+            {
+                float distanceTarget = Vector2.Distance(transform.position, e.transform.position);
+
+                if (minDist > distanceTarget)
+                {
+                    minDist = distanceTarget;
+                    currentTarget = e.gameObject;
+                }
+            }
+        }
+        else
+        {
+            currentTarget = null;
+        }
+
+    }
+
+    void FielOfView()
+    {
+        #region activation direction
+        if (up || down || right || left)
+        {
+
+            if (lastDir.x == 0 && lastDir.y == 1)
+            {
+                up.SetActive(true);
+                down.SetActive(false);
+                right.SetActive(false);
+                left.SetActive(false);
+            }
+
+            if (lastDir.x == 1 && lastDir.y == 0)
+            {
+                up.SetActive(false);
+                down.SetActive(false);
+                right.SetActive(true);
+                left.SetActive(false);
+            }
+
+            if (lastDir.x == 0 && lastDir.y == -1)
+            {
+                up.SetActive(false);
+                down.SetActive(true);
+                right.SetActive(false);
+                left.SetActive(false);
+            }
+
+            if (lastDir.x == -1 && lastDir.y == 0)
+            {
+                up.SetActive(false);
+                down.SetActive(false);
+                right.SetActive(false);
+                left.SetActive(true);
+            }
+        }
+       
+
+        #endregion
+
+
+
+    }
     #endregion
 }
 
