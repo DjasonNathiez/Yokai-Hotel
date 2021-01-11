@@ -12,6 +12,7 @@ public class KF_Interaction : MonoBehaviour
     public KF_InteractionManager intM;
     public GameObject thisInteract;
     public bool inRange;
+    private bool inDialogue;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,7 @@ public class KF_Interaction : MonoBehaviour
                 Debug.Log("Dialogue Start");
                 KF_ResetInteract.dialogueReset = 1;
                 interactAction.Invoke();
+                inDialogue = true;
                 return;
             }
             else if (Input.GetButtonDown("Interact") && (KF_ResetInteract.dialogueReset == 1))
@@ -82,6 +84,12 @@ public class KF_Interaction : MonoBehaviour
             {
                 interact.SetActive(true);
             }
+            if (inDialogue == true)
+            {
+                inDialogue = false;
+                intM.EndInteraction();
+            }
+
         }
     }
 }
