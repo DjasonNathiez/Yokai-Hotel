@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 velocitySmoothing;
 
     [Header("Dash")]
+    public bool dash;
     public float dashDistance;
     public float dashTime;
 
@@ -125,7 +126,7 @@ public class PlayerController : MonoBehaviour
         if (inputAxis.magnitude > dirSensibility)
             lastDir = inputAxis;
 
-        bool dash = Input.GetButtonDown("Dash");
+         dash = Input.GetButtonDown("Dash");
 
         // attack
         if (Input.GetButtonDown("Attack1"))

@@ -12,6 +12,11 @@ public class AttackEffect : MonoBehaviour
 
     public LayerMask detectMask;
     public GameObject bulletPrefab;
+
+    [Header("Attack Multiplier")]
+    public float hA_boost;
+    public float lA_boost, sA_boost;
+    
     [Header("Cam")]
     public GameObject cam;
     public CinemachineBrain camBrain;
