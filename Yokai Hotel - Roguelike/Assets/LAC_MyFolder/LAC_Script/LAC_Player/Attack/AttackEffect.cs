@@ -35,7 +35,10 @@ public class AttackEffect : MonoBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera");
         camBrain = cam.GetComponent<CinemachineBrain>();
 
-        audioM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
+        GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
+
+        if(gameManager)
+            audioM = gameManager.GetComponent<AudioManager>();
 
     }
 
