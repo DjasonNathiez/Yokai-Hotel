@@ -24,9 +24,10 @@ public class EnnemiBehaviour : MonoBehaviour
     #endregion
     #region health
     [Header("health")]
-    public int healthPoints;
-    public int healthDamage = 0;
+    public float healthPoints;
+    public float healthDamage = 0;
 
+    
     [HideInInspector]
     public bool hurt;
     #endregion

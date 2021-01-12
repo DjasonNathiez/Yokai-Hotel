@@ -10,26 +10,36 @@ public class InterfaceManager : MonoBehaviour
 {
     InventoryManager inventory;
     PlayerController player;
+    KF_KeyActivate kActive;
     public Slider fillSlider;
 
     [Header("Health")]
     public RawImage[] allTextureLantern;
     public Texture hpActivate;
     public Texture hpDown;
+    public GameObject hpBar;
     /// Texture hpNotActive;
 
-    int currentHealth;
-    int maxHealth;
+    float currentHealth;
+    float maxHealth;
 
     float shootValue;
 
     [Header("Money")]
     TextMeshProUGUI moneyText;
-    int currentMoney;
+    float currentMoney;
+
+    [Header("Keys")]
+    public RawImage keysImage;
+    public Texture keysLow;
+    public Texture keysMedium;
+    public Texture keysHigh;
+    int currentKey;
 
     private void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        
         
         if(playerObj)
         inventory = playerObj.GetComponent<InventoryManager>(); //initialization du script InventoryManager
@@ -39,15 +49,12 @@ public class InterfaceManager : MonoBehaviour
         if(playerObj)
         player = playerObj.GetComponent<PlayerController>();
 
-        allTextureLantern = GetComponentsInChildren<RawImage>();
+        allTextureLantern = hpBar.GetComponentsInChildren<RawImage>();
 
         //initialization HealthBar
         for(int i = 0; i < allTextureLantern.Length; i++)
         {
-            if(i != 0)
-            {
-                allTextureLantern[i].enabled = true;
-            }
+            allTextureLantern[i].enabled = true;
         }
 
     }
@@ -58,6 +65,8 @@ public class InterfaceManager : MonoBehaviour
         UpdateHealth();
         UpdateMoney();
         UpdateShoot();
+        UpdateKey();
+
     }
 
     void UpdateHealth()
@@ -82,13 +91,46 @@ public class InterfaceManager : MonoBehaviour
         if (inventory)
             currentMoney = inventory.money;
 
-        if(moneyText)
+        if (moneyText)
+        {
             moneyText.text = currentMoney.ToString();
+            
+            if(currentMoney > 999)
+            {
+                moneyText.text = "999+";
+            }
+        }
     }
 
     void UpdateShoot()
     {
         if (player)
             fillSlider.value = player.shootGaugeState;
+    }
+
+    void UpdateKey()
+    {
+        //de 1 à 3 clé selon le niveau
+
+        /// keys/keysinlvl
+
+        if(kActive && inventory)
+        currentKey = inventory.keys / kActive.keysinroom;
+
+        if(currentKey == 1 / 3)
+        {
+            keysImage.texture = keysLow;
+        }
+
+        if(currentKey == 2 / 3)
+        {
+            keysImage.texture = keysMedium;
+        }
+
+        if (currentKey == 3 / 3)
+        {
+            keysImage.texture = keysHigh;
+        }
+
     }
 }

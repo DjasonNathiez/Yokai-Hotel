@@ -8,13 +8,14 @@ public class EnnemiShield : MonoBehaviour
 {
     [HideInInspector]
     public GameObject objShielded;
-    public int shieldPoint;
+    public float shieldPoint;
     public Vector2 shieldDir;
 
 
     // Update is called once per frame
     void Update()
     {
+        
         if (shieldPoint <= 0)
             Destroy(gameObject);
     }
