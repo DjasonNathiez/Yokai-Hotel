@@ -17,6 +17,7 @@ public class Attack : ScriptableObject
     [Header("KnockBack")]
     public float knockBackValue; 
     public float knockBackModifier;
+    public float stunTime;
 
     [Header("Screen")]
     public float screenShakeAmp;
