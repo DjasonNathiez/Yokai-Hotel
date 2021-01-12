@@ -11,7 +11,10 @@ public class WaveManager : MonoBehaviour
 
     int waveIndex = 0;
     public EnnemiBehaviour[] activeEnemy;
-    
+    private Transform roomtr;
+    public GameObject room;
+    public List<GameObject> doors;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +22,19 @@ public class WaveManager : MonoBehaviour
         foreach( Wave w in waves)
         {
             w.gameObject.SetActive(false);
+        }
+        roomtr = transform.root;
+        room = roomtr.gameObject;
+        foreach(Transform child in roomtr)
+        {
+            if ((child.tag == "Door") && (child.gameObject.GetComponent<Door>().doorLink != null))
+            {
+                doors.Add(child.gameObject);  
+            }
+        }
+        for (int i = 0; i < doors.Count; i++)
+        {
+            doors[i].GetComponent<BoxCollider2D>().isTrigger = false;
         }
     }
 
@@ -51,6 +67,10 @@ public class WaveManager : MonoBehaviour
         if(waveIndex >= waves.Length)
         {
             Debug.Log("all wave End");
+            for (int i = 0; i < doors.Count; i++)
+            {
+                doors[i].GetComponent<BoxCollider2D>().isTrigger = true;
+            }
             Destroy(gameObject);
         }
         

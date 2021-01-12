@@ -25,12 +25,32 @@ public class Door : MonoBehaviour
         doorTriggerZone = this.gameObject.GetComponent<BoxCollider2D>();
     }
 
+    private void Start()
+    {
+        if (this.gameObject.CompareTag("NoLinkDoor"))
+        {
+            if (doorLink != null)
+            {
+                doorLink.doorLink = null;
+                doorLink = null;
+            }          
+        }
+    }
+
     private void Update()
     {
         if (doorLink == null)
         {
             doorTriggerZone.isTrigger = false;
             temporaryShow.SetActive(false);
+        }
+        if (doorTriggerZone.isTrigger == false)
+        {
+            temporaryShow.SetActive(false);
+        }
+        if (doorTriggerZone.isTrigger == true)
+        {
+            temporaryShow.SetActive(true);
         }
     }             
 
