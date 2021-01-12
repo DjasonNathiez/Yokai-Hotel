@@ -5,12 +5,18 @@ using UnityEngine.Rendering;
 
 public class KF_AssetLayerOrdering : MonoBehaviour
 {
-    private GameObject thisObject;
+    public GameObject thisObject;
     private SpriteRenderer thisSP;
+    public bool manualCollider;
 
     private void Start()
     {
-        thisObject = this.gameObject;
+        if (manualCollider == false)
+            thisObject = this.gameObject;
+        else
+            if (thisObject == null)
+            thisObject = this.gameObject;
+
         thisSP = thisObject.GetComponent<SpriteRenderer>();
     }
     private void OnTriggerEnter2D(Collider2D collision)

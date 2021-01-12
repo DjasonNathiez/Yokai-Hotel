@@ -7,6 +7,8 @@ public class KF_KeyActivate : MonoBehaviour
     public InventoryManager inventoryM;
     public Room thisRoom;
     public int keysinroom;
+    public GameObject interactb;
+    private bool bActif;
 
 
     // Start is called before the first frame update
@@ -23,15 +25,18 @@ public class KF_KeyActivate : MonoBehaviour
             this.gameObject.SetActive(false);
             keysinroom = 0;
         }
-            
+        interactb.SetActive(false);
+        bActif = true;
+
     }
 
 
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && (bActif == true))
         {
+            interactb.SetActive(true);
             if (!inventoryM)
                 inventoryM = collision.gameObject.GetComponent<InventoryManager>();
 
@@ -40,7 +45,15 @@ public class KF_KeyActivate : MonoBehaviour
                 inventoryM.keys ++;
                 Debug.Log("Key Added");
                 this.gameObject.SetActive(false);
+                Destroy(interactb);
+                bActif = false;
             }
         }
+    }
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && (bActif == true))
+            interactb.SetActive(false);
     }
 }
