@@ -14,6 +14,7 @@ public class WaveManager : MonoBehaviour
     private Transform roomtr;
     public GameObject room;
     public List<GameObject> doors;
+    public bool tutorial;
 
     // Start is called before the first frame update
     void Start()
@@ -25,11 +26,14 @@ public class WaveManager : MonoBehaviour
         }
         roomtr = transform.root;
         room = roomtr.gameObject;
-        foreach(Transform child in roomtr)
+        if (tutorial == false)
         {
-            if ((child.tag == "Door") && (child.gameObject.GetComponent<Door>().doorLink != null))
+            foreach (Transform child in roomtr)
             {
-                doors.Add(child.gameObject);  
+                if ((child.tag == "Door") && (child.gameObject.GetComponent<Door>().doorLink != null))
+                {
+                    doors.Add(child.gameObject);
+                }
             }
         }
         for (int i = 0; i < doors.Count; i++)

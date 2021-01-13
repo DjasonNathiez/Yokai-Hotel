@@ -6,7 +6,7 @@ public class KF_TutorialDoors : MonoBehaviour
 {
     public GameObject doorLink;
     public GameObject playerObj;
-    private BoxCollider2D doorTriggerZone;
+    public BoxCollider2D doorTriggerZone;
     public GameObject temporaryShow;
     public bool TutorialFinish;
     public bool TutorialStart; 

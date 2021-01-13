@@ -29,7 +29,7 @@ public class KF_KeyActivate : MonoBehaviour
         interactb.SetActive(false);
         bActif = true;
         anim = this.gameObject.GetComponent<Animator>();
-
+        thisRoom = transform.root.GetComponent<Room>();
     }
 
 
