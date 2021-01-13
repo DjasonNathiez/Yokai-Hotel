@@ -98,6 +98,7 @@ public class AttackEffect : MonoBehaviour
                     ennemi.healthDamage = damage;
                     ennemi.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
                     ennemi.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
+                    ennemi.stunTime = attackM.attack[player.attackChoose].stunTime;
 
                     // feedBack
                     ScreenShake(attackM.attack[player.attackChoose].screenShakeAmp, attackM.attack[player.attackChoose].screenShakeFreq, attackM.attack[player.attackChoose].screenShakeTime);
@@ -119,14 +120,14 @@ public class AttackEffect : MonoBehaviour
 
         if (collider.tag == "BulletEnemy" && player.attackChoose == 3)
         {
-            Bullet bullet = collider.GetComponentInParent<Bullet>();
+            /*Bullet bullet = collider.GetComponentInParent<Bullet>();
 
             if (bullet && bullet.tag == "BulletEnemy")
             {
                 Debug.Log("hitBullet");
                 bullet.speed = -2*bullet.speed;
                 bullet.tag = "BulletAlly";
-            }
+            }*/
             
         }
     }
