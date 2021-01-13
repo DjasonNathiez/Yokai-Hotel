@@ -40,7 +40,7 @@ public class PlayerAnimator : MonoBehaviour
 
     void UpdateAnimatorState()
     {
-        if ((int)player.playerState == 0 || (int) player.playerState == 3)
+        if ((int)player.playerState == 0 || (int) player.playerState == 4)
         {
             if (player.velocity.magnitude > moveSensibility)
                 animatorState = AnimatorState.MOVE;
