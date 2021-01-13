@@ -14,7 +14,7 @@ public class EnchantManager : MonoBehaviour
 
     [Header("Boost")]
     public float lightBoost = 1;
-    public float heavyBoost = 1, shootBoost = 1;
+    public float heavyBoost = 1;
     private void Start()
     {
         foreach(Enchant e in enchants)
@@ -44,6 +44,7 @@ public class EnchantManager : MonoBehaviour
                 bool lightAttack = (player.lightAttack && (int)currentEnchant.actionType == 0);
                 bool heavyAttack = (player.heavyAttack && (int)currentEnchant.actionType == 1);
                 bool shootAttack = (player.shootAttack && (int)currentEnchant.actionType == 2);
+
                 bool dash = player.dash && (int)currentEnchant.actionType == 3;
 
                 bool effectCond = (lightAttack || heavyAttack || shootAttack || dash);
@@ -71,7 +72,6 @@ public class EnchantManager : MonoBehaviour
 
         lightBoost = boostL;
         heavyBoost = boostH;
-        shootBoost = boostS;
     }
 
     public void AddEnchant(ref List<Enchant> enchants, Enchant enchant)

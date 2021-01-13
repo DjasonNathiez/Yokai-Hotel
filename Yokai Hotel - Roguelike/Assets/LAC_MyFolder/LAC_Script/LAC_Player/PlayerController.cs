@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 {
 
     Rigidbody2D rb2D;
-    public enum PlayerState { FREE, DASH, ATTACK, HURT };
+    public enum PlayerState { FREE, DASH, ATTACK, HURT, MANAGE };
     public PlayerState playerState = PlayerState.FREE;
 
     [Header("Movement")]
@@ -76,6 +76,13 @@ public class PlayerController : MonoBehaviour
     public float hurtTime;
     public float invincibleTime;
     bool invincible;
+    [Header("Manage Setting")]
+    public string startTriggerM = "";
+    public string endTriggerM = "";
+
+    public float manageSpeed;
+    public Vector2 manageDir;
+
 
     [Header("Shoot")]
     public float lAFillAmount;
@@ -289,6 +296,15 @@ public class PlayerController : MonoBehaviour
                     spriteT.color = col;
                     break;
                 }
+            case PlayerState.MANAGE:
+                {
+                    Vector2 targetVelocity = manageDir.normalized * manageSpeed;
+                    velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocity.x, ref velocitySmoothing.x,
+                                                 (Mathf.Abs(velocity.x) <= Mathf.Abs(targetVelocity.x)) ? acceleration : deceleration);
+                    velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocity.y, ref velocitySmoothing.y,
+                                                 (Mathf.Abs(velocity.y) <= Mathf.Abs(targetVelocity.y)) ? acceleration : deceleration);
+                    break;
+                }
 
         }
 
@@ -467,5 +483,19 @@ public class PlayerController : MonoBehaviour
 
     }
     #endregion
+
+    // Manage cond
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(startTriggerM != null && endTriggerM != null)
+        {
+            if (collision.tag == startTriggerM)
+                playerState = PlayerState.MANAGE;
+
+            if (collision.tag == endTriggerM)
+                playerState = PlayerState.FREE;
+        }
+        
+    }
 }
 
