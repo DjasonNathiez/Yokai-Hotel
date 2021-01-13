@@ -77,8 +77,8 @@ public class PlayerController : MonoBehaviour
     public float invincibleTime;
     bool invincible;
     [Header("Manage Setting")]
-    public string startTriggerM = "";
-    public string endTriggerM = "";
+    public string[] startTriggerM ;
+    public string[] endTriggerM ;
 
     public float manageSpeed;
     public Vector2 manageDir;
@@ -487,13 +487,20 @@ public class PlayerController : MonoBehaviour
     // Manage cond
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(startTriggerM != null && endTriggerM != null)
+        if(startTriggerM.Length > 0 && endTriggerM.Length > 0)
         {
-            if (collision.tag == startTriggerM)
-                playerState = PlayerState.MANAGE;
+            foreach(string s in startTriggerM)
+            {
+                if(collision.tag == s)
+                    playerState = PlayerState.MANAGE;
+            }
 
-            if (collision.tag == endTriggerM)
-                playerState = PlayerState.FREE;
+            foreach (string s in endTriggerM)
+            {
+                if (collision.tag == s)
+                    playerState = PlayerState.FREE;
+            }
+
         }
         
     }
