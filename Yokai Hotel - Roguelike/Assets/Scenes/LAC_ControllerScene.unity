@@ -1503,7 +1503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866906aebe63aa24099b6be310032148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
+  playerState: 4
   speed: 6
   acceleration: 0.07
   deceleration: 0.02
@@ -1544,6 +1544,10 @@ MonoBehaviour:
   isHurt: 0
   hurtTime: 0.2
   invincibleTime: 1
+  startTriggerM: []
+  endTriggerM: []
+  manageSpeed: 5
+  manageDir: {x: 1, y: 0}
   lAFillAmount: 0
   hAFillAmount: 0
   uAFillAmount: 0
@@ -1570,7 +1574,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 256005332}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.88, y: -1.42, z: 0}
+  m_LocalPosition: {x: -3.88, y: -2.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 622787590}
@@ -2352,7 +2356,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 440582569}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 11.21, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3208,8 +3212,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attack:
+  - {fileID: 11400000, guid: ec672fda4cac6fb48989a0f53cc3f0b9, type: 2}
   - {fileID: 11400000, guid: b051eba4f5863884e9e25b874cebe7e1, type: 2}
-  - {fileID: 11400000, guid: debb57419c4bc8e46bd44ac92eda4e7f, type: 2}
   - {fileID: 11400000, guid: dafa2868b51e2be40a5b4ceaba4b3592, type: 2}
   - {fileID: 11400000, guid: e7fe1b811981ac94da688e7a90389ab5, type: 2}
   - {fileID: 11400000, guid: 7e0888549f30e7a4cbe28e6d6a8bd34d, type: 2}
@@ -3361,7 +3365,6 @@ MonoBehaviour:
   chooseDelay: 2
   lightBoost: 0
   heavyBoost: 0
-  shootBoost: 0
 --- !u!1 &623991594
 GameObject:
   m_ObjectHideFlags: 0
