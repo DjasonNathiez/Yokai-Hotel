@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KF_KeyActivate : MonoBehaviour
+public class KF_TutorialKeyActivate : MonoBehaviour
 {
-    public InventoryManager inventoryM;
     public Room thisRoom;
     public int keysinroom;
     public GameObject interactb;
@@ -13,19 +12,11 @@ public class KF_KeyActivate : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
 
-        if (thisRoom.keyToSpawn == true)
-        {
-            this.gameObject.SetActive(true);
-            keysinroom = 1;
-        }
-        else
-        {
-            this.gameObject.SetActive(false);
-            keysinroom = 0;
-        }
+        keysinroom = 1;
+        this.gameObject.SetActive(true);
         interactb.SetActive(false);
         bActif = true;
         anim = this.gameObject.GetComponent<Animator>();
@@ -38,13 +29,8 @@ public class KF_KeyActivate : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && (bActif == true))
         {
-            interactb.SetActive(true);
-            if (!inventoryM)
-                inventoryM = collision.gameObject.GetComponent<InventoryManager>();
-
             if (Input.GetButtonDown("Interact"))
             {
-                inventoryM.keys++;
                 Debug.Log("Key Added");
                 anim.SetBool("gotKey", true);
                 Destroy(interactb);
