@@ -36,9 +36,9 @@ public class Enchant : ScriptableObject
 public struct EnchantEffect
 {
     
-    public enum ActionType { LIGHT_ATTACK, HEAVY_ATTACK, SHOOT_ATTACK, DASH};
-    public ActionType actionType;
-
+    public enum ConditionType { LIGHT_ATTACK, HEAVY_ATTACK, SHOOT_ATTACK, DASH, PERMANENT, HEALTH, };
+    public ConditionType actionType;
+    
     public enum EffectType { BOOST_LIGHT, BOOST_HEAVY, BOOST_SHOOT};
     public EffectType effectType;
 
@@ -46,7 +46,6 @@ public struct EnchantEffect
     public float effectDuration;
 
     public float duration;
-
 
 }
 

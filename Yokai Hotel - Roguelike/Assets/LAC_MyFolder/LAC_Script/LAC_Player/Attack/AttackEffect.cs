@@ -114,8 +114,8 @@ public class AttackEffect : MonoBehaviour
                 }
 
             }
-
-            audioM.PlaySound("Ennemy hurt", 0);
+            if(audioM)
+                audioM.PlaySound("Ennemy hurt", 0);
         }
 
         if (collider.tag == "BulletEnemy" && player.attackChoose == 3)
