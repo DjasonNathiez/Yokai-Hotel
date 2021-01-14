@@ -14,12 +14,12 @@ public class AttackEffect : MonoBehaviour
     public GameObject bulletPrefab;
 
     [Header("Attack Boost")]
-    public float heavyBoost;
-    public float lightBoost, sA_boost;
+    public float heavyBoost = 1;
+    public float lightBoost = 1, sA_boost = 1;
 
     public float attackBoost = 1;
-    public float theftLifeProba;
-    public float dropBoost;
+    public float theftLifeProba = 0;
+    public float dropBoost = 1;
 
     [HideInInspector]
     public bool kill_L;
