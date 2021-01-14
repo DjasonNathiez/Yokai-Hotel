@@ -1503,7 +1503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866906aebe63aa24099b6be310032148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 4
+  playerState: 0
   speed: 6
   acceleration: 0.07
   deceleration: 0.02
@@ -1540,6 +1540,7 @@ MonoBehaviour:
   attackVelocity: {x: 0, y: 0}
   attackM: {fileID: 0}
   health: 10
+  maxHealth: 0
   hurtDamage: 0
   isHurt: 0
   hurtTime: 0.2
@@ -2356,7 +2357,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 440582569}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 11.21, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3236,9 +3237,14 @@ MonoBehaviour:
     m_Bits: 1024
   bulletPrefab: {fileID: 5675991171498453655, guid: ca0ff352529c06a4c8d0b772f66f99f3,
     type: 3}
-  hA_boost: 0
-  lA_boost: 0
+  heavyBoost: 0
+  lightBoost: 0
   sA_boost: 0
+  attackBoost: 1
+  theftLifeProba: 0
+  dropBoost: 0
+  kill_L: 0
+  kill_H: 0
   cam: {fileID: 0}
   camBrain: {fileID: 0}
   virtualCam: {fileID: 0}
@@ -3357,14 +3363,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 256005335}
+  inventory: {fileID: 256005337}
+  attackEffect: {fileID: 622787594}
   enchants:
-  - {fileID: 11400000, guid: d0d736b5b50beb54383f1c4d6df9e04d, type: 2}
-  - {fileID: 11400000, guid: 21178466bb48096468b9e4d3e2c9f0f7, type: 2}
+  - {fileID: 11400000, guid: f5d835537dc42784f8ee79224a36b590, type: 2}
+  - {fileID: 11400000, guid: a56e6b85087d15e46bc5f0fd94846fd6, type: 2}
   maxEnchant: 2
   chooseIndex: 0
   chooseDelay: 2
+  lightAttack: 0
+  heavyAttack: 0
+  dash: 0
+  healthValue: 0
+  moneyValue: 0
   lightBoost: 0
   heavyBoost: 0
+  attackBoost: 1
+  theftLifeProba: 0
+  dropBoost: 0
+  moneyBoost: 0
+  moneyReduc: 0
 --- !u!1 &623991594
 GameObject:
   m_ObjectHideFlags: 0
@@ -4268,7 +4286,7 @@ PrefabInstance:
     - target: {fileID: 2178055191111880849, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2178055191279671020, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}
@@ -4293,7 +4311,7 @@ PrefabInstance:
     - target: {fileID: 2178055192705325881, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2178055192705325883, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}

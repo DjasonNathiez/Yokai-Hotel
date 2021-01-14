@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97d3eb2b1d905cf42a5bba199f6083c2, type: 3}
-  m_Name: Enchant
+  m_Name: MoneyStock
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   enchantEffects:
-  - actionType: 0
+  - level: 0
+    conditionType: 0
     conditionValues:
-    - name: attack
-      value: 0
-    effectType: 1
-    boostValue: 1.5
-    effectDuration: 5
-    duration: 0.6824429
+    - name: Min Money
+      value: 50
+    effectType: 3
+    boostValue: 1.2
+    effectDuration: -1
+    duration: 0

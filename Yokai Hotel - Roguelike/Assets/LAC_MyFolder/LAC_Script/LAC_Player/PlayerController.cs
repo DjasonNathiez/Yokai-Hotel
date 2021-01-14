@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("HURT")]
     public int health;
+    public int maxHealth;
     public int hurtDamage;
     public bool isHurt;
 
