@@ -8,6 +8,7 @@ public class EnchantManager : MonoBehaviour
 
     public List<Enchant> enchants;
     public int maxEnchant;
+    [HideInInspector]
     public int chooseIndex;
     public float chooseDelay;
     float chooseDuration;
@@ -15,11 +16,18 @@ public class EnchantManager : MonoBehaviour
     [Header("Boost")]
     public float lightBoost = 1;
     public float heavyBoost = 1;
+    public float attackBoost = 1;
+
+    public float theftLifeProba;
+
+    public float dropBoost;
+    public float moneyBoost;
+    public float moneyReduc;
     private void Start()
     {
         foreach(Enchant e in enchants)
         {
-            Debug.Log(e.GenerateDescription());
+            //Debug.Log(e.GenerateDescription());
         }
     }
     private void Update()
@@ -41,11 +49,11 @@ public class EnchantManager : MonoBehaviour
                 EnchantEffect currentEnchant = e.enchantEffects[i];
 
                 // check match conditions
-                bool lightAttack = (player.lightAttack && (int)currentEnchant.actionType == 0);
-                bool heavyAttack = (player.heavyAttack && (int)currentEnchant.actionType == 1);
-                bool shootAttack = (player.shootAttack && (int)currentEnchant.actionType == 2);
+                bool lightAttack = (player.lightAttack && (int)currentEnchant.conditionType == 0);
+                bool heavyAttack = (player.heavyAttack && (int)currentEnchant.conditionType == 1);
+                bool shootAttack = (player.shootAttack && (int)currentEnchant.conditionType == 2);
 
-                bool dash = player.dash && (int)currentEnchant.actionType == 3;
+                bool dash = player.dash && (int)currentEnchant.conditionType == 3;
 
                 bool effectCond = (lightAttack || heavyAttack || shootAttack || dash);
 
@@ -73,7 +81,7 @@ public class EnchantManager : MonoBehaviour
         lightBoost = boostL;
         heavyBoost = boostH;
     }
-
+    
     public void AddEnchant(ref List<Enchant> enchants, Enchant enchant)
     {
         if (enchants.Count < maxEnchant)
