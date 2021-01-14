@@ -13,10 +13,17 @@ public class AttackEffect : MonoBehaviour
     public LayerMask detectMask;
     public GameObject bulletPrefab;
 
-    [Header("Attack Multiplier")]
-    public float hA_boost;
-    public float lA_boost, sA_boost;
+    [Header("Attack Boost")]
+    public float heavyBoost;
+    public float lightBoost, sA_boost;
+
+    public float attackBoost = 1;
+    public float theftLifeProba;
+    public float dropBoost;
+
+    [HideInInspector]
     public bool kill_L;
+    [HideInInspector]
     public bool kill_H;
 
     float killbuffer = 0.2f;
@@ -66,7 +73,13 @@ public class AttackEffect : MonoBehaviour
                 EnnemiTank eTank = ennemi.GetComponentInParent<EnnemiTank>();
                 bool deflectShield = false;
 
-                float damage = attackM.attack[player.attackChoose].damage;
+                float attackTypeBoost = 1;
+                if (attackM.attack[player.attackChoose].attackType == Attack.AttackType.HEAVY)
+                    attackTypeBoost *= heavyBoost;
+                if (attackM.attack[player.attackChoose].attackType == Attack.AttackType.LIGHT)
+                    attackTypeBoost *= lightBoost;
+
+                float damage = attackM.attack[player.attackChoose].damage * attackBoost * attackTypeBoost;
                 Vector2 repulseDir = (ennemi.transform.position - player.transform.position).normalized;
                 if (eTank)
                 {
@@ -88,7 +101,7 @@ public class AttackEffect : MonoBehaviour
                 if (deflectShield)
                 {
                     if (player.attackChoose == 3)
-                        damage += 1;
+                        damage -= 1;
 
                     eTank.shieldPoint -= damage;
                     damage = 0;
@@ -97,6 +110,28 @@ public class AttackEffect : MonoBehaviour
                 }
                 else if (damage > 0)
                 {
+
+                    // feedBack & kill effect
+                    ScreenShake(attackM.attack[player.attackChoose].screenShakeAmp, attackM.attack[player.attackChoose].screenShakeFreq, attackM.attack[player.attackChoose].screenShakeTime);
+                    if (ennemi.healthPoints <= damage)
+                    {
+                        if (player.attackChoose == 3)
+                            kill_H = true;
+                        if (player.attackChoose == 0 || player.attackChoose == 1 || player.attackChoose == 2)
+                            kill_L = true;
+                        if(dropBoost != 1)
+                        {
+                            DropSystem dropEnnemi = ennemi.GetComponent<DropSystem>();
+                            dropEnnemi.dropRateG *= dropBoost;
+                        }
+                       
+                        if (attackM.attack[player.attackChoose].screenShakeAmp == 0)
+                            ScreenShake(0.5f, 4, 0.3f);
+                        StartCoroutine(KillReset(killbuffer));
+                        SlowTime(0.2f, 0.3f);
+                        
+
+                    }
                     // apply damage & recoil
                     Debug.Log("Hit ennemy");
                     ennemi.healthDamage = damage;
@@ -104,21 +139,6 @@ public class AttackEffect : MonoBehaviour
                     ennemi.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
                     ennemi.stunTime = attackM.attack[player.attackChoose].stunTime;
 
-                    // feedBack
-                    ScreenShake(attackM.attack[player.attackChoose].screenShakeAmp, attackM.attack[player.attackChoose].screenShakeFreq, attackM.attack[player.attackChoose].screenShakeTime);
-                    if (ennemi.healthPoints <= damage)
-                    {
-                        if (attackM.attack[player.attackChoose].screenShakeAmp == 0)
-                            ScreenShake(0.5f, 4, 0.3f);
-                        if (player.attackChoose == 3)
-                            kill_H = true;
-                        if (player.attackChoose == 0 || player.attackChoose == 1 || player.attackChoose == 2)
-                            kill_L = true;
-                        StartCoroutine(KillReset(killbuffer));
-                        SlowTime(0.2f, 0.3f);
-                        
-
-                    }
                     damage = 0;
                     
                 }

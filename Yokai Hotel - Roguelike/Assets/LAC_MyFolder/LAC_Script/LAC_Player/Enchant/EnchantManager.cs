@@ -22,7 +22,7 @@ public class EnchantManager : MonoBehaviour
 
     public float healthValue;
     public float moneyValue;
-    bool kill;
+
    
 
     [Header("Boost")]
@@ -53,6 +53,11 @@ public class EnchantManager : MonoBehaviour
         float boostL = 1;
         float boostH = 1;
         float boostS = 1;
+        float boostG = 1;
+
+        float boostDrop = 1;
+        float reducMoney = 1;
+        float boostTheftHealth = 0;
 
         foreach (Enchant e in enchants)
         {
@@ -197,6 +202,47 @@ public class EnchantManager : MonoBehaviour
                         }
                 }
 
+                // apply effect cond
+
+                if (e.enchantEffects[i].active)
+                {
+                    switch (currentEnchant.effectType)
+                    {
+                        case EnchantEffect.EffectType.BOOST_LIGHT:
+                            {
+                                boostL *= currentEnchant.boostValue;
+                                break;
+                            }
+                        case EnchantEffect.EffectType.BOOST_HEAVY:
+                            {
+                                boostH *= currentEnchant.boostValue;
+                                break;
+                            }
+                        case EnchantEffect.EffectType.BOOST_ATTACK:
+                            {
+                                boostG *= currentEnchant.boostValue;
+                                break;
+                            }
+                        case EnchantEffect.EffectType.BOOST_DROP:
+                            {
+                                boostDrop *= currentEnchant.boostValue;
+                                break;
+                            }
+                        case EnchantEffect.EffectType.THEFT_HEALTH:
+                            {
+                                boostTheftHealth = currentEnchant.boostValue;
+                                break;
+                            }
+                        case EnchantEffect.EffectType.PRICE:
+                            {
+                                reducMoney = currentEnchant.boostValue * (((int)currentEnchant.conditionType == 4)? healthValue : 1);
+                                break;
+                            }
+
+                    }
+                }
+                
+
                 //bool lightAttack = (player.lightAttack && (int)currentEnchant.conditionType == 0);
                 //bool heavyAttack = (player.heavyAttack && (int)currentEnchant.conditionType == 1);
                 bool shootAttack = (player.shootAttack && (int)currentEnchant.conditionType == 2);
@@ -223,8 +269,14 @@ public class EnchantManager : MonoBehaviour
             }
         }
 
-        lightBoost = boostL;
-        heavyBoost = boostH;
+        lightBoost = attackEffect.lightBoost = boostL;
+        heavyBoost = attackEffect.heavyBoost = boostH;
+        attackBoost = attackEffect.attackBoost = boostG;
+
+        dropBoost = attackEffect.dropBoost = boostDrop;
+        theftLifeProba = attackEffect.theftLifeProba = boostTheftHealth;
+
+        moneyReduc = reducMoney;
     }
    
     
