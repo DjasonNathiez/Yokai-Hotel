@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 3867148610447654500}
   - component: {fileID: 3867148610447654504}
   m_Layer: 8
-  m_Name: 'MyPlayer '
+  m_Name: MyPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,6 +150,7 @@ MonoBehaviour:
   lastDir: {x: 0, y: 0}
   velocity: {x: 0, y: 0}
   velocitySmoothing: {x: 0, y: 0}
+  dash: 0
   dashDistance: 4
   dashTime: 0.12
   dashDir: {x: 0, y: 0}
@@ -183,6 +184,13 @@ MonoBehaviour:
   isHurt: 0
   hurtTime: 0.2
   invincibleTime: 1
+  startTriggerM:
+  - FadeStart
+  endTriggerM:
+  - EndTrigger
+  - EndTrigger2
+  manageSpeed: 0
+  manageDir: {x: 0, y: 0}
   lAFillAmount: 12.5
   hAFillAmount: 14.3
   uAFillAmount: 33.4
@@ -407,6 +415,9 @@ MonoBehaviour:
     m_Bits: 1024
   bulletPrefab: {fileID: 5675991171498453655, guid: ca0ff352529c06a4c8d0b772f66f99f3,
     type: 3}
+  hA_boost: 0
+  lA_boost: 0
+  sA_boost: 0
   cam: {fileID: 0}
   camBrain: {fileID: 0}
   virtualCam: {fileID: 0}

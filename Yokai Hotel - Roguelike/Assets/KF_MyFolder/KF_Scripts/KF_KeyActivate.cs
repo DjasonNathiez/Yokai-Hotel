@@ -15,7 +15,7 @@ public class KF_KeyActivate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        thisRoom = this.transform.root.GetComponent<Room>();
         if (thisRoom.keyToSpawn == true)
         {
             this.gameObject.SetActive(true);
@@ -29,7 +29,7 @@ public class KF_KeyActivate : MonoBehaviour
         interactb.SetActive(false);
         bActif = true;
         anim = this.gameObject.GetComponent<Animator>();
-        thisRoom = transform.root.GetComponent<Room>();
+        
     }
 
 

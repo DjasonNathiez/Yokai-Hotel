@@ -9,12 +9,16 @@ public class KF_TutorialDoors : MonoBehaviour
     public BoxCollider2D doorTriggerZone;
     public GameObject temporaryShow;
     public bool TutorialFinish;
-    public bool TutorialStart; 
+    public bool TutorialStart;
+    private GameObject tutorial;
+    public GameObject tutorialDoor;
     // Start is called before the first frame update
     void Start()
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
         doorTriggerZone = this.gameObject.GetComponent<BoxCollider2D>();
+        tutorial = GameObject.FindGameObjectWithTag("Tutorial");
+
     }
 
 
@@ -26,6 +30,7 @@ public class KF_TutorialDoors : MonoBehaviour
             {
                 doorTriggerZone.isTrigger = true;
                 temporaryShow.SetActive(true);
+                
             }
             if (TutorialStart == true)
             {
@@ -52,12 +57,22 @@ public class KF_TutorialDoors : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-                Teleport();
+            if (TutorialFinish == true)
+                Destroy(tutorialDoor);
+            Teleport();              
         }
     }
 
     private void Teleport()
     {
         playerObj.transform.position = doorLink.GetComponent<Transform>().position;
+        if (TutorialFinish == true)
+            StartCoroutine(DestroyTuto());
+    }
+
+    IEnumerator DestroyTuto()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Destroy(tutorial);
     }
 }
