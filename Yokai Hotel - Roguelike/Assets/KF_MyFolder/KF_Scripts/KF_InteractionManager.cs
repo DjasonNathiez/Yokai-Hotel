@@ -12,13 +12,18 @@ public class KF_InteractionManager : MonoBehaviour
     public Animator dialogueAnim; //to make dialogue appear
     public List<GameObject> interactionInLevel = new List<GameObject>();
     public KF_LevelManager levelM;
-         
+    public Sprite objectBox;
+    public Sprite dialogueBox;
+    public Image dialogueBoxSP;
+    public bool objectDialogue;
+
     void Start()
     {
         sentences = new Queue<string>();
         waitTime = 0;
         dialogueText = GameObject.FindGameObjectWithTag("DialogueText").GetComponent<Text>();
         levelM = FindObjectOfType<KF_LevelManager>();
+        dialogueBoxSP = GameObject.FindGameObjectWithTag("DialogueBox").GetComponent<Image>();
     }
     private void Update()
     {
@@ -37,9 +42,34 @@ public class KF_InteractionManager : MonoBehaviour
     {
         dialogueAnim.SetBool("isOpen", true);
         sentences.Clear();
+        if (objectDialogue == true)
+        {
+            dialogueBoxSP.sprite = objectBox;
+            var tempColor = dialogueBoxSP.color;
+            tempColor.a = 255f;
+            dialogueBoxSP.color = tempColor;
+        }
         foreach (string sentence in dialogue.sentences)
         {
             sentences.Enqueue(sentence);
+        }
+        DisplayNextSentence();
+    }
+
+    public void SecondStartInteract(KF_DialogueSecond dialogueSecond)
+    {
+        dialogueAnim.SetBool("isOpen", true);
+        sentences.Clear();
+        if (objectDialogue == true)
+        {
+            dialogueBoxSP.sprite = objectBox;
+            var tempColor = dialogueBoxSP.color;
+            tempColor.a = 255f;
+            dialogueBoxSP.color = tempColor;
+        }
+        foreach (string sentence2 in dialogueSecond.sentences2)
+        {
+            sentences.Enqueue(sentence2);
         }
         DisplayNextSentence();
     }
@@ -59,6 +89,8 @@ public class KF_InteractionManager : MonoBehaviour
     public void EndInteraction()
     {
         dialogueAnim.SetBool("isOpen", false);
+        if (objectDialogue == true)
+            StartCoroutine(ChangeBox());
         Debug.Log("Dialogue End");
         KF_ResetInteract.dialogueReset = 0;
     }
@@ -71,5 +103,15 @@ public class KF_InteractionManager : MonoBehaviour
             dialogueText.text += letter;
             yield return new WaitForSeconds(waitTime);
         }
+    }
+
+    IEnumerator ChangeBox()
+    {
+        yield return new WaitForSeconds(1f);
+        var tempColor = dialogueBoxSP.color;
+        tempColor.a = 230f;
+        dialogueBoxSP.color = tempColor;
+        dialogueBoxSP.sprite = dialogueBox;
+        objectDialogue = false;
     }
 }
