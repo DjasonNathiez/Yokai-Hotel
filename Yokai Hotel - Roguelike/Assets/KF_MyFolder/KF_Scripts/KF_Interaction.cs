@@ -14,6 +14,19 @@ public class KF_Interaction : MonoBehaviour
     public bool inRange;
     private bool inDialogue;
 
+    [Header("==== OPTIONS ====")]
+    public bool objectDialogue;
+    public bool objectEffect;
+    public bool effectIsRemove;
+    public GameObject effectTarget;
+    public bool effectReversable;
+    public bool reverse;
+    public bool hastalked;
+    public bool secondDialogue;
+    public KF_DialogueSecond dialogue2;
+    public UnityEvent interactOtherStart;
+    public bool secondDialogueStart;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +37,10 @@ public class KF_Interaction : MonoBehaviour
                 thisInteract = interact;
         }
         interactionIcon.SetActive(false);
+        if (secondDialogue == false)
+        {
+            dialogue2.sentences2 = dialogue.sentences;
+        }
     }
 
     private void Update()
@@ -34,7 +51,48 @@ public class KF_Interaction : MonoBehaviour
             {
                 Debug.Log("Dialogue Start");
                 KF_ResetInteract.dialogueReset = 1;
-                interactAction.Invoke();
+                if (effectReversable == false)
+                {
+                    hastalked = false;
+                    reverse = false;
+                }
+                if (objectDialogue == true)
+                {
+                    intM.objectDialogue = true;
+                    if ((objectEffect == true) && (reverse == false))
+                    {
+                        if (effectIsRemove == true)
+                            effectTarget.SetActive(false);
+                        if (effectIsRemove == false)
+                            effectTarget.SetActive(true);
+                        Debug.Log("ObjectNotReverse");
+                        secondDialogueStart = false;
+                    }
+                    if ((effectReversable == true) && (objectEffect == true) && (hastalked == true) && (reverse == true))
+                    {
+                        Debug.Log("ObjectReverse");
+                        if (effectIsRemove == true)
+                            effectTarget.SetActive(true);
+                        if (effectIsRemove == false)
+                            effectTarget.SetActive(false);
+                        hastalked = false;
+                        secondDialogueStart = true;
+                    }
+                }
+                if ((hastalked == false) && (secondDialogueStart == false))
+                {
+                    Debug.Log("1");
+                    reverse = true;
+                    hastalked = true;
+                    interactAction.Invoke();
+                }     
+                if ((secondDialogue == true) && (secondDialogueStart == true))
+                {
+                    Debug.Log("2");
+                    reverse = false;
+                    hastalked = false;
+                    interactOtherStart.Invoke();
+                }
                 inDialogue = true;
                 return;
             }
@@ -56,6 +114,11 @@ public class KF_Interaction : MonoBehaviour
     public void TriggerContinue()
     {
         intM.DisplayNextSentence();
+    }
+
+    public void TriggerOtherInteract()
+    {
+        intM.SecondStartInteract(dialogue2);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
