@@ -18,7 +18,6 @@ public class KF_TutorialDoors : MonoBehaviour
         playerObj = GameObject.FindGameObjectWithTag("Player");
         doorTriggerZone = this.gameObject.GetComponent<BoxCollider2D>();
         tutorial = GameObject.FindGameObjectWithTag("Tutorial");
-
     }
 
 
@@ -59,7 +58,8 @@ public class KF_TutorialDoors : MonoBehaviour
         {
             if (TutorialFinish == true)
                 Destroy(tutorialDoor);
-            Teleport();              
+            Teleport();
+            
         }
     }
 
