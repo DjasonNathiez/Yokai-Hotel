@@ -16,6 +16,10 @@ public class AttackEffect : MonoBehaviour
     [Header("Attack Multiplier")]
     public float hA_boost;
     public float lA_boost, sA_boost;
+    public bool kill_L;
+    public bool kill_H;
+
+    float killbuffer = 0.2f;
     
     [Header("Cam")]
     public GameObject cam;
@@ -106,11 +110,17 @@ public class AttackEffect : MonoBehaviour
                     {
                         if (attackM.attack[player.attackChoose].screenShakeAmp == 0)
                             ScreenShake(0.5f, 4, 0.3f);
-
+                        if (player.attackChoose == 3)
+                            kill_H = true;
+                        if (player.attackChoose == 0 || player.attackChoose == 1 || player.attackChoose == 2)
+                            kill_L = true;
+                        StartCoroutine(KillReset(killbuffer));
                         SlowTime(0.2f, 0.3f);
+                        
 
                     }
                     damage = 0;
+                    
                 }
 
             }
@@ -251,5 +261,10 @@ public class AttackEffect : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay);
         Time.timeScale = 1;
+    }
+    public IEnumerator KillReset(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        kill_L = kill_H = false;
     }
 }

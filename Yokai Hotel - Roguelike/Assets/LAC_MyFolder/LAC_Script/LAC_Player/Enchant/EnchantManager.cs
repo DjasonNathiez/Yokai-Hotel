@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnchantManager : MonoBehaviour
 {
     public PlayerController player;
+    public InventoryManager inventory;
+    public AttackEffect attackEffect;
 
     public List<Enchant> enchants;
     public int maxEnchant;
@@ -12,6 +14,16 @@ public class EnchantManager : MonoBehaviour
     public int chooseIndex;
     public float chooseDelay;
     float chooseDuration;
+
+    [Header("Boost Cond")]
+    public bool lightAttack;
+    public bool heavyAttack;
+    public bool dash;
+
+    public float healthValue;
+    public float moneyValue;
+    bool kill;
+   
 
     [Header("Boost")]
     public float lightBoost = 1;
@@ -49,20 +61,153 @@ public class EnchantManager : MonoBehaviour
                 EnchantEffect currentEnchant = e.enchantEffects[i];
 
                 // check match conditions
-                bool lightAttack = (player.lightAttack && (int)currentEnchant.conditionType == 0);
-                bool heavyAttack = (player.heavyAttack && (int)currentEnchant.conditionType == 1);
+                switch (currentEnchant.conditionType)
+                {
+                    case EnchantEffect.ConditionType.LIGHT_ATTACK:
+                        {
+                            #region Active Condition
+                            if ( player.lightAttack && e.enchantEffects[i].duration < 0 && e.enchantEffects[i].effectDuration > 0)
+                            {
+                                e.enchantEffects[i].duration = currentEnchant.effectDuration;
+                                e.enchantEffects[i].active = true;
+                            }
+
+                            if (e.enchantEffects[i].effectDuration > 0)
+                                e.enchantEffects[i].duration -= Time.deltaTime;
+
+                            if (e.enchantEffects[i].duration < 0)
+                                e.enchantEffects[i].active = false;
+                            #endregion
+
+                            break;
+                        }
+                    case EnchantEffect.ConditionType.HEAVY_ATTACK:
+                        {
+                            #region Active Condition
+                            if (player.heavyAttack && e.enchantEffects[i].duration < 0 && e.enchantEffects[i].effectDuration > 0)
+                            {
+                                e.enchantEffects[i].duration = currentEnchant.effectDuration;
+                                e.enchantEffects[i].active = true;
+                            }
+
+                            if (e.enchantEffects[i].effectDuration > 0)
+                                e.enchantEffects[i].duration -= Time.deltaTime;
+
+                            if (e.enchantEffects[i].duration < 0)
+                                e.enchantEffects[i].active = false;
+                            #endregion
+
+                            break;
+                        }
+                    case EnchantEffect.ConditionType.DASH:
+                        {
+                            
+                            #region Active Condition
+                            if (((int)player.playerState == 1) && e.enchantEffects[i].duration < 0 && e.enchantEffects[i].effectDuration > 0)
+                            {
+                                e.enchantEffects[i].duration = currentEnchant.effectDuration;
+                                e.enchantEffects[i].active = true;
+                            }
+
+                            if(e.enchantEffects[i].effectDuration > 0)
+                                e.enchantEffects[i].duration -= Time.deltaTime;
+
+                            if (e.enchantEffects[i].duration < 0)
+                                e.enchantEffects[i].active = false;
+
+                            
+                            #endregion
+
+                            break;
+                        }
+                    case EnchantEffect.ConditionType.HEALTH:
+                        {
+                            healthValue = player.maxHealth - player.health;
+                            e.enchantEffects[i].active = (healthValue > 0);
+
+                            break;
+                        }
+                    case EnchantEffect.ConditionType.MONEY:
+                        {
+                            e.enchantEffects[i].active = (inventory.money >= e.enchantEffects[i].conditionValues[1].value);
+                            break;
+                        }
+                    case EnchantEffect.ConditionType.LIGHT_KILL:
+                        {
+                            #region Active Condition
+                            if (attackEffect.kill_L && e.enchantEffects[i].duration < 0 && e.enchantEffects[i].effectDuration > 0)
+                            {
+                                e.enchantEffects[i].duration = currentEnchant.effectDuration;
+                                e.enchantEffects[i].active = true;
+                            }
+
+                            if (e.enchantEffects[i].effectDuration > 0)
+                                e.enchantEffects[i].duration -= Time.deltaTime;
+
+                            if (e.enchantEffects[i].duration < 0)
+                                e.enchantEffects[i].active = false;
+                            #endregion
+
+                            break;
+                        }
+                    case EnchantEffect.ConditionType.HEAVY_KILL:
+                        {
+                            #region Active Condition
+                            if (attackEffect.kill_H && e.enchantEffects[i].duration < 0 && e.enchantEffects[i].effectDuration > 0)
+                            {
+                                e.enchantEffects[i].duration = currentEnchant.effectDuration;
+                                e.enchantEffects[i].active = true;
+                            }
+
+                            if (e.enchantEffects[i].effectDuration > 0)
+                                e.enchantEffects[i].duration -= Time.deltaTime;
+
+                            if (e.enchantEffects[i].duration < 0)
+                                e.enchantEffects[i].active = false;
+                            #endregion
+
+                            break;
+                        }
+                    case EnchantEffect.ConditionType.HIT:
+                        {
+                            #region Active Condition
+                            if (player.isHurt && e.enchantEffects[i].duration < 0 && e.enchantEffects[i].effectDuration > 0)
+                            {
+                                e.enchantEffects[i].duration = currentEnchant.effectDuration;
+                                e.enchantEffects[i].active = true;
+                            }
+
+                            if (e.enchantEffects[i].effectDuration > 0)
+                                e.enchantEffects[i].duration -= Time.deltaTime;
+
+                            if (e.enchantEffects[i].duration < 0)
+                                e.enchantEffects[i].active = false;
+                            #endregion
+                            break;
+                        }
+                    case EnchantEffect.ConditionType.FULL_HEALTH:
+                        {
+                            e.enchantEffects[i].active = (player.maxHealth == player.health);
+                            break;
+                        }
+                    case EnchantEffect.ConditionType.MIN_HEALTH:
+                        {
+                            e.enchantEffects[i].active = (player.health == 1);
+                            break;
+                        }
+                }
+
+                //bool lightAttack = (player.lightAttack && (int)currentEnchant.conditionType == 0);
+                //bool heavyAttack = (player.heavyAttack && (int)currentEnchant.conditionType == 1);
                 bool shootAttack = (player.shootAttack && (int)currentEnchant.conditionType == 2);
-
-                bool dash = player.dash && (int)currentEnchant.conditionType == 3;
-
                 bool effectCond = (lightAttack || heavyAttack || shootAttack || dash);
 
                 // apply duration 
-                if (effectCond && e.enchantEffects[i].duration < 0)
-                    e.enchantEffects[i].duration = currentEnchant.effectDuration;
+                //if (effectCond && e.enchantEffects[i].duration < 0)
+                    //e.enchantEffects[i].duration = currentEnchant.effectDuration;
 
                 // decrease duration by time & apply boost effect
-                if (e.enchantEffects[i].duration >= 0)
+                /*if (e.enchantEffects[i].duration >= 0)
                 {
                     if ((int)currentEnchant.effectType == 0)
                         boostL *= currentEnchant.boostValue;
@@ -74,13 +219,14 @@ public class EnchantManager : MonoBehaviour
                         boostS *= currentEnchant.boostValue;
 
                     e.enchantEffects[i].duration -= Time.deltaTime;
-                }
+                }*/
             }
         }
 
         lightBoost = boostL;
         heavyBoost = boostH;
     }
+   
     
     public void AddEnchant(ref List<Enchant> enchants, Enchant enchant)
     {

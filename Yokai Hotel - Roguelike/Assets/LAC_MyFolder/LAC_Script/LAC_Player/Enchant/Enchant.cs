@@ -48,6 +48,7 @@ public struct EnchantEffect
     [HideInInspector]
     public float duration;
 
+    public bool active;
 }
 
 [Serializable]

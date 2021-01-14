@@ -70,6 +70,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("HURT")]
     public int health;
+    public int maxHealth;
+
     public int hurtDamage;
     public bool isHurt;
 
@@ -203,6 +205,7 @@ public class PlayerController : MonoBehaviour
                     if (dash && dashable)
                     {
                         //dashDir = lastDir.normalized;
+                        Debug.Log("dash "+dash);
                         dashVelocity = lastDir.normalized * (dashDistance / dashTime);
                         StartCoroutine(LoadDash());
                         dashable = false;
@@ -404,6 +407,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(hurtTime);
         spriteT.color = Color.white;
         playerState = PlayerState.FREE;
+        isHurt = false;
 
         yield return new WaitForSeconds(invincibleTime - hurtTime);
         invincible = false;
