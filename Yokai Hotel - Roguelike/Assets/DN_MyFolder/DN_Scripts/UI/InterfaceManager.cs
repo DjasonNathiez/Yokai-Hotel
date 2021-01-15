@@ -10,7 +10,8 @@ public class InterfaceManager : MonoBehaviour
 {
     InventoryManager inventory;
     PlayerController player;
-    KF_KeyActivate kActive;
+    public ProceduralGenerator kActive;
+    public KF_LevelManager levelM;
     public Slider fillSlider;
 
     [Header("Health")]
@@ -30,15 +31,20 @@ public class InterfaceManager : MonoBehaviour
     float currentMoney;
 
     [Header("Keys")]
-    public RawImage keysImage;
-    public Texture keysLow;
-    public Texture keysMedium;
-    public Texture keysHigh;
+    public RawImage[] keysImage;
+    public Texture keysMiss;
+    public Texture keysUp;
+    public GameObject keysObj;
     int currentKey;
+
+    private void Awake()
+    {
+    }
 
     private void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+
         
         
         if(playerObj)
@@ -61,12 +67,13 @@ public class InterfaceManager : MonoBehaviour
 
     private void Update()
     {
+        kActive = levelM.levels[levelM.levelCount].GetComponent<ProceduralGenerator>();
 
         UpdateHealth();
         UpdateMoney();
         UpdateShoot();
         UpdateKey();
-
+        
     }
 
     void UpdateHealth()
@@ -111,25 +118,32 @@ public class InterfaceManager : MonoBehaviour
     void UpdateKey()
     {
         //de 1 à 3 clé selon le niveau
-
         /// keys/keysinlvl
 
-        if(kActive && inventory)
-        currentKey = inventory.keys / kActive.keysinroom;
+        if (kActive)
+        currentKey = kActive.keyNumber;
+       
+        //initialization
 
-        if(currentKey == 1 / 3)
-        {
-            keysImage.texture = keysLow;
-        }
+        keysImage = keysObj.GetComponentsInChildren<RawImage>();
 
-        if(currentKey == 2 / 3)
+        for(int i = 0; i < currentKey; i++)
         {
-            keysImage.texture = keysMedium;
-        }
+            keysImage[i].enabled = true;
 
-        if (currentKey == 3 / 3)
-        {
-            keysImage.texture = keysHigh;
+            if(inventory.keys != 0)
+            {
+                keysImage[inventory.keys -1].texture = keysUp;
+
+                Debug.Log("keysUp");
+            }
+            else 
+            {
+                keysImage[i].texture = keysMiss;
+
+                Debug.Log("keysMiss");
+            }
+            
         }
 
     }
