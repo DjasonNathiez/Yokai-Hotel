@@ -59,10 +59,12 @@ public class EnchantManager : MonoBehaviour
         float reducMoney = 1;
         float boostTheftHealth = 0;
 
+        
         foreach (Enchant e in enchants)
         {
             for (int i = 0; i < e.enchantEffects.Length; i++)
             {
+                
                 EnchantEffect currentEnchant = e.enchantEffects[i];
 
                 // check match conditions
@@ -280,14 +282,17 @@ public class EnchantManager : MonoBehaviour
     }
    
     
-    public void AddEnchant(ref List<Enchant> enchants, Enchant enchant)
+    public void AddEnchant(Enchant enchant)
     {
-        if (enchants.Count < maxEnchant)
-            enchants.Add(enchant);
-        else
+        if(enchant != null)
         {
-            enchants.RemoveAt(chooseIndex);
-            enchants.Add(enchant);
+            if (enchants.Count < maxEnchant)
+                enchants.Add(enchant);
+            else
+            {
+                enchants.RemoveAt(chooseIndex);
+                enchants.Add(enchant);
+            }
         }
     }
     public void ChooseEnchant()

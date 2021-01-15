@@ -49,6 +49,7 @@ public struct EnchantEffect
     public float duration;
 
     public bool active;
+    public float price;
 }
 
 [Serializable]

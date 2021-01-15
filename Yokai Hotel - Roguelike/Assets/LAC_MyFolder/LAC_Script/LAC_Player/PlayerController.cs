@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
         currentRecoilDash = recoilDashTime;
         currentRecoilReset = recoilResetTime;
 
-
+        maxHealth = health;
     }
 
     // Update is called once per frame
@@ -178,8 +178,8 @@ public class PlayerController : MonoBehaviour
         {
             if (!invincible)
             {
-                Debug.Log("lose health");
-                health -= hurtDamage;
+                //Debug.Log("lose health");
+                ChangeHealth(-hurtDamage);
                 isHurt = true;
                 invincible = true;
 
@@ -505,5 +505,17 @@ public class PlayerController : MonoBehaviour
         }
         
     }
+
+    public void ChangeHealth( int value)
+    {
+        Debug.Log((value>= 0)? "player heal": "player lose health");
+        health = Mathf.Clamp(health + value, 0, maxHealth);
+    }
+    public void ChangeMaxHealth(int value)
+    {
+        Debug.Log((value >= 0) ? "player + MaxHealth" : "player - MaxHealth");
+        maxHealth += value;
+    }
+
 }
 
