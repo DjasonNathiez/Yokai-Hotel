@@ -21,11 +21,11 @@ public class KF_Interaction : MonoBehaviour
     public GameObject effectTarget;
     public bool effectReversable;
     public bool reverse;
-    public bool hastalked;
+    private bool hastalked;
     public bool secondDialogue;
     public KF_DialogueSecond dialogue2;
     public UnityEvent interactOtherStart;
-    public bool secondDialogueStart;
+    private bool secondDialogueStart;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +40,14 @@ public class KF_Interaction : MonoBehaviour
         if (secondDialogue == false)
         {
             dialogue2.sentences2 = dialogue.sentences;
+        }
+        if ((reverse == true) && (effectIsRemove == true))
+        {
+            effectTarget.SetActive(false);
+        }
+        if ((reverse == true) && (effectIsRemove == false))
+        {
+            effectTarget.SetActive(true);
         }
     }
 
@@ -65,12 +73,10 @@ public class KF_Interaction : MonoBehaviour
                             effectTarget.SetActive(false);
                         if (effectIsRemove == false)
                             effectTarget.SetActive(true);
-                        Debug.Log("ObjectNotReverse");
                         secondDialogueStart = false;
                     }
-                    if ((effectReversable == true) && (objectEffect == true) && (hastalked == true) && (reverse == true))
+                    if ((effectReversable == true) && (objectEffect == true) && (reverse == true))
                     {
-                        Debug.Log("ObjectReverse");
                         if (effectIsRemove == true)
                             effectTarget.SetActive(true);
                         if (effectIsRemove == false)
@@ -81,14 +87,12 @@ public class KF_Interaction : MonoBehaviour
                 }
                 if ((hastalked == false) && (secondDialogueStart == false))
                 {
-                    Debug.Log("1");
                     reverse = true;
                     hastalked = true;
                     interactAction.Invoke();
                 }     
                 if ((secondDialogue == true) && (secondDialogueStart == true))
                 {
-                    Debug.Log("2");
                     reverse = false;
                     hastalked = false;
                     interactOtherStart.Invoke();
