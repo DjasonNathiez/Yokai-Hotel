@@ -11,11 +11,13 @@ public class KF_MultipleInteract : MonoBehaviour
     public int interactCount = 0;
     public KF_LevelManager LevelM;
     private int listMax;
+    public bool hubReturn;
 
 
     void Start()
     {
-        LevelM = GameObject.FindGameObjectWithTag("HotelManager").GetComponent<KF_LevelManager>();
+        hubReturn = LevelM.hubReturn;
+        LevelM = FindObjectOfType<KF_LevelManager>();
         currentInteract = interactions[interactCount];
         if (random == true)
             currentInteract = interactions[Random.Range(0, interactions.Count)];
@@ -34,6 +36,7 @@ public class KF_MultipleInteract : MonoBehaviour
 
     void Update()
     {
+        hubReturn = LevelM.hubReturn;
         if (intM.interactDone == true)
         {
             currentInteract.gameObject.SetActive(false);
@@ -58,7 +61,7 @@ public class KF_MultipleInteract : MonoBehaviour
             currentInteract.gameObject.SetActive(true);
             intM.interactDone = false;
         }
-        if (LevelM.levelChanged == true)
+        if ((LevelM.levelChanged == true) || (hubReturn == true))
         {
             foreach (Transform child in this.gameObject.GetComponent<Transform>()) 
             {
@@ -68,8 +71,11 @@ public class KF_MultipleInteract : MonoBehaviour
                         Debug.Log("Already in list");
                     else
                     {
-                        interactions.Add(child.gameObject.GetComponent<KF_Interaction>());
-                        child.gameObject.SetActive(false);
+                        if (child.gameObject.activeInHierarchy)
+                        {
+                            interactions.Add(child.gameObject.GetComponent<KF_Interaction>());
+                            child.gameObject.SetActive(false);
+                        }
                     }
                     
                 }

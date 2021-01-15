@@ -15,6 +15,8 @@ public class KF_Interaction : MonoBehaviour
     private bool inDialogue;
 
     [Header("==== OPTIONS ====")]
+    public bool isInMultiple;
+    public bool givesSomething;
     public bool objectDialogue;
     public bool objectEffect;
     public bool effectIsRemove;
@@ -26,6 +28,10 @@ public class KF_Interaction : MonoBehaviour
     public KF_DialogueSecond dialogue2;
     public UnityEvent interactOtherStart;
     private bool secondDialogueStart;
+
+    [Header("==== DO NOT TOUCH ====")]
+    public bool isGiven;
+
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +69,10 @@ public class KF_Interaction : MonoBehaviour
                 {
                     hastalked = false;
                     reverse = false;
+                }
+                if (givesSomething == true)
+                {
+                    isGiven = true;
                 }
                 if (objectDialogue == true)
                 {
@@ -149,6 +159,8 @@ public class KF_Interaction : MonoBehaviour
             interactionIcon.SetActive(false);
             foreach (GameObject interact in intM.interactionInLevel)
             {
+                if ((interact.GetComponent<KF_Interaction>().isInMultiple == true) || (interact == thisInteract))
+                    continue;
                 interact.SetActive(true);
             }
             if (inDialogue == true)

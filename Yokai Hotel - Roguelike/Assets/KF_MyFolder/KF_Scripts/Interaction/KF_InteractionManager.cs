@@ -28,7 +28,7 @@ public class KF_InteractionManager : MonoBehaviour
     }
     private void Update()
     {
-        if (levelM.levelChanged == true)
+        if ((levelM.levelChanged == true) || (levelM.hubReturn == true))
         {
             interactionInLevel.Clear();
             foreach (GameObject interact in GameObject.FindGameObjectsWithTag("Interact"))
