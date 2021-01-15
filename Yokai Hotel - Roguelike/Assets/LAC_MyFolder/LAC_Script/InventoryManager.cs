@@ -10,7 +10,7 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         player = GetComponent<PlayerController>();
-        maxHealth = player.health;
+        maxHealth = player.maxHealth;
 
     }
 
