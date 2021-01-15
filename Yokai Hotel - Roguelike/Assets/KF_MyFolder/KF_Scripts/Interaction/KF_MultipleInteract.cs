@@ -80,6 +80,11 @@ public class KF_MultipleInteract : MonoBehaviour
                     
                 }
             }
+            foreach (KF_Interaction interact in interactions)
+            {
+                if (interact == interactions[0])
+                    interact.gameObject.SetActive(true);
+            }
             listMax = interactions.Count;
         }
     }

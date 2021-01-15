@@ -28,7 +28,7 @@ public class KF_Unlockables : MonoBehaviour
     public bool secretActivated;
     public List<KF_UnlockablesIndividual> secretTriggers;
     private int secretToUnlock;
-    private List<int> unlocked = new List<int>();
+    public List<int> unlocked = new List<int>();
 
 
 
@@ -75,25 +75,18 @@ public class KF_Unlockables : MonoBehaviour
             LevelUnlock();
 
 
-        if (lvlM.levelChanged == true)
-            foreach (KF_UnlockablesIndividual secretTrigger in secretTriggers)
-            {
-                if (secretTrigger.secretUnlocked == true)
-                {
-                    secretToUnlock = secretTrigger.secretInList;
-                    secretActivated = true;
-                }
+        foreach (KF_UnlockablesIndividual secretTrigger in secretTriggers)
+        {
+            if (secretTrigger.secretUnlocked == true)
+            {  
+                secretToUnlock = secretTrigger.secretInList;
+                secretTrigger.secretUnlocked = false;
+                secretActivated = true;
             }
+        }
         if ((lvlM.levelChanged == true) || (hubReturn == true))
         {
-            foreach (GameObject secrets in GameObject.FindGameObjectsWithTag("Secret"))
-            {
-                if (secretTriggers.Contains(secrets.GetComponent<KF_UnlockablesIndividual>()))
-                    return;
-                else
-                secretTriggers.Add(secrets.GetComponent<KF_UnlockablesIndividual>());
-            }
-            onePerLevel = false;
+            StartCoroutine(AddSecret());
         }
         if (secretActivated == true)
             SecretUnlock();
@@ -201,5 +194,20 @@ public class KF_Unlockables : MonoBehaviour
         {
             secrets[id].SetActive(true); //problem?
         }
+
+
+    }
+
+    private IEnumerator AddSecret()
+    {
+        yield return new WaitForSeconds(1f);
+        foreach (GameObject secrets in GameObject.FindGameObjectsWithTag("Secret"))
+        {
+            if (secretTriggers.Contains(secrets.GetComponent<KF_UnlockablesIndividual>()))
+                Debug.Log("Secret already added");
+            else
+                secretTriggers.Add(secrets.GetComponent<KF_UnlockablesIndividual>());
+        }
+        onePerLevel = false;
     }
 }
