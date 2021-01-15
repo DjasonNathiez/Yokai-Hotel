@@ -126,5 +126,5 @@ public class ShopManager : MonoBehaviour
         {
             // buy else
         }
-    }
+    }  
 }
