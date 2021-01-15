@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 89314267}
   m_Layer: 0
   m_Name: Level Manager
-  m_TagString: Untagged
+  m_TagString: HotelManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -434,6 +434,11 @@ PrefabInstance:
       propertyPath: onEnter
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3089290880165220447, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+        type: 3}
+      propertyPath: random
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3555486430538579611, guid: 2a824c49a4abdfd4f990cb7ddb469795,
         type: 3}
       propertyPath: m_IsActive
@@ -468,6 +473,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405838982609708882, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6461832021646661411, guid: 2a824c49a4abdfd4f990cb7ddb469795,
         type: 3}
@@ -632,6 +642,7 @@ MonoBehaviour:
   attackVelocity: {x: 0, y: 0}
   attackM: {fileID: 0}
   health: 0
+  maxHealth: 0
   hurtDamage: 0
   isHurt: 0
   hurtTime: 0.2
@@ -778,9 +789,14 @@ MonoBehaviour:
     m_Bits: 1024
   bulletPrefab: {fileID: 9174963586662408213, guid: 189a40e121eda7f4faf320d8bfeaec46,
     type: 3}
-  hA_boost: 0
-  lA_boost: 0
+  heavyBoost: 1
+  lightBoost: 1
   sA_boost: 0
+  attackBoost: 1
+  theftLifeProba: 0
+  dropBoost: 1
+  kill_L: 0
+  kill_H: 0
   cam: {fileID: 0}
   camBrain: {fileID: 0}
   virtualCam: {fileID: 0}

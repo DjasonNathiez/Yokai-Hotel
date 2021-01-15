@@ -16,6 +16,7 @@ public class KF_InteractionManager : MonoBehaviour
     public Sprite dialogueBox;
     public Image dialogueBoxSP;
     public bool objectDialogue;
+    public bool interactDone;
 
     void Start()
     {
@@ -40,6 +41,7 @@ public class KF_InteractionManager : MonoBehaviour
 
     public void StartInteract(KF_Dialogue dialogue)
     {
+        interactDone = false;
         dialogueAnim.SetBool("isOpen", true);
         sentences.Clear();
         if (objectDialogue == true)
@@ -58,6 +60,7 @@ public class KF_InteractionManager : MonoBehaviour
 
     public void SecondStartInteract(KF_DialogueSecond dialogueSecond)
     {
+        interactDone = false;
         dialogueAnim.SetBool("isOpen", true);
         sentences.Clear();
         if (objectDialogue == true)
@@ -93,6 +96,7 @@ public class KF_InteractionManager : MonoBehaviour
             StartCoroutine(ChangeBox());
         Debug.Log("Dialogue End");
         KF_ResetInteract.dialogueReset = 0;
+        interactDone = true;
     }
 
     IEnumerator TypeSentence(string sentence)

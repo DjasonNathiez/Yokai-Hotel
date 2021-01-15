@@ -73,12 +73,10 @@ public class KF_Interaction : MonoBehaviour
                             effectTarget.SetActive(false);
                         if (effectIsRemove == false)
                             effectTarget.SetActive(true);
-                        Debug.Log("ObjectNotReverse");
                         secondDialogueStart = false;
                     }
                     if ((effectReversable == true) && (objectEffect == true) && (reverse == true))
                     {
-                        Debug.Log("ObjectReverse");
                         if (effectIsRemove == true)
                             effectTarget.SetActive(true);
                         if (effectIsRemove == false)
@@ -89,14 +87,12 @@ public class KF_Interaction : MonoBehaviour
                 }
                 if ((hastalked == false) && (secondDialogueStart == false))
                 {
-                    Debug.Log("1");
                     reverse = true;
                     hastalked = true;
                     interactAction.Invoke();
                 }     
                 if ((secondDialogue == true) && (secondDialogueStart == true))
                 {
-                    Debug.Log("2");
                     reverse = false;
                     hastalked = false;
                     interactOtherStart.Invoke();
