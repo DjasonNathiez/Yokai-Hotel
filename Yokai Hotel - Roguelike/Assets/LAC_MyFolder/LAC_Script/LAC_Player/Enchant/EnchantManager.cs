@@ -38,6 +38,10 @@ public class EnchantManager : MonoBehaviour
     public float moneyReduc;
     private void Start()
     {
+        player = GetComponentInParent<PlayerController>();
+        inventory = GetComponentInParent<InventoryManager>();
+
+        attackEffect = GetComponent<AttackEffect>();
         foreach(Enchant e in enchants)
         {
             Debug.Log(e.GenerateDescription());
@@ -201,6 +205,24 @@ public class EnchantManager : MonoBehaviour
                     case EnchantEffect.ConditionType.MIN_HEALTH:
                         {
                             e.enchantEffects[i].active = (player.health == 1);
+                            break;
+                        }
+
+                    case EnchantEffect.ConditionType.NO_HIT:
+                        {
+                            #region Active Condition
+                            if (player.isHurt && e.enchantEffects[i].duration < 0 && e.enchantEffects[i].effectDuration > 0)
+                            {
+                                e.enchantEffects[i].duration = currentEnchant.effectDuration;
+                                e.enchantEffects[i].active = false;
+                            }
+
+                            if (e.enchantEffects[i].effectDuration > 0)
+                                e.enchantEffects[i].duration -= Time.deltaTime;
+
+                            if (e.enchantEffects[i].duration < 0)
+                                e.enchantEffects[i].active = true;
+                            #endregion
                             break;
                         }
                 }

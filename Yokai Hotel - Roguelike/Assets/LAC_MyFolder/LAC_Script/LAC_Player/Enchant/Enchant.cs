@@ -9,7 +9,7 @@ public class Enchant : ScriptableObject
     public Sprite icon;
     public EnchantEffect[] enchantEffects;
     public float price;
-    //public string description;
+    public string name;
     public string GenerateDescription()
     {
         // initialize
@@ -17,6 +17,7 @@ public class Enchant : ScriptableObject
 
         string condition = "";
         string effect = "";
+        string duration = "";
 
         string[] boostChanges = { "increase ", "decrease " };
 
@@ -30,53 +31,58 @@ public class Enchant : ScriptableObject
             {
                 case EnchantEffect.ConditionType.LIGHT_ATTACK:
                     {
-                        condition += " After light attack ";
+                        condition += "After light attack ";
                         break;
                     }
                 case EnchantEffect.ConditionType.HEAVY_ATTACK:
                     {
-                        condition += " After heavy attack ";
+                        condition += "After heavy attack ";
                         break;
                     }
                 case EnchantEffect.ConditionType.DASH:
                     {
-                        condition += " After dash ";
+                        condition += "After dash ";
                         break;
                     }
                 case EnchantEffect.ConditionType.HEALTH:
                     {
-                        condition += " for each missing health points ";
+                        condition += "For each missing health points ";
                         break;
                     }
                 case EnchantEffect.ConditionType.MONEY:
                     {
-                        condition += " If money stock is greater than ";
+                        condition += "If money stock is greater than ";
                         break;
                     }
                 case EnchantEffect.ConditionType.LIGHT_KILL:
                     {
-                        condition += " After a kill by light attack ";
+                        condition += "After a kill by light attack ";
 
                         break;
                     }
                 case EnchantEffect.ConditionType.HEAVY_KILL:
                     {
-                        condition += " After a kill by heavy attack ";
+                        condition += "After a kill by heavy attack ";
                         break;
                     }
                 case EnchantEffect.ConditionType.HIT:
                     {
-                        condition += " After taking damage ";
+                        condition += "After taking damage ";
                         break;
                     }
                 case EnchantEffect.ConditionType.FULL_HEALTH:
                     {
-                        condition += " If you are full health ";
+                        condition += "If you are full health ";
                         break;
                     }
                 case EnchantEffect.ConditionType.MIN_HEALTH:
                     {
-                        condition += " If one health point left ";
+                        condition += "If one health point left ";
+                        break;
+                    }
+                case EnchantEffect.ConditionType.NO_HIT:
+                    {
+                        condition += "Any hit takes during " + e.effectDuration;
                         break;
                     }
             }
@@ -114,8 +120,9 @@ public class Enchant : ScriptableObject
                     }
 
             }
-
-            sentence = condition + effect;
+            if (e.effectDuration > 0)
+                duration += " during " + e.effectDuration + " secondes";
+            sentence = condition + effect + duration;
         }
         
 
@@ -128,7 +135,7 @@ public class Enchant : ScriptableObject
 public struct EnchantEffect
 {
     public int level;
-    public enum ConditionType { LIGHT_ATTACK, HEAVY_ATTACK, SHOOT_ATTACK, DASH, HEALTH, MONEY,LIGHT_KILL,HEAVY_KILL, HIT, FULL_HEALTH , MIN_HEALTH};
+    public enum ConditionType { LIGHT_ATTACK, HEAVY_ATTACK, SHOOT_ATTACK, DASH, HEALTH, MONEY,LIGHT_KILL,HEAVY_KILL, HIT, FULL_HEALTH , MIN_HEALTH, NO_HIT};
     public ConditionType conditionType;
     public BoostValue[] conditionValues;
 
