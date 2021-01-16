@@ -9,14 +9,14 @@ public class ShopManager : MonoBehaviour
     public InventoryManager inventoryM;
 
     [Header("Floor")]
-    public int floor;
+    public int floorLevel;
     public float priceMultiplier;
 
     [Header("Enchant")]
     public List<Enchant> enchantList;
     List<Enchant> exceptEnchants;
     public Enchant[] shopEnchants;
-    public float[] enchantPrice;
+    
 
     [Header("Health")]
     public int healValue;
@@ -24,8 +24,14 @@ public class ShopManager : MonoBehaviour
     public float healPrice;
     public float maxHealPrice;
 
+    public Sprite[] healSprite;
+
     [Header("Buy")]
     public BuyDetector[] buyDetectors;
+    public int[] price = new int[3];
+
+    [Header("Show")]
+    public SpriteRenderer[] shopItemS;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +50,8 @@ public class ShopManager : MonoBehaviour
         SelectShopEnchant(enchantList, exceptEnchants, ref shopEnchants);
         SelectHealValues(ref healValue);
 
+        UpdatePrice();
+
         // get detector
         buyDetectors = GetComponentsInChildren<BuyDetector>();
     }
@@ -52,6 +60,7 @@ public class ShopManager : MonoBehaviour
     void Update()
     {
         BuyProcess(buyDetectors);
+        UpdateVisual();
     }
 
     void SelectShopEnchant(List<Enchant> baseEnchant, List<Enchant> removeEnchant, ref Enchant[] shopEnchant)
@@ -103,28 +112,58 @@ public class ShopManager : MonoBehaviour
                     }
                     trigger = true;
                 }
-                if (buyDetectors[i].Buy)
+
+                if (buyDetectors[i].Buy )
                 {
-                    Buy(i);
-                    buyDetectors[i].Buy = false;
-                    buyDetectors[i].enabled = false;
+                    if (inventoryM.money >= price[i])
+                    {
+                        Buy(i);
+                        buyDetectors[i].Buy = false;
+                        buyDetectors[i].enabled = false;
+                    }
+                    else
+                        Debug.Log("need more money");
                 }
             }
         }
     }
     void Buy(int buyIndex)
     {
-        if(buyIndex < 3)
+        if(buyIndex < 2)
         {
             // buy enchant
             enchantM.AddEnchant(shopEnchants[buyIndex]);
             shopEnchants[buyIndex] = null;
 
+            inventoryM.money -= price[buyIndex];
             Debug.Log("Buy Enchant");
         }
         else
         {
-            // buy else
+            playerC.ChangeHealth(healValue);
+            healValue = 0;
+
+            Debug.Log("Buy Heal");
         }
-    }  
+    } 
+    void UpdatePrice()
+    {
+        for(int i = 0; i < 2; i++)
+        {
+            if (shopEnchants[i]!= null)
+            {
+                price[i] = (int)(shopEnchants[i].price * Mathf.Pow(priceMultiplier, floorLevel) * enchantM.moneyReduc);
+            }    
+        }
+        price[2] = (int)((healPrice * healValue) *Mathf.Pow(priceMultiplier, floorLevel) *enchantM.moneyReduc);
+    }
+    void UpdateVisual()
+    {
+        // show enchants
+        shopItemS[0].sprite = (shopEnchants[0] != null)? shopEnchants[0].icon : null;
+        shopItemS[1].sprite = (shopEnchants[1] != null) ? shopEnchants[1].icon : null;
+
+        // show heal
+        shopItemS[2].sprite = (healValue > 0) ? healSprite[healValue - 1] : null;
+    }
 }
