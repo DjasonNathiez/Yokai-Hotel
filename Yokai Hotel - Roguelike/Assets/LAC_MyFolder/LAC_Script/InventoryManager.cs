@@ -19,10 +19,11 @@ public class InventoryManager : MonoBehaviour
     {
         if (health > 0 && player.health < maxHealth)
         {
-            player.health += health;
-            health = 0;
+            //player.health += health;
+            //health = 0;
         }
         currentHealth = player.health;
+        maxHealth = player.maxHealth;
 
     }
 }
