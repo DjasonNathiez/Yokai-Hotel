@@ -8,11 +8,12 @@ public class EnchantManager : MonoBehaviour
     public InventoryManager inventory;
     public AttackEffect attackEffect;
 
+    [Header("Enchant")]
     public List<Enchant> enchants;
     public int maxEnchant;
     [HideInInspector]
     public int chooseIndex;
-    public float chooseDelay;
+    float chooseDelay = 2;
     float chooseDuration;
 
     [Header("Boost Cond")]
@@ -39,7 +40,7 @@ public class EnchantManager : MonoBehaviour
     {
         foreach(Enchant e in enchants)
         {
-            //Debug.Log(e.GenerateDescription());
+            Debug.Log(e.GenerateDescription());
         }
     }
     private void Update()
@@ -205,7 +206,6 @@ public class EnchantManager : MonoBehaviour
                 }
 
                 // apply effect cond
-
                 if (e.enchantEffects[i].active)
                 {
                     switch (currentEnchant.effectType)
@@ -244,7 +244,6 @@ public class EnchantManager : MonoBehaviour
                     }
                 }
                 
-
                 //bool lightAttack = (player.lightAttack && (int)currentEnchant.conditionType == 0);
                 //bool heavyAttack = (player.heavyAttack && (int)currentEnchant.conditionType == 1);
                 bool shootAttack = (player.shootAttack && (int)currentEnchant.conditionType == 2);

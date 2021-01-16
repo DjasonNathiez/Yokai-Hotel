@@ -9,24 +9,115 @@ public class Enchant : ScriptableObject
     public Sprite icon;
     public EnchantEffect[] enchantEffects;
     public float price;
-
+    //public string description;
     public string GenerateDescription()
     {
         // initialize
         string sentence = "";
 
-        string[] actions = { "light attack", "heavy attack", "shoot", "dash" };
-        string[] boostChange = { "increase", "decrease" };
+        string condition = "";
+        string effect = "";
+
+        string[] boostChanges = { "increase ", "decrease " };
 
         foreach(EnchantEffect e in enchantEffects)
         {
             float boostState = Mathf.Abs(e.boostValue - 1) * 100;
             if (sentence != "") // line return
                 sentence += "\n and ";
+            string boostChange = (e.boostValue < 1) ? boostChanges[1] : boostChanges[0];
+            switch (e.conditionType)
+            {
+                case EnchantEffect.ConditionType.LIGHT_ATTACK:
+                    {
+                        condition += " After light attack ";
+                        break;
+                    }
+                case EnchantEffect.ConditionType.HEAVY_ATTACK:
+                    {
+                        condition += " After heavy attack ";
+                        break;
+                    }
+                case EnchantEffect.ConditionType.DASH:
+                    {
+                        condition += " After dash ";
+                        break;
+                    }
+                case EnchantEffect.ConditionType.HEALTH:
+                    {
+                        condition += " for each missing health points ";
+                        break;
+                    }
+                case EnchantEffect.ConditionType.MONEY:
+                    {
+                        condition += " If money stock is greater than ";
+                        break;
+                    }
+                case EnchantEffect.ConditionType.LIGHT_KILL:
+                    {
+                        condition += " After a kill by light attack ";
 
-            sentence += "After "+actions[(int)e.conditionType]+": " +((e.boostValue < 1)?boostChange[1] : boostChange[0])+ " " +actions[(int)e.effectType] +" damage by " +boostState+" % " +
-                        " during :" + e.effectDuration + " secondes";
+                        break;
+                    }
+                case EnchantEffect.ConditionType.HEAVY_KILL:
+                    {
+                        condition += " After a kill by heavy attack ";
+                        break;
+                    }
+                case EnchantEffect.ConditionType.HIT:
+                    {
+                        condition += " After taking damage ";
+                        break;
+                    }
+                case EnchantEffect.ConditionType.FULL_HEALTH:
+                    {
+                        condition += " If you are full health ";
+                        break;
+                    }
+                case EnchantEffect.ConditionType.MIN_HEALTH:
+                    {
+                        condition += " If one health point left ";
+                        break;
+                    }
+            }
+            switch (e.effectType)
+            {
+                case EnchantEffect.EffectType.BOOST_LIGHT:
+                    {
+                        effect += boostChange + "light attack damage by : " + boostState +" %";
+                        break;
+                    }
+                case EnchantEffect.EffectType.BOOST_HEAVY:
+                    {
+                        effect += boostChange + "heavy attack damage by : " + boostState + " %";
+                        break;
+                    }
+                case EnchantEffect.EffectType.BOOST_ATTACK:
+                    {
+                        effect += boostChange + "attack damage by : " + boostState + " %";
+                        break;
+                    }
+                case EnchantEffect.EffectType.BOOST_DROP:
+                    {
+                        effect += boostChange + "item drop rate by  : " + boostState + " %";
+                        break;
+                    }
+                case EnchantEffect.EffectType.THEFT_HEALTH:
+                    {
+                       effect += " gain : " + e.boostValue * 100 + " % of chance to heal one health point";
+                        break;
+                    }
+                case EnchantEffect.EffectType.PRICE:
+                    {
+                        effect += boostChange + " shop price by : " + boostState + " %";
+                        break;
+                    }
+
+            }
+
+            sentence = condition + effect;
         }
+        
 
         return sentence;
     }
