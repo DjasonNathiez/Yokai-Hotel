@@ -21,7 +21,7 @@ public class EnchantManager : MonoBehaviour
     public bool dash;
 
     public float healthValue;
-    public float moneyValue;
+    //public float moneyValue;
 
    
 
