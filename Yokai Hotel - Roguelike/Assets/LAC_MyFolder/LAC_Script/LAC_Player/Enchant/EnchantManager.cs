@@ -8,11 +8,12 @@ public class EnchantManager : MonoBehaviour
     public InventoryManager inventory;
     public AttackEffect attackEffect;
 
+    [Header("Enchant")]
     public List<Enchant> enchants;
     public int maxEnchant;
     [HideInInspector]
     public int chooseIndex;
-    public float chooseDelay;
+    float chooseDelay = 2;
     float chooseDuration;
 
     [Header("Boost Cond")]
@@ -37,9 +38,13 @@ public class EnchantManager : MonoBehaviour
     public float moneyReduc;
     private void Start()
     {
+        player = GetComponentInParent<PlayerController>();
+        inventory = GetComponentInParent<InventoryManager>();
+
+        attackEffect = GetComponent<AttackEffect>();
         foreach(Enchant e in enchants)
         {
-            //Debug.Log(e.GenerateDescription());
+            Debug.Log(e.GenerateDescription());
         }
     }
     private void Update()
@@ -202,10 +207,27 @@ public class EnchantManager : MonoBehaviour
                             e.enchantEffects[i].active = (player.health == 1);
                             break;
                         }
+
+                    case EnchantEffect.ConditionType.NO_HIT:
+                        {
+                            #region Active Condition
+                            if (player.isHurt && e.enchantEffects[i].duration < 0 && e.enchantEffects[i].effectDuration > 0)
+                            {
+                                e.enchantEffects[i].duration = currentEnchant.effectDuration;
+                                e.enchantEffects[i].active = false;
+                            }
+
+                            if (e.enchantEffects[i].effectDuration > 0)
+                                e.enchantEffects[i].duration -= Time.deltaTime;
+
+                            if (e.enchantEffects[i].duration < 0)
+                                e.enchantEffects[i].active = true;
+                            #endregion
+                            break;
+                        }
                 }
 
                 // apply effect cond
-
                 if (e.enchantEffects[i].active)
                 {
                     switch (currentEnchant.effectType)
@@ -244,7 +266,6 @@ public class EnchantManager : MonoBehaviour
                     }
                 }
                 
-
                 //bool lightAttack = (player.lightAttack && (int)currentEnchant.conditionType == 0);
                 //bool heavyAttack = (player.heavyAttack && (int)currentEnchant.conditionType == 1);
                 bool shootAttack = (player.shootAttack && (int)currentEnchant.conditionType == 2);

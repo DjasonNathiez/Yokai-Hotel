@@ -8,6 +8,7 @@ public class KF_ShopInteract : MonoBehaviour
     public KF_ShopDialogue objectToBuy;
     public UnityEvent itemDescAppear;
     public UnityEvent itemBuy;
+    public bool showState, lastShowState;
     public bool inRange;
     public bool objectBought; // this bools is true when object is bought
 
@@ -32,24 +33,33 @@ public class KF_ShopInteract : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((inRange == true) && (objectBought == false))
+        /*if ((inRange == true) && (objectBought == false))
         {
-            if (onlyOnce == false)
-                ShowItemDesc();
+            //if (onlyOnce == false)
+                //ShowItemDesc();
             if (Input.GetButtonDown("Interact"))
             {
                 objectBought = true;
                 Debug.Log("Item Purchased");
-                RemoveDesc();
+                //RemoveDesc();
             }
             onlyOnce = true;
         }
         if (inDialogue == true)
         {
-            RemoveDesc();
+            //RemoveDesc();
             inDialogue = false;
             onlyOnce = false;
+        }*/
+        if (showState != lastShowState)
+        {
+            if(showState)
+                ShowItemDesc();
+            else
+                RemoveDesc();
+            lastShowState = showState;
         }
+           
     }
 
     public void ShowItemDesc()

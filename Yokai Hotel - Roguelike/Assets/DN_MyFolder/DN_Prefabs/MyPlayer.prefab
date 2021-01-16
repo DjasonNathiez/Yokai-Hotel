@@ -180,6 +180,7 @@ MonoBehaviour:
   attackVelocity: {x: 0, y: 0}
   attackM: {fileID: 0}
   health: 10
+  maxHealth: 0
   hurtDamage: 0
   isHurt: 0
   hurtTime: 0.2
@@ -290,6 +291,9 @@ GameObject:
   - component: {fileID: 3867148611082786491}
   - component: {fileID: 3867148611082786488}
   - component: {fileID: 3867148611082786489}
+  - component: {fileID: 6352650693337835805}
+  - component: {fileID: 7314374932543469846}
+  - component: {fileID: 3397660010953235329}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -393,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b7f531796a33e040ba3c49d06410b3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 0}
+  ghost: {fileID: 7314374932543469846}
   moveSensibility: 0.1
   animatorState: 0
 --- !u!114 &3867148611082786491
@@ -415,9 +419,14 @@ MonoBehaviour:
     m_Bits: 1024
   bulletPrefab: {fileID: 5675991171498453655, guid: ca0ff352529c06a4c8d0b772f66f99f3,
     type: 3}
-  hA_boost: 0
-  lA_boost: 0
+  heavyBoost: 1
+  lightBoost: 1
   sA_boost: 0
+  attackBoost: 1
+  theftLifeProba: 0
+  dropBoost: 1
+  kill_L: 0
+  kill_H: 0
   cam: {fileID: 0}
   camBrain: {fileID: 0}
   virtualCam: {fileID: 0}
@@ -465,6 +474,71 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6352650693337835805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867148611082786484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2a27b1e794a0d4fb4849d06204fd19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  feetPrefab: {fileID: 8160639419976686638, guid: 5bb98e8ae1d65c64a957e09b8aac21af,
+    type: 3}
+  footFreq: 0.1
+  footDuration: 0.5
+  footDist: 0.1
+--- !u!114 &7314374932543469846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867148611082786484}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e0208b15957eb4bb5e24920d532e92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GhostPrefab: {fileID: 6519268443080290510, guid: 3ca934da399b281488641809e54be92e,
+    type: 3}
+  spriteToGhost: {fileID: 0}
+  colorFilter: {r: 1, g: 1, b: 1, a: 0.46666667}
+  spawnDelay: 0.02
+  destroyTime: 0.3
+--- !u!114 &3397660010953235329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867148611082786484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f362e062d1f2e154e8fbd3eaadf10194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  inventory: {fileID: 0}
+  attackEffect: {fileID: 0}
+  enchants: []
+  maxEnchant: 3
+  chooseIndex: 0
+  lightAttack: 0
+  heavyAttack: 0
+  dash: 0
+  healthValue: 0
+  lightBoost: 1
+  heavyBoost: 1
+  attackBoost: 1
+  theftLifeProba: 0
+  dropBoost: 1
+  moneyBoost: 1
+  moneyReduc: 1
 --- !u!1 &3867148611245771318
 GameObject:
   m_ObjectHideFlags: 0

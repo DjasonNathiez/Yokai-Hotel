@@ -32,6 +32,7 @@ public class ShopManager : MonoBehaviour
 
     [Header("Show")]
     public SpriteRenderer[] shopItemS;
+    public KF_ShopInteract[] shopInteracts;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +55,9 @@ public class ShopManager : MonoBehaviour
 
         // get detector
         buyDetectors = GetComponentsInChildren<BuyDetector>();
+        shopInteracts = GetComponentsInChildren<KF_ShopInteract>();
+
+        // update shop inte
     }
 
     // Update is called once per frame
@@ -105,13 +109,18 @@ public class ShopManager : MonoBehaviour
                 if (buyDetectors[i].onTrigger && !trigger)
                 {
                     // display something
-                    if (i < 3)
+                    if (i < 2)
                     {
                         enchantM.ChooseEnchant();
                         Debug.Log("Choose Enchant");
                     }
+                    if (shopInteracts[i] != null)
+                        shopInteracts[i].showState = true;
+
                     trigger = true;
                 }
+                else if (shopInteracts[i] != null)
+                    shopInteracts[i].showState = false ;
 
                 if (buyDetectors[i].Buy )
                 {
@@ -120,6 +129,9 @@ public class ShopManager : MonoBehaviour
                         Buy(i);
                         buyDetectors[i].Buy = false;
                         buyDetectors[i].enabled = false;
+
+                        if (shopInteracts[i] != null)
+                            shopInteracts[i].showState = false;
                     }
                     else
                         Debug.Log("need more money");
@@ -165,5 +177,35 @@ public class ShopManager : MonoBehaviour
 
         // show heal
         shopItemS[2].sprite = (healValue > 0) ? healSprite[healValue - 1] : null;
+
+        UpdateShopInteractVisual();
+    }
+
+    void UpdateShopInteractVisual()
+    {
+        for(int i = 0; i < shopInteracts.Length; i++)
+        {
+            if(i < 2) // detect enchant
+            {
+                if(shopEnchants[i] != null)
+                {
+                    shopInteracts[i].objectToBuy.nameObj = shopEnchants[i].name.Split('?');
+                    shopInteracts[i].objectToBuy.description = shopEnchants[i].GenerateDescription().Split('?');
+                    shopInteracts[i].objectToBuy.price = price[i].ToString().Split('?');
+                }
+                
+
+            }
+            else
+            {
+                string healName = "Heal stock of : " + healValue;
+                string healDesc = " Heal " + healValue + " points no more, no less";
+                shopInteracts[i].objectToBuy.nameObj = healName.Split('?');
+                shopInteracts[i].objectToBuy.description = healDesc.Split('?');
+                shopInteracts[i].objectToBuy.price = price[i].ToString().Split('?');
+            }
+
+            
+        }
     }
 }
