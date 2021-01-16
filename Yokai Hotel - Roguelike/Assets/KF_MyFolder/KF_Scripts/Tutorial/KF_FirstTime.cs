@@ -9,7 +9,7 @@ public class KF_FirstTime : MonoBehaviour
     public List<GameObject> spawnObjects;
     public bool firstTime;
     public KF_Interaction tutorialActivator;
-    public bool hubReturn; //when player dies = true
+    public bool hubReturn; //when player dies = true. Should be reference of the gamemanager 
 
     void Awake()
     {
@@ -45,6 +45,7 @@ public class KF_FirstTime : MonoBehaviour
                 objects.SetActive(false);
             }
         }
+        hubReturn = FindObjectOfType<KF_LevelManager>().hubReturn;
     }
 
     private void Update()

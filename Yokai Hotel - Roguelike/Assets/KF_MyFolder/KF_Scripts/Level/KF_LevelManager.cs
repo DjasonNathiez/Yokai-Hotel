@@ -18,6 +18,7 @@ public class KF_LevelManager : MonoBehaviour
     public GameObject postProcess1;
     public GameObject postProcess2;
     public int postProcessChangeLevel;
+    public bool hubReturn;
 
     // Start is called before the first frame update
     void Awake()
@@ -72,6 +73,11 @@ public class KF_LevelManager : MonoBehaviour
         {
             postProcess1.SetActive(false);
             postProcess2.SetActive(true);
+        }
+        if (hubReturn == true)
+        {
+            levelChanged = true;
+            hubReturn = false;
         }
     }
     private IEnumerator MoveLevelHub()

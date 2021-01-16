@@ -28,7 +28,7 @@ public class KF_InteractionManager : MonoBehaviour
     }
     private void Update()
     {
-        if (levelM.levelChanged == true)
+        if ((levelM.levelChanged == true) || (levelM.hubReturn == true))
         {
             interactionInLevel.Clear();
             foreach (GameObject interact in GameObject.FindGameObjectsWithTag("Interact"))
@@ -46,10 +46,11 @@ public class KF_InteractionManager : MonoBehaviour
         sentences.Clear();
         if (objectDialogue == true)
         {
-            dialogueBoxSP.sprite = objectBox;
-            var tempColor = dialogueBoxSP.color;
-            tempColor.a = 255f;
-            dialogueBoxSP.color = tempColor;
+            ChangeToObject();
+        }
+        if (objectDialogue == false)
+        {
+            ChangeToDialogue();
         }
         foreach (string sentence in dialogue.sentences)
         {
@@ -61,15 +62,16 @@ public class KF_InteractionManager : MonoBehaviour
     public void SecondStartInteract(KF_DialogueSecond dialogueSecond)
     {
         interactDone = false;
-        dialogueAnim.SetBool("isOpen", true);
         sentences.Clear();
         if (objectDialogue == true)
         {
-            dialogueBoxSP.sprite = objectBox;
-            var tempColor = dialogueBoxSP.color;
-            tempColor.a = 255f;
-            dialogueBoxSP.color = tempColor;
+            ChangeToObject();
         }
+        if (objectDialogue == false)
+        {
+            ChangeToDialogue();
+        }
+        dialogueAnim.SetBool("isOpen", true);
         foreach (string sentence2 in dialogueSecond.sentences2)
         {
             sentences.Enqueue(sentence2);
@@ -93,10 +95,11 @@ public class KF_InteractionManager : MonoBehaviour
     {
         dialogueAnim.SetBool("isOpen", false);
         if (objectDialogue == true)
-            StartCoroutine(ChangeBox());
+            objectDialogue = false;
         Debug.Log("Dialogue End");
         KF_ResetInteract.dialogueReset = 0;
         interactDone = true;
+        dialogueText.text = "";
     }
 
     IEnumerator TypeSentence(string sentence)
@@ -109,13 +112,19 @@ public class KF_InteractionManager : MonoBehaviour
         }
     }
 
-    IEnumerator ChangeBox()
+    void ChangeToObject()
     {
-        yield return new WaitForSeconds(1f);
+        dialogueBoxSP.sprite = objectBox;
+        var tempColor = dialogueBoxSP.color;
+        tempColor.a = 255f;
+        dialogueBoxSP.color = tempColor;
+    }
+
+    void ChangeToDialogue()
+    {
         var tempColor = dialogueBoxSP.color;
         tempColor.a = 230f;
         dialogueBoxSP.color = tempColor;
         dialogueBoxSP.sprite = dialogueBox;
-        objectDialogue = false;
     }
 }
