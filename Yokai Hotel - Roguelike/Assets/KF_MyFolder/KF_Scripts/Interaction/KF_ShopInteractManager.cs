@@ -35,6 +35,7 @@ public class KF_ShopInteractManager : MonoBehaviour
         price = new Queue<string>();
         lvlM = FindObjectOfType<KF_LevelManager>();
         dialogueBoxSP = GameObject.FindGameObjectWithTag("DialogueBox").GetComponent<Image>();
+        dialogueAnim = GameObject.FindGameObjectWithTag("DialogueAnim").GetComponent<Animator>();
 
     }
 
