@@ -22,7 +22,7 @@ public class InterfaceManager : MonoBehaviour
     /// Texture hpNotActive;
 
     float currentHealth;
-    float maxHealth;
+    public float maxHealth;
 
     float shootValue;
 
@@ -60,7 +60,7 @@ public class InterfaceManager : MonoBehaviour
         //initialization HealthBar
         for(int i = 0; i < allTextureLantern.Length; i++)
         {
-            allTextureLantern[i].enabled = true;
+            allTextureLantern[i].enabled = false;
         }
 
     }
@@ -81,16 +81,25 @@ public class InterfaceManager : MonoBehaviour
         if (inventory)
         {
             currentHealth = inventory.currentHealth;
-            maxHealth = inventory.maxHealth;
+            //maxHealth = inventory.maxHealth;
         }
 
         for(int i = 0; i < allTextureLantern.Length; i++)
         {
-            if(i != 0)
+            
+               allTextureLantern[i].texture = (currentHealth > i) ? hpActivate : hpDown;
+            
+            if(i < maxHealth)
             {
-                allTextureLantern[i].texture = (currentHealth >= i) ? hpActivate : hpDown;
+                allTextureLantern[i].enabled = true;
+            }
+
+            if(i >= maxHealth)
+            {
+                allTextureLantern[i].enabled = false;
             }
         }
+
     }
 
     void UpdateMoney()
@@ -135,13 +144,11 @@ public class InterfaceManager : MonoBehaviour
             {
                 keysImage[inventory.keys -1].texture = keysUp;
 
-                Debug.Log("keysUp");
             }
             else 
             {
                 keysImage[i].texture = keysMiss;
 
-                Debug.Log("keysMiss");
             }
             
         }
