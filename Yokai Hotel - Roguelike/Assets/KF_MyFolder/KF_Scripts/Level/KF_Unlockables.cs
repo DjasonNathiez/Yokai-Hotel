@@ -51,6 +51,7 @@ public class KF_Unlockables : MonoBehaviour
                 go.SetActive(false);
         }
 
+        Debug.Log("Save exist ? " + SaveSystem.SaveExist());
         nextUnlock = 2;
         hubReturn = lvlM.hubReturn;
         
@@ -80,6 +81,7 @@ public class KF_Unlockables : MonoBehaviour
         if (updateUnlocks == true)
             LevelUnlock();
 
+        //
 
         foreach (KF_UnlockablesIndividual secretTrigger in secretTriggers)
         {
