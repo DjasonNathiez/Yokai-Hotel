@@ -19,6 +19,7 @@ public class InterfaceManager : MonoBehaviour
     public Texture hpActivate;
     public Texture hpDown;
     public GameObject hpBar;
+    public GameObject[] lightHP;
     /// Texture hpNotActive;
 
     float currentHealth;
@@ -49,6 +50,7 @@ public class InterfaceManager : MonoBehaviour
     private void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        
 
         keysObj = GameObject.FindGameObjectWithTag("Keys");
         enchantIMG = GameObject.FindGameObjectWithTag("EnchantIMG");
@@ -65,12 +67,15 @@ public class InterfaceManager : MonoBehaviour
 
         allTextureLantern = hpBar.GetComponentsInChildren<RawImage>();
 
+        lightHP = GameObject.FindGameObjectsWithTag("LightUI");
         
 
         //initialization HealthBar
-        for(int i = 0; i < allTextureLantern.Length; i++)
+        
+
+        for (int i = 0; i < enchantM.enchants.Count; i++)
         {
-            allTextureLantern[i].enabled = false;
+            enchantList[i].enabled = false;
         }
 
     }
@@ -98,10 +103,10 @@ public class InterfaceManager : MonoBehaviour
 
         for(int i = 0; i < allTextureLantern.Length; i++)
         {
-            
-               allTextureLantern[i].texture = (currentHealth > i) ? hpActivate : hpDown;
-            
-            if(i < maxHealth)
+
+            //allTextureLantern[i].texture = (currentHealth > i) ? hpActivate : hpDown;
+
+            if (i < maxHealth)
             {
                 allTextureLantern[i].enabled = true;
             }
@@ -174,12 +179,12 @@ public class InterfaceManager : MonoBehaviour
         enchantList = enchantIMG.GetComponentsInChildren<RawImage>();
         for(int i = 0; i < enchantM.enchants.Count; i++)
         {
+            enchantList[i].enabled = true;
             enchantList[i].texture = enchantM.enchants[i].icon.texture;
 
-            if(enchantM.enchants[i].enchantEffects[i].active == true)
-            {
-                Debug.Log("IMAGE QUI BOUGE");
-            }
+
+            //if(enchantM.enchants[i].enchantEffects[i].active == true)
+            
         }
     }
 }

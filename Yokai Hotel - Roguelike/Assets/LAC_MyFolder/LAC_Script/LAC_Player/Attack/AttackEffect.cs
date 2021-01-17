@@ -287,4 +287,14 @@ public class AttackEffect : MonoBehaviour
         yield return new WaitForSecondsRealtime(delay);
         kill_L = kill_H = false;
     }
+
+    public void LightAttackSound()
+    {
+        audioM.PlaySound("Player fast attack", 0);
+    }
+
+    public void HeavyAttackSound()
+    {
+        audioM.PlaySound("Player heavy attack", 0);
+    }
 }
