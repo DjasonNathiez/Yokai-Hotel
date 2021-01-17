@@ -35,8 +35,8 @@ public class KF_Unlockables : MonoBehaviour
 
     void Start()
     {
-        if (SaveSystem.LoadProgress() == null)// detect first time
-            SaveSystem.SaveProgress(this);
+        //if (SaveSystem.LoadProgress() == null)// detect first time
+            //SaveSystem.SaveProgress(this);
 
         nextUnlock = 2;
         hubReturn = lvlM.hubReturn;

@@ -37,6 +37,11 @@ public class InterfaceManager : MonoBehaviour
     public GameObject keysObj;
     int currentKey;
 
+    [Header("Enchant")]
+    public RawImage[] enchantList;
+    GameObject enchantIMG;
+    EnchantManager enchantM;
+
     private void Awake()
     {
     }
@@ -45,17 +50,22 @@ public class InterfaceManager : MonoBehaviour
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
 
-        
+        keysObj = GameObject.FindGameObjectWithTag("Keys");
+        enchantIMG = GameObject.FindGameObjectWithTag("EnchantIMG");
         
         if(playerObj)
         inventory = playerObj.GetComponent<InventoryManager>(); //initialization du script InventoryManager
-
+     
         moneyText = GameObject.FindGameObjectWithTag("MoneyText").GetComponent<TextMeshProUGUI>();
 
         if(playerObj)
         player = playerObj.GetComponent<PlayerController>();
 
+        enchantM = playerObj.GetComponentInChildren<EnchantManager>();
+
         allTextureLantern = hpBar.GetComponentsInChildren<RawImage>();
+
+        
 
         //initialization HealthBar
         for(int i = 0; i < allTextureLantern.Length; i++)
@@ -67,12 +77,14 @@ public class InterfaceManager : MonoBehaviour
 
     private void Update()
     {
+        if(levelM)
         kActive = levelM.levels[levelM.levelCount].GetComponent<ProceduralGenerator>();
 
         UpdateHealth();
         UpdateMoney();
         UpdateShoot();
         UpdateKey();
+        UpdateEnchant();
         
     }
 
@@ -81,7 +93,7 @@ public class InterfaceManager : MonoBehaviour
         if (inventory)
         {
             currentHealth = inventory.currentHealth;
-            //maxHealth = inventory.maxHealth;
+            maxHealth = inventory.maxHealth;
         }
 
         for(int i = 0; i < allTextureLantern.Length; i++)
@@ -153,5 +165,21 @@ public class InterfaceManager : MonoBehaviour
             
         }
 
+    }
+
+    void UpdateEnchant()
+    {
+        //initialize image
+
+        enchantList = enchantIMG.GetComponentsInChildren<RawImage>();
+        for(int i = 0; i < enchantM.enchants.Count; i++)
+        {
+            enchantList[i].texture = enchantM.enchants[i].icon.texture;
+
+            if(enchantM.enchants[i].enchantEffects[i].active == true)
+            {
+                Debug.Log("IMAGE QUI BOUGE");
+            }
+        }
     }
 }
