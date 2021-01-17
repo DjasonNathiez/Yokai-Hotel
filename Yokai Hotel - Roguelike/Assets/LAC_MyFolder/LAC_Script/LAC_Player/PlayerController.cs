@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
 
     Rigidbody2D rb2D;
-    public enum PlayerState { FREE, DASH, ATTACK, HURT, MANAGE };
+    public enum PlayerState { FREE, DASH, ATTACK, HURT, MANAGE , DIE};
     public PlayerState playerState = PlayerState.FREE;
 
     [Header("Movement")]
@@ -172,7 +173,9 @@ public class PlayerController : MonoBehaviour
         //attackChoose = 1;
 
         #endregion
-
+        // debug
+        if (Input.GetKeyDown(KeyCode.K))
+            ChangeHealth(-health);
         // take damage
         if (hurtDamage != 0)
         {
@@ -185,10 +188,16 @@ public class PlayerController : MonoBehaviour
 
                 StartCoroutine(Recovery());
                 playerState = PlayerState.HURT;
+
+                // death condition
+                if (health <= 0)
+                    Death();
             }
 
             hurtDamage = 0;
         }
+        if (health <= 0)
+            playerState = PlayerState.DIE;
 
         switch (playerState)
         {
@@ -309,6 +318,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        # region shootSection
         //maximize shoot gauge
         if (shootGaugeState > shootGaugeMax)
         {
@@ -332,6 +342,7 @@ public class PlayerController : MonoBehaviour
         {
             aimDirection = lastDir.normalized;
         }
+        #endregion
     }
 
     private void FixedUpdate()
@@ -510,11 +521,28 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log((value>= 0)? "player heal": "player lose health");
         health = Mathf.Clamp(health + value, 0, maxHealth);
+
+        if (health <= 0)
+            Death();
     }
     public void ChangeMaxHealth(int value)
     {
         Debug.Log((value >= 0) ? "player + MaxHealth" : "player - MaxHealth");
         maxHealth += value;
+    }
+
+    public void Death()
+    {
+        velocity = Vector2.zero;
+        playerState = PlayerState.DIE;
+        StartCoroutine(Restart(4));
+    }
+
+    public IEnumerator Restart(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        int restartIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(restartIndex);
     }
 
 }

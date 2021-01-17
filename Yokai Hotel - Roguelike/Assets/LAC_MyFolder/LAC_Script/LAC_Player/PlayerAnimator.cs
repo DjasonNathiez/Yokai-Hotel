@@ -12,7 +12,7 @@ public class PlayerAnimator : MonoBehaviour
 
     [Header("Displacement")]
     public float moveSensibility;
-    public enum AnimatorState { IDLE, MOVE, DASH, ATTACK};
+    public enum AnimatorState { IDLE, MOVE, DASH, ATTACK,DIE};
     public AnimatorState animatorState;
     // Start is called before the first frame update
     void Start()
@@ -54,15 +54,18 @@ public class PlayerAnimator : MonoBehaviour
         if ((int)player.playerState == 2)
             animatorState = AnimatorState.ATTACK;
 
+        if ((int)player.playerState == 5)
+            animatorState = AnimatorState.DIE;
+
     }
     void UpdateAnimatorValue()
     {
         animator.SetInteger("AnimatorState", (int)animatorState);
 
-        if ((int)player.playerState != 1)
+        if ((int)player.playerState != 1 && (int)player.playerState != 5)
             UpdateBlendTree(player.dashDir);
 
-        if ((int)player.playerState != 1)
+        if ((int)player.playerState != 1 && (int)player.playerState != 5)
             UpdateBlendTree(player.lastDir);
 
         animator.SetInteger("AttackChoose", player.attackChoose);  
