@@ -11,15 +11,10 @@ public class KF_Unlockables : MonoBehaviour
     public List<GameObject> bossUnlock;
     public int maxLevelReached;
     public KF_LevelManager lvlM;
-    private bool hubReturn;
+    public bool hubReturn;
 
-    private int[] unlockLevels = { 2, 4, 6, 8, 10 };
+    public int[] unlockLevels = new int[5];
     private bool updateUnlocks;
-    public bool unlock2;
-    private bool unlock4;
-    private bool unlock6;
-    private bool unlock8;
-    private bool unlockBoss;
     private int nextUnlock;
     private bool onePerLevel;
 
@@ -30,16 +25,27 @@ public class KF_Unlockables : MonoBehaviour
     private int secretToUnlock;
     public List<int> unlocked = new List<int>();
 
+    [Header("==== Do Not Touch ====")]
+    public bool unlock2;
+    public bool unlock4;
+    public bool unlock6;
+    public bool unlock8;
+    public bool unlockBoss;
+    private int count;
 
 
 
-    void Start()
+
+    void Awake()
     {
+        Debug.Log("Save exist ? " + SaveSystem.SaveExist());
         lvlM = FindObjectOfType<KF_LevelManager>();
+        SaveSystem.SaveProgress(this);
+        SaveSystem.DeleteSave();
 
-        if (SaveSystem.LoadProgress() == null)// detect first time      
+        if (SaveSystem.SaveExist() == false)// detect first time      
         {
-            SaveSystem.SaveProgress(this, lvlM);
+            SaveSystem.SaveProgress(this);
 
             foreach (GameObject go in level4Unlock)
                 go.SetActive(false);
@@ -50,10 +56,24 @@ public class KF_Unlockables : MonoBehaviour
             foreach (GameObject go in bossUnlock)
                 go.SetActive(false);
         }
+        else
+        {
+            ProgressData data = SaveSystem.LoadProgress();
+            maxLevelReached = data.maxLevelReached;
+            unlock2 = data.unlock2;
+            unlock4 = data.unlock4;
+            unlock6 = data.unlock6;
+            unlock8 = data.unlock8;
+            unlockBoss = data.unlockBoss;
+            hubReturn = data.hubReturn;
 
-        Debug.Log("Save exist ? " + SaveSystem.SaveExist());
-        nextUnlock = 2;
-        hubReturn = lvlM.hubReturn;
+            lvlM.hubReturn = data.hubReturn;
+            for (int i = 0; i < data.unlocked.Count; i++)
+                unlocked.Add(data.unlocked[i]);
+        }
+
+
+        nextUnlock = unlockLevels[count];
         
         foreach (GameObject secret in secrets)
             secret.SetActive(false);
@@ -77,11 +97,11 @@ public class KF_Unlockables : MonoBehaviour
         if ((maxLevelReached == nextUnlock) && (onePerLevel == false))
         {
             updateUnlocks = true;
+            nextUnlock = unlockLevels[count + 1];
         }
         if (updateUnlocks == true)
             LevelUnlock();
 
-        //
 
         foreach (KF_UnlockablesIndividual secretTrigger in secretTriggers)
         {
@@ -94,6 +114,7 @@ public class KF_Unlockables : MonoBehaviour
         }
         if ((lvlM.levelChanged == true) || (hubReturn == true))
         {
+
             StartCoroutine(AddSecret());
         }
         if (secretActivated == true)

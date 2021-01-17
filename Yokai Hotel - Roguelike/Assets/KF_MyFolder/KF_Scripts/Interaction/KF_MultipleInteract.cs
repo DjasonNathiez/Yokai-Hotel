@@ -16,7 +16,7 @@ public class KF_MultipleInteract : MonoBehaviour
 
     void Start()
     {
-        hubReturn = LevelM.hubReturn;
+        hubReturn = LevelM.gameObject.GetComponent<KF_Unlockables>().hubReturn;
         LevelM = FindObjectOfType<KF_LevelManager>();
         currentInteract = interactions[interactCount];
         if (random == true)

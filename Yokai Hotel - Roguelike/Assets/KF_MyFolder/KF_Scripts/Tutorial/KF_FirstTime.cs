@@ -45,7 +45,7 @@ public class KF_FirstTime : MonoBehaviour
                 objects.SetActive(false);
             }
         }
-        hubReturn = FindObjectOfType<KF_LevelManager>().hubReturn;
+        hubReturn = FindObjectOfType<KF_Unlockables>().hubReturn;
     }
 
     private void Update()

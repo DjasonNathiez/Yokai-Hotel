@@ -16,14 +16,21 @@ public class KF_LevelManager : MonoBehaviour
     public GameObject fadecanvas;
     public bool levelChanged;
 
-    public GameObject postProcess1;
-    public GameObject postProcess2;
+    //public GameObject postProcess1;
+    //public GameObject postProcess2;
     public int postProcessChangeLevel;
     public bool hubReturn;
+    private KF_Unlockables unlockables;
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
+        fadecanvas.SetActive(true);
+    }
+
+    void Start()
+    {
+        unlockables = this.gameObject.GetComponent<KF_Unlockables>();
         player = FindObjectOfType<PlayerController>();
         for (int i = 1; i < levels.Count; i++)
         {
@@ -35,10 +42,10 @@ public class KF_LevelManager : MonoBehaviour
         foreach (Transform child in levelpos) if (child.CompareTag("StartPoint"))
                 playerPosition.position = child.position;
         checkTriggers = currentLevel.GetComponent<KF_CheckTriggers>();
-        fadecanvas.SetActive(true);
+        hubReturn = unlockables.hubReturn;
 
-        postProcess1.SetActive(true);
-        postProcess2.SetActive(false);
+        //postProcess1.SetActive(true);
+        //postProcess2.SetActive(false);
         levelChanged = false;
     }
 
@@ -74,11 +81,11 @@ public class KF_LevelManager : MonoBehaviour
                         playerPosition.position = child.position;
             }*/
         }
-        if (levelCount == postProcessChangeLevel)
+        /*if (levelCount == postProcessChangeLevel)
         {
             postProcess1.SetActive(false);
             postProcess2.SetActive(true);
-        }
+        }*/
         if (hubReturn == true)
         {
             levelChanged = true;
