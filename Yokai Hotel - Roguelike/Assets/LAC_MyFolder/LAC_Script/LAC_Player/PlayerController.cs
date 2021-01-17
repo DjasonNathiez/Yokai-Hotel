@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
     public int maxHealth;
     public int hurtDamage;
     public bool isHurt;
+    public bool isDead;
 
     public float hurtTime;
     public float invincibleTime;
@@ -197,7 +198,11 @@ public class PlayerController : MonoBehaviour
             hurtDamage = 0;
         }
         if (health <= 0)
+        {
             playerState = PlayerState.DIE;
+            isDead = true;
+        }
+            
 
         switch (playerState)
         {
@@ -541,6 +546,7 @@ public class PlayerController : MonoBehaviour
     public IEnumerator Restart(float delay)
     {
         yield return new WaitForSeconds(delay);
+
         int restartIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(restartIndex);
     }

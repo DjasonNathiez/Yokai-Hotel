@@ -9,6 +9,6 @@ public class ProgressData
     public ProgressData(KF_Unlockables unlockables)
     {
         maxLevelReached = unlockables.maxLevelReached;
-
+        
     }
 }
