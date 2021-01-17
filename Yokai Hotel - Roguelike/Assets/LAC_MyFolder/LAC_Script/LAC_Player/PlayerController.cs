@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
 
     Rigidbody2D rb2D;
-    public enum PlayerState { FREE, DASH, ATTACK, HURT };
+    public enum PlayerState { FREE, DASH, ATTACK, HURT, MANAGE , DIE};
     public PlayerState playerState = PlayerState.FREE;
 
     [Header("Movement")]
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 velocitySmoothing;
 
     [Header("Dash")]
+    public bool dash;
     public float dashDistance;
     public float dashTime;
 
@@ -69,12 +71,21 @@ public class PlayerController : MonoBehaviour
 
     [Header("HURT")]
     public int health;
+    public int maxHealth;
     public int hurtDamage;
     public bool isHurt;
+    public bool isDead;
 
     public float hurtTime;
     public float invincibleTime;
     bool invincible;
+    [Header("Manage Setting")]
+    public string[] startTriggerM ;
+    public string[] endTriggerM ;
+
+    public float manageSpeed;
+    public Vector2 manageDir;
+
 
     [Header("Shoot")]
     public float lAFillAmount;
@@ -125,7 +136,7 @@ public class PlayerController : MonoBehaviour
         currentRecoilDash = recoilDashTime;
         currentRecoilReset = recoilResetTime;
 
-
+        maxHealth = health;
     }
 
     // Update is called once per frame
@@ -139,7 +150,7 @@ public class PlayerController : MonoBehaviour
         if (inputAxis.magnitude > dirSensibility)
             lastDir = inputAxis;
 
-        bool dash = Input.GetButtonDown("Dash");
+         dash = Input.GetButtonDown("Dash");
 
         // attack
         if (Input.GetButtonDown("Attack1"))
@@ -163,23 +174,35 @@ public class PlayerController : MonoBehaviour
         //attackChoose = 1;
 
         #endregion
-
+        // debug
+        if (Input.GetKeyDown(KeyCode.K))
+            ChangeHealth(-health);
         // take damage
         if (hurtDamage != 0)
         {
             if (!invincible)
             {
-                Debug.Log("lose health");
-                health -= hurtDamage;
+                //Debug.Log("lose health");
+                ChangeHealth(-hurtDamage);
                 isHurt = true;
                 invincible = true;
 
                 StartCoroutine(Recovery());
                 playerState = PlayerState.HURT;
+
+                // death condition
+                if (health <= 0)
+                    Death();
             }
 
             hurtDamage = 0;
         }
+        if (health <= 0)
+        {
+            playerState = PlayerState.DIE;
+            isDead = true;
+        }
+            
 
         switch (playerState)
         {
@@ -288,9 +311,19 @@ public class PlayerController : MonoBehaviour
                     spriteT.color = col;
                     break;
                 }
+            case PlayerState.MANAGE:
+                {
+                    Vector2 targetVelocity = manageDir.normalized * manageSpeed;
+                    velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocity.x, ref velocitySmoothing.x,
+                                                 (Mathf.Abs(velocity.x) <= Mathf.Abs(targetVelocity.x)) ? acceleration : deceleration);
+                    velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocity.y, ref velocitySmoothing.y,
+                                                 (Mathf.Abs(velocity.y) <= Mathf.Abs(targetVelocity.y)) ? acceleration : deceleration);
+                    break;
+                }
 
         }
 
+        # region shootSection
         //maximize shoot gauge
         if (shootGaugeState > shootGaugeMax)
         {
@@ -314,6 +347,7 @@ public class PlayerController : MonoBehaviour
         {
             aimDirection = lastDir.normalized;
         }
+        #endregion
     }
 
     private void FixedUpdate()
@@ -348,7 +382,8 @@ public class PlayerController : MonoBehaviour
             shootGaugeState += lAFillAmount;
 
 
-           
+            if (audioManager)
+                audioManager.PlaySound("Player fast attack", 0);
         }
 
 
@@ -359,6 +394,9 @@ public class PlayerController : MonoBehaviour
 
             if (screenShake)
                 screenShake.isShaking = true;
+
+            if (audioManager)
+                audioManager.PlaySound("Player heavy attack", 0);
         }
 
 
@@ -366,6 +404,8 @@ public class PlayerController : MonoBehaviour
         {
             attackChoose = 4;
 
+            if (audioManager)
+                audioManager.PlaySound("Player distance attack", 0);
         }
 
 
@@ -460,5 +500,56 @@ public class PlayerController : MonoBehaviour
 
     }
     #endregion
+
+    // Manage cond
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(startTriggerM.Length > 0 && endTriggerM.Length > 0)
+        {
+            foreach(string s in startTriggerM)
+            {
+                if(collision.tag == s)
+                    playerState = PlayerState.MANAGE;
+            }
+
+            foreach (string s in endTriggerM)
+            {
+                if (collision.tag == s)
+                    playerState = PlayerState.FREE;
+            }
+
+        }
+        
+    }
+
+    public void ChangeHealth( int value)
+    {
+        Debug.Log((value>= 0)? "player heal": "player lose health");
+        health = Mathf.Clamp(health + value, 0, maxHealth);
+
+        if (health <= 0)
+            Death();
+    }
+    public void ChangeMaxHealth(int value)
+    {
+        Debug.Log((value >= 0) ? "player + MaxHealth" : "player - MaxHealth");
+        maxHealth += value;
+    }
+
+    public void Death()
+    {
+        velocity = Vector2.zero;
+        playerState = PlayerState.DIE;
+        StartCoroutine(Restart(4));
+    }
+
+    public IEnumerator Restart(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        int restartIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(restartIndex);
+    }
+
 }
 

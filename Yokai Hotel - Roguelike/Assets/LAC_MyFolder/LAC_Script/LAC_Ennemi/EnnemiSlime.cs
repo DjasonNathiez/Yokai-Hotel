@@ -43,6 +43,7 @@ public class EnnemiSlime : EnnemiBehaviour
 
     public int attackStock, maxAttackStock;
     public float minAttackDetect, maxAttackDetect;
+    public List<Bullet> activeBullet;
  
 
     public float timeToLoad, timeBetweenAttack;
@@ -58,6 +59,15 @@ public class EnnemiSlime : EnnemiBehaviour
     // Update is called once per frame
     public override void Update()
     {
+        if(healthPoints < 0)
+        {
+            foreach(Bullet b in activeBullet)
+            {
+                if(b != null)
+                    Destroy(b.gameObject);
+            }
+        }
+
         // detect player
         float targetDistX = Mathf.Abs(target.transform.position.x - transform.position.x);
         float targetDistY = Mathf.Abs(target.transform.position.y - transform.position.y);
@@ -198,6 +208,8 @@ public class EnnemiSlime : EnnemiBehaviour
 
             GameObject bullet = Instantiate(bulletObj, transform.position, transform.rotation);
             Bullet b = bullet.GetComponent<Bullet>();
+            activeBullet.Add(b);
+
             if (b)
                 b.dir = targetDir;
 

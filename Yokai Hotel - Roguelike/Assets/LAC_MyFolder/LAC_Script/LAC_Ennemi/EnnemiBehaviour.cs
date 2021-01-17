@@ -27,6 +27,7 @@ public class EnnemiBehaviour : MonoBehaviour
     public float healthPoints;
     public float healthDamage = 0;
 
+    
     [HideInInspector]
     public bool hurt;
     #endregion
@@ -98,10 +99,7 @@ public class EnnemiBehaviour : MonoBehaviour
         {
             healthPoints -= healthDamage;
             healthDamage = 0;
-        }
 
-        if (repulseForce != Vector2.zero)
-        {
             if (ennemyState != EnnemyState.STUN)
                 lastState = ennemyState;
 
@@ -110,6 +108,8 @@ public class EnnemiBehaviour : MonoBehaviour
             velocity = repulseForce;
             repulseForce = Vector2.zero;
         }
+
+
         if (ennemyState != EnnemyState.STUN)
             spriteT.color = Color.white;
 
@@ -122,8 +122,9 @@ public class EnnemiBehaviour : MonoBehaviour
                     SetVelocity(Vector2.zero, inertness * inertnessModifier);
 
                     if (velocity.magnitude <= recovery)
-                    {  
-                        ennemyState = EnnemyState.IDLE;
+                    {
+                        StartCoroutine(StunRecovery(stunTime));
+                        Debug.Log("apply stun");
                         velocity = Vector2.zero;
                         inertnessModifier = 1;
                     }
@@ -161,4 +162,13 @@ public class EnnemiBehaviour : MonoBehaviour
         //Debug.Log("Detection Use");
         return (hit);
     }
+
+    public IEnumerator StunRecovery(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        stunTime = 0;
+        ennemyState = EnnemyState.IDLE;
+    }
+
+   
 }

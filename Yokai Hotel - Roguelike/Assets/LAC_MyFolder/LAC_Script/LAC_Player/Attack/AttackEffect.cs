@@ -12,6 +12,22 @@ public class AttackEffect : MonoBehaviour
 
     public LayerMask detectMask;
     public GameObject bulletPrefab;
+
+    [Header("Attack Boost")]
+    public float heavyBoost = 1;
+    public float lightBoost = 1, sA_boost = 1;
+
+    public float attackBoost = 1;
+    public float theftLifeProba = 0;
+    public float dropBoost = 1;
+
+    [HideInInspector]
+    public bool kill_L;
+    [HideInInspector]
+    public bool kill_H;
+
+    float killbuffer = 0.2f;
+    
     [Header("Cam")]
     public GameObject cam;
     public CinemachineBrain camBrain;
@@ -30,7 +46,10 @@ public class AttackEffect : MonoBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera");
         camBrain = cam.GetComponent<CinemachineBrain>();
 
-        audioM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
+        GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
+
+        if(gameManager)
+            audioM = gameManager.GetComponent<AudioManager>();
 
     }
 
@@ -54,7 +73,13 @@ public class AttackEffect : MonoBehaviour
                 EnnemiTank eTank = ennemi.GetComponentInParent<EnnemiTank>();
                 bool deflectShield = false;
 
-                float damage = attackM.attack[player.attackChoose].damage;
+                float attackTypeBoost = 1;
+                if (attackM.attack[player.attackChoose].attackType == Attack.AttackType.HEAVY)
+                    attackTypeBoost *= heavyBoost;
+                if (attackM.attack[player.attackChoose].attackType == Attack.AttackType.LIGHT)
+                    attackTypeBoost *= lightBoost;
+
+                float damage = attackM.attack[player.attackChoose].damage * attackBoost * attackTypeBoost;
                 Vector2 repulseDir = (ennemi.transform.position - player.transform.position).normalized;
                 if (eTank)
                 {
@@ -76,7 +101,7 @@ public class AttackEffect : MonoBehaviour
                 if (deflectShield)
                 {
                     if (player.attackChoose == 3)
-                        damage += 1;
+                        damage -= 1;
 
                     eTank.shieldPoint -= damage;
                     damage = 0;
@@ -85,40 +110,54 @@ public class AttackEffect : MonoBehaviour
                 }
                 else if (damage > 0)
                 {
+
+                    // feedBack & kill effect
+                    ScreenShake(attackM.attack[player.attackChoose].screenShakeAmp, attackM.attack[player.attackChoose].screenShakeFreq, attackM.attack[player.attackChoose].screenShakeTime);
+                    if (ennemi.healthPoints <= damage)
+                    {
+                        if (player.attackChoose == 3)
+                            kill_H = true;
+                        if (player.attackChoose == 0 || player.attackChoose == 1 || player.attackChoose == 2)
+                            kill_L = true;
+                        if(dropBoost != 1)
+                        {
+                            DropSystem dropEnnemi = ennemi.GetComponent<DropSystem>();
+                            dropEnnemi.dropRateG *= dropBoost;
+                        }
+                       
+                        if (attackM.attack[player.attackChoose].screenShakeAmp == 0)
+                            ScreenShake(0.5f, 4, 0.3f);
+                        StartCoroutine(KillReset(killbuffer));
+                        SlowTime(0.2f, 0.3f);
+                        
+
+                    }
                     // apply damage & recoil
                     Debug.Log("Hit ennemy");
                     ennemi.healthDamage = damage;
                     ennemi.inertnessModifier = attackM.attack[player.attackChoose].knockBackModifier;
                     ennemi.repulseForce = attackM.attack[player.attackChoose].knockBackValue * repulseDir;
+                    ennemi.stunTime = attackM.attack[player.attackChoose].stunTime;
 
-                    // feedBack
-                    ScreenShake(attackM.attack[player.attackChoose].screenShakeAmp, attackM.attack[player.attackChoose].screenShakeFreq, attackM.attack[player.attackChoose].screenShakeTime);
-                    if (ennemi.healthPoints <= damage)
-                    {
-                        if (attackM.attack[player.attackChoose].screenShakeAmp == 0)
-                            ScreenShake(0.5f, 4, 0.3f);
-
-                        SlowTime(0.2f, 0.3f);
-
-                    }
                     damage = 0;
+                    
                 }
 
             }
-
-            audioM.PlaySound("Ennemy hurt", 0);
+            if(audioM)
+                audioM.PlaySound("Ennemy hurt", 0);
         }
 
         if (collider.tag == "BulletEnemy" && player.attackChoose == 3)
         {
-            Bullet bullet = collider.GetComponentInParent<Bullet>();
+            /*Bullet bullet = collider.GetComponentInParent<Bullet>();
 
             if (bullet && bullet.tag == "BulletEnemy")
             {
                 Debug.Log("hitBullet");
                 bullet.speed = -2*bullet.speed;
                 bullet.tag = "BulletAlly";
-            }
+            }*/
             
         }
     }
@@ -242,5 +281,10 @@ public class AttackEffect : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay);
         Time.timeScale = 1;
+    }
+    public IEnumerator KillReset(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        kill_L = kill_H = false;
     }
 }

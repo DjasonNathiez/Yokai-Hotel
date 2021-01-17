@@ -15,6 +15,7 @@ public class EnnemiShield : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (shieldPoint <= 0)
             Destroy(gameObject);
     }
