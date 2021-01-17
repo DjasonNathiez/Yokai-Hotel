@@ -19,6 +19,7 @@ public class KF_MultipleInteract : MonoBehaviour
         hubReturn = LevelM.gameObject.GetComponent<KF_Unlockables>().hubReturn;
         LevelM = FindObjectOfType<KF_LevelManager>();
         currentInteract = interactions[interactCount];
+        AddLines();
         if (random == true)
             currentInteract = interactions[Random.Range(0, interactions.Count)];
         intM = FindObjectOfType<KF_InteractionManager>();
@@ -63,29 +64,34 @@ public class KF_MultipleInteract : MonoBehaviour
         }
         if ((LevelM.levelChanged == true) || (hubReturn == true))
         {
-            foreach (Transform child in this.gameObject.GetComponent<Transform>()) 
-            {
-                if (child.gameObject.CompareTag("Interact"))
-                {
-                    if (interactions.Contains(child.gameObject.GetComponent<KF_Interaction>()))
-                        Debug.Log("Already in list");
-                    else
-                    {
-                        if (child.gameObject.activeInHierarchy)
-                        {
-                            interactions.Add(child.gameObject.GetComponent<KF_Interaction>());
-                            child.gameObject.SetActive(false);
-                        }
-                    }
-                    
-                }
-            }
-            foreach (KF_Interaction interact in interactions)
-            {
-                if (interact == interactions[0])
-                    interact.gameObject.SetActive(true);
-            }
-            listMax = interactions.Count;
+            AddLines();
         }
+    }
+
+    void AddLines()
+    {
+        foreach (Transform child in this.gameObject.GetComponent<Transform>())
+        {
+            if (child.gameObject.CompareTag("Interact"))
+            {
+                if (interactions.Contains(child.gameObject.GetComponent<KF_Interaction>()))
+                    Debug.Log("Already in list");
+                else
+                {
+                    if (child.gameObject.activeInHierarchy)
+                    {
+                        interactions.Add(child.gameObject.GetComponent<KF_Interaction>());
+                        child.gameObject.SetActive(false);
+                    }
+                }
+
+            }
+        }
+        foreach (KF_Interaction interact in interactions)
+        {
+            if (interact == interactions[0])
+                interact.gameObject.SetActive(true);
+        }
+        listMax = interactions.Count;
     }
 }

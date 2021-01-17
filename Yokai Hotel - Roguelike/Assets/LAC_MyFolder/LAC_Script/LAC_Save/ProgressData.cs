@@ -13,8 +13,9 @@ public class ProgressData
     public bool unlock6;
     public bool unlock8;
     public bool unlockBoss;
+    public bool firstTime;
 
-    public List<int> unlocked;
+    public List<int> unlocked = new List<int>();
     
 
     public ProgressData(KF_Unlockables unlockables)
@@ -27,6 +28,7 @@ public class ProgressData
         unlock6 = unlockables.unlock6;
         unlock8 = unlockables.unlock8;
         unlockBoss = unlockables.unlockBoss;
+        firstTime = unlockables.firstTime;
 
         for (int i = 0; i < unlockables.unlocked.Count; i++)
             unlocked.Add(unlockables.unlocked[i]);

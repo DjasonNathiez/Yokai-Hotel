@@ -11,8 +11,10 @@ public class KF_FirstTime : MonoBehaviour
     public KF_Interaction tutorialActivator;
     public bool hubReturn; //when player dies = true. Should be reference of the gamemanager 
 
-    void Awake()
+    void Start()
     {
+        firstTime = FindObjectOfType<KF_Unlockables>().firstTime;
+
         if (firstTime == true)
         {
             foreach (GameObject objects in normalObjects)
@@ -33,11 +35,11 @@ public class KF_FirstTime : MonoBehaviour
         {
             foreach (GameObject objects in spawnObjects)
             {
-                objects.SetActive(true);
+                objects.SetActive(false);
             }
             foreach (GameObject objects in normalObjects)
             {
-                objects.SetActive(false);
+                objects.SetActive(true);
             }
             tutorialActivator.reverse = true;
             foreach (GameObject objects in firstTimeObjects)
@@ -48,25 +50,4 @@ public class KF_FirstTime : MonoBehaviour
         hubReturn = FindObjectOfType<KF_Unlockables>().hubReturn;
     }
 
-    private void Update()
-    {
-        if (hubReturn == true)
-        {
-            foreach (GameObject objects in spawnObjects)
-            {
-                objects.SetActive(false);
-            }
-            foreach (GameObject objects in normalObjects)
-            {
-                objects.SetActive(true);
-            }
-            if (firstTime == true)
-            {
-                foreach (GameObject objects in firstTimeObjects)
-                {
-                    objects.SetActive(false);
-                }
-            }
-        }
-    }
 }
