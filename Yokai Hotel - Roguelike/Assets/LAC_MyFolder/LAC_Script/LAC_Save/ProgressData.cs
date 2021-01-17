@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class ProgressData 
 {
-    public int maxLevelReached;
+    public bool hubReturn;
 
-    public ProgressData(KF_Unlockables unlockables)
+    public int maxLevelReached;
+    
+
+    public ProgressData(KF_Unlockables unlockables, KF_LevelManager lvlM)
     {
+        hubReturn = lvlM.hubReturn;
+
         maxLevelReached = unlockables.maxLevelReached;
         
     }

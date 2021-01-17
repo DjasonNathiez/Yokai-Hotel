@@ -3,13 +3,13 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 public static class SaveSystem 
 {
-    public static void SaveProgress( KF_Unlockables unlockables)
+    public static void SaveProgress( KF_Unlockables unlockables, KF_LevelManager lvlM)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/progress.lose";
 
         FileStream stream = new FileStream(path,FileMode.Create);
-        ProgressData data = new ProgressData(unlockables);
+        ProgressData data = new ProgressData(unlockables, lvlM);
 
         formatter.Serialize(stream, data);
         stream.Close();

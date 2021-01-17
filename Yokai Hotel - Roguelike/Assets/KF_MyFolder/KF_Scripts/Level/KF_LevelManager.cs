@@ -9,6 +9,7 @@ public class KF_LevelManager : MonoBehaviour
     public GameObject nextLevel;
     public int levelCount;
     public Transform playerPosition;
+    private PlayerController player;
 
     public KF_CheckTriggers checkTriggers;
     public KF_LevelExit endTrigger;
@@ -23,6 +24,7 @@ public class KF_LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        player = FindObjectOfType<PlayerController>();
         for (int i = 1; i < levels.Count; i++)
         {
             levels[i].SetActive(false);
@@ -42,6 +44,9 @@ public class KF_LevelManager : MonoBehaviour
 
     public void Update()
     {
+        if (player.isDead == true)
+            hubReturn = true;
+
         if (currentLevel.CompareTag("Hub"))
         {
             endTrigger = GameObject.FindGameObjectWithTag("HubTrigger").GetComponent<KF_LevelExit>();
