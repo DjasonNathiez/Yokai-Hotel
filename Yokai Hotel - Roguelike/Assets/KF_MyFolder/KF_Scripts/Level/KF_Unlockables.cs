@@ -36,6 +36,9 @@ public class KF_Unlockables : MonoBehaviour
     void Start()
     {
         Debug.Log("Save exist ? " + SaveSystem.SaveExist());
+        ProgressData data = SaveSystem.LoadProgress();
+
+
         nextUnlock = 2;
         hubReturn = lvlM.hubReturn;
         lvlM = FindObjectOfType<KF_LevelManager>();
