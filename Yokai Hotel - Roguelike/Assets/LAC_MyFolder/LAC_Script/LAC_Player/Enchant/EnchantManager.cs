@@ -13,6 +13,7 @@ public class EnchantManager : MonoBehaviour
     public int maxEnchant;
     [HideInInspector]
     public int chooseIndex;
+    public bool choosing ;
     float chooseDelay = 2;
     float chooseDuration;
 

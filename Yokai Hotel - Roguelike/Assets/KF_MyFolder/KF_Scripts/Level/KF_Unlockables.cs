@@ -35,9 +35,7 @@ public class KF_Unlockables : MonoBehaviour
 
     void Start()
     {
-        if (SaveSystem.LoadProgress() == null)// detect first time
-            SaveSystem.SaveProgress(this);
-
+        Debug.Log("Save exist ? " + SaveSystem.SaveExist());
         nextUnlock = 2;
         hubReturn = lvlM.hubReturn;
         lvlM = FindObjectOfType<KF_LevelManager>();
@@ -77,6 +75,7 @@ public class KF_Unlockables : MonoBehaviour
         if (updateUnlocks == true)
             LevelUnlock();
 
+        //
 
         foreach (KF_UnlockablesIndividual secretTrigger in secretTriggers)
         {
