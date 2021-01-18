@@ -7,7 +7,7 @@ public class BossManager : MonoBehaviour
 
     public BossBehaviour[] bossArray;
     public GameObject player;
-    public LayerMask blockMask;
+    public LayerMask thatMask;
 
     [Header("Pattern Offset")]
     public Vector2 attackOffset;
@@ -30,7 +30,7 @@ public class BossManager : MonoBehaviour
         paternTimer -= Time.deltaTime;
         if(paternTimer < 0)
         {
-            StartPosPatern(bossArray[0],1, 1, 1 );
+            StartPosPatern(bossArray[0],0, 1, 0 );
             //DefinePatern(1, 1, 1);
             paternTimer = paternFreq;
         }
@@ -39,7 +39,7 @@ public class BossManager : MonoBehaviour
 
     void StartPosPatern(BossBehaviour boss, float pAttack, float pDash, float pShoot)
     {
-        List<Vector2> checkDir = new List<Vector2> { Vector2.right };//, Vector2.up, Vector2.left, Vector2.down };
+        List<Vector2> checkDir = new List<Vector2> { Vector2.right , Vector2.up, Vector2.left, Vector2.down };
         Vector2 startPos = Vector2.zero;
         Vector2 orient = Vector2.zero;
 
@@ -68,24 +68,36 @@ public class BossManager : MonoBehaviour
 
         // choose & check pos
         bool findDir = false;
-        while(!findDir || checkDir.Count == 0)
+        while(!findDir)
         {
             Vector2 chooseDir = checkDir[Random.Range(0, checkDir.Count)];
             float dirRad = Mathf.Atan2(offSet.y, offSet.x) + Mathf.Atan2(chooseDir.y, chooseDir.x);
             Vector2 choosePos = new Vector2(Mathf.Cos(dirRad), Mathf.Sin(dirRad)).normalized * offSet.magnitude;
 
-            choosePos = CheckDir(choosePos, 0.7f, blockMask);
-
+            choosePos = CheckDir(choosePos, 0.8f, thatMask);
+           
             if (choosePos != Vector2.zero)
             {
                 startPos = choosePos + (Vector2)player.transform.position;
                 orient = chooseDir;
-                Debug.Log("ChoseDir : "+chooseDir);
+                Debug.Log("dir found : " + chooseDir);
                 findDir = true;
             }
             else
+            {
                 checkDir.Remove(chooseDir);
+                Debug.Log("remove dir : " + chooseDir);
+            }
+                
+
+            if (checkDir.Count == 0)
+            {
+                Debug.Log("no dir found: " + chooseDir);
+                findDir = true;
+            }
+
         }
+
         if(startPos != Vector2.zero)
         {
             boss.transform.position = startPos;
@@ -102,7 +114,7 @@ public class BossManager : MonoBehaviour
         pShoot = pShoot / pTotal;
 
         float rValue = Random.value;
-        int patternIndex = -1;
+        int patternIndex = 1;
 
         if (rValue >= 0 && rValue <= pAttack)
             patternIndex = 1;
@@ -113,23 +125,25 @@ public class BossManager : MonoBehaviour
         if (rValue > pAttack + pDash && rValue <= pTotal)
             patternIndex = 3;
 
-        //Debug.Log("random value" + rValue);
-        //Debug.Log("pattern index" + patternIndex);
+        Debug.Log("random value" + rValue);
+        Debug.Log("pattern index" + patternIndex);
         return patternIndex;
     }
     Vector2 CheckDir( Vector2 dir, float minDistMultiplier, LayerMask mask)
     {
         Vector2 vToReturn = Vector2.zero;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, dir.magnitude, mask);
+        RaycastHit2D hit = Physics2D.Raycast(player.transform.position, dir.normalized, dir.magnitude, mask);
+        Debug.DrawRay(player.transform.position, dir, Color.blue,2f);
         if (hit)
         {
             if (hit.distance > dir.magnitude * minDistMultiplier)
-                vToReturn = hit.transform.position;
+                vToReturn = dir.normalized * hit.distance;
         }
-        else
-            vToReturn = dir;
+        else 
+           vToReturn = dir;
 
         return vToReturn;
+        
 
     }
 }
