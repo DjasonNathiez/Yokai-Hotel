@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BossBehaviour : EnnemiBehaviour
 {
-    public enum BossState {P1,P2,P3,P4,AIM,DIE,TRANSITION };
-    public BossState bossState;
+    public enum BossState {FREE,ATTACK,DASH,SHOOT};
+    public BossState bossState = BossState.SHOOT;
 
-    public Vector2 orient = new Vector2(0, 1);
+    public Vector2 orient = new Vector2(1, 0);
     public bool moving = false;
 
     // Start is called before the first frame update
@@ -22,22 +22,22 @@ public class BossBehaviour : EnnemiBehaviour
         base.Update();
         switch (bossState)
         {
-            case BossState.P1:
+            case BossState.FREE:
                 {
-                    Displacement(5, -orient, speed);
+                    //Displacement(5, -orient, speed);
                     break;
                 }
-            case BossState.P2:
-                {
-                    
-                    break;
-                }
-            case BossState.P3:
+            case BossState.ATTACK:
                 {
                     
                     break;
                 }
-            case BossState.P4:
+            case BossState.DASH:
+                {
+                    
+                    break;
+                }
+            case BossState.SHOOT:
                 {
                     
                     break;
