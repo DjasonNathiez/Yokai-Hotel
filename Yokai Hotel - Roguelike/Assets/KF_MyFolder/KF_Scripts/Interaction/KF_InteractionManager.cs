@@ -17,6 +17,7 @@ public class KF_InteractionManager : MonoBehaviour
     public Image dialogueBoxSP;
     public bool objectDialogue;
     public bool interactDone;
+    public int[] objectDialogueColor = new int[3];
 
     void Start()
     {
