@@ -29,6 +29,7 @@ public class KF_TutorialKeyActivate : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && (bActif == true))
         {
+            interactb.SetActive(true);
             if (Input.GetButtonDown("Interact"))
             {
                 Debug.Log("Key Added");

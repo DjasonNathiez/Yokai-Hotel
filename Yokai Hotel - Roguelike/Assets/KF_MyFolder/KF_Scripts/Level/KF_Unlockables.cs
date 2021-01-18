@@ -15,7 +15,7 @@ public class KF_Unlockables : MonoBehaviour
 
     public int[] unlockLevels = new int[5];
     private bool updateUnlocks;
-    private int nextUnlock;
+    public int nextUnlock;
     private bool onePerLevel;
 
     [Header("==== Secrets ====")]
