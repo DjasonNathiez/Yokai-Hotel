@@ -526,6 +526,59 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 11.28137, y: 0.5511247}
   m_EdgeRadius: 0
+--- !u!1 &88340004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 88340006}
+  - component: {fileID: 88340005}
+  m_Layer: 0
+  m_Name: BossManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &88340005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88340004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ccdc32c49c9a5e479e6ce962ee009de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossArray: []
+  player: {fileID: 256005332}
+  blockMask:
+    serializedVersion: 2
+    m_Bits: 0
+  attackOffset: {x: 1, y: 0}
+  dashOffset: {x: 2, y: 0}
+  shootOffset: {x: 1, y: 1}
+  paternFreq: 5
+--- !u!4 &88340006
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88340004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 534537409}
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &102237842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1681,7 +1734,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 256005332}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.88, y: -2.46, z: 0}
+  m_LocalPosition: {x: -19.85, y: -0.96, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 622787590}
@@ -2946,7 +2999,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534537404}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe68ce6831701154cab9fb5ec76d90da, type: 3}
   m_Name: 
@@ -2977,8 +3030,8 @@ MonoBehaviour:
   targetDist: 0
   targetDir: {x: 0, y: 0}
   targetVisible: 0
-  bossState: 0
-  orient: {x: 0, y: 1}
+  bossState: 3
+  orient: {x: 1, y: 0}
   moving: 0
 --- !u!114 &534537406
 MonoBehaviour:
@@ -3042,14 +3095,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534537404}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -15.57, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1611408733}
   - {fileID: 1029879924}
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_Father: {fileID: 88340006}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &550216297
 GameObject:
@@ -4131,7 +4184,7 @@ Transform:
   - {fileID: 922626778}
   - {fileID: 177449819}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &686477890
 GameObject:
@@ -7146,6 +7199,7 @@ GameObject:
   - component: {fileID: 1611408733}
   - component: {fileID: 1611408734}
   - component: {fileID: 1611408735}
+  - component: {fileID: 1611408736}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -7206,8 +7260,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4918761630250100137, guid: a9920c4d92c5e0c4f85653402443288a,
-    type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -7215,7 +7268,7 @@ SpriteRenderer:
   m_Size: {x: 3.275, y: 3.125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &1611408735
@@ -7237,6 +7290,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1611408736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611408732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1cff0e90118a2346b1560c8d7a9b709, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animState: 0
 --- !u!1 &1612705647
 GameObject:
   m_ObjectHideFlags: 0
