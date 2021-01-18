@@ -41,6 +41,14 @@ public class AniamtorBoss : MonoBehaviour
         animator.SetInteger("BossState", (int)animState);
         UpdateBlendTree(boss.orient);
     }
+    public void StartDash()
+    {
+        boss.dashVelocity = boss.dashSpeed;
+    }
+    public void EndDash()
+    {
+        boss.dashVelocity = 0;
+    }
     public void ReturnFreeState()
     {
         boss.bossState = BossBehaviour.BossState.FREE;
