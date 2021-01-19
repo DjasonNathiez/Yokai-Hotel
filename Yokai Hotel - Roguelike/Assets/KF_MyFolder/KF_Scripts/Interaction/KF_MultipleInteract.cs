@@ -8,17 +8,18 @@ public class KF_MultipleInteract : MonoBehaviour
     public List<KF_Interaction> interactions;
     public bool random;
     public KF_Interaction currentInteract;
-    public int interactCount = 0;
+    public int interactCount;
     public KF_LevelManager LevelM;
     private int listMax;
     public bool hubReturn;
+    public bool endOfDialogue;
 
 
     void Start()
     {
-        hubReturn = LevelM.gameObject.GetComponent<KF_Unlockables>().hubReturn;
         LevelM = FindObjectOfType<KF_LevelManager>();
-        currentInteract = interactions[interactCount];
+        hubReturn = LevelM.gameObject.GetComponent<KF_Unlockables>().hubReturn;
+        currentInteract = interactions[0];
         AddLines();
         if (random == true)
             currentInteract = interactions[Random.Range(0, interactions.Count)];
@@ -32,14 +33,16 @@ public class KF_MultipleInteract : MonoBehaviour
             else
                 interactions[i].gameObject.SetActive(false);
         }
-        listMax = interactions.Count;
+        listMax = interactions.Count;    
     }
 
     void Update()
     {
+        endOfDialogue = currentInteract.endOfDialogue;
         hubReturn = LevelM.hubReturn;
-        if (intM.interactDone == true)
+        if ((endOfDialogue == true) && (random == false))
         {
+            currentInteract.endOfDialogue = false;
             currentInteract.gameObject.SetActive(false);
             interactCount++;
             if (interactCount == interactions.Count)
@@ -50,8 +53,9 @@ public class KF_MultipleInteract : MonoBehaviour
             currentInteract.gameObject.SetActive(true);
             intM.interactDone = false;
         }
-        if ((intM.interactDone == true) && (random == true))
+        if ((endOfDialogue == true) && (random == true))
         {
+            currentInteract.endOfDialogue = false;
             currentInteract.gameObject.SetActive(false);
             interactCount++;
             if (interactCount == interactions.Count)

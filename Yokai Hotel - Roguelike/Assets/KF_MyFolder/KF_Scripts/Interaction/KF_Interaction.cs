@@ -34,6 +34,9 @@ public class KF_Interaction : MonoBehaviour
 
     [Header("==== DO NOT TOUCH ====")]
     public bool isGiven;
+    public int counter;
+    public int counting;
+    public bool endOfDialogue;
 
 
     // Start is called before the first frame update
@@ -64,6 +67,7 @@ public class KF_Interaction : MonoBehaviour
         {
             effectTarget.SetActive(true);
         }
+        counter = dialogue.sentences.Length;
     }
 
     private void Update()
@@ -122,12 +126,18 @@ public class KF_Interaction : MonoBehaviour
             }
             else if (Input.GetButtonDown("Interact") && (KF_ResetInteract.dialogueReset == 1))
             {
+                counting++;
+                endOfDialogue = false;
+                if (counting == counter)
+                {
+                    counting = 0;
+                    endOfDialogue = true;
+                }
                 Debug.Log("Dialogue Next Line");
                 interactContinue.Invoke();
                 return;
             }
         }
-        
     }
 
     public void TriggerInteract()
@@ -153,7 +163,7 @@ public class KF_Interaction : MonoBehaviour
             interactionIcon.SetActive(true);
             foreach (GameObject interact in intM.interactionInLevel)
             {
-                if (interact.Equals(this.gameObject))
+                if ((interact.Equals(this.gameObject)) || (interact.GetComponent<KF_Interaction>().isInMultiple == true))
                     continue;
                 interact.SetActive(false);
             }
@@ -179,6 +189,7 @@ public class KF_Interaction : MonoBehaviour
             if (inDialogue == true)
             {
                 inDialogue = false;
+                endOfDialogue = true;
                 intM.EndInteraction();
             }
             if ((exclamationPoint == true) && (onlyOnce == false))
