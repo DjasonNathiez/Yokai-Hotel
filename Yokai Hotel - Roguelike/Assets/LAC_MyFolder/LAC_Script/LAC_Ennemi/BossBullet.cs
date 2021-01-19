@@ -19,6 +19,8 @@ public class BossBullet : MonoBehaviour
     //public Collider2D hitBox;
     public CircleCollider2D cC2D;
     SpriteRenderer spriteR;
+
+    PlayerController player;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,14 @@ public class BossBullet : MonoBehaviour
         Collider2D hit = Physics2D.OverlapCircle(transform.position, cC2D.radius, blockMask);
         if (hit)
         {
+            if(player == null)
+                player = hit.GetComponentInParent<PlayerController>();
+
+            if (player)
+            {
+                player.hurtDamage = damage;
+                Debug.Log("BossbulletHit");
+            }
             SetActiveBullet(false);
             Debug.Log("BossBullet hit Player");
         }
@@ -91,15 +101,18 @@ public class BossBullet : MonoBehaviour
         {
             active = false;
             cC2D.enabled = false;
-            Color color = Color.white;
+            Color color = spriteR.color;
             color.a = 0;
+
             spriteR.color = color;
         }
         if (state)
         {
             active = true;
             cC2D.enabled = true;
-            spriteR.color = Color.white;
+            Color color = spriteR.color;
+            color.a = 255;
+            spriteR.color = color;
         }
         
         
