@@ -7558,6 +7558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animState: 0
+  attackDamage: 1
 --- !u!61 &1611408737
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7574,7 +7575,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.2, y: 0.65}
     oldSize: {x: 6.5, y: 6.5}
     newSize: {x: 6.5, y: 6.5}
     adaptiveTilingThreshold: 0.5
@@ -7758,7 +7759,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1687407228
 Transform:
   m_ObjectHideFlags: 0
@@ -7854,12 +7855,12 @@ MonoBehaviour:
   speed: 0
   velocity: {x: 0, y: 0}
   haveBounce: 0
-  damage: 0
-  rb2D: {fileID: 0}
+  damage: 1
+  rb2D: {fileID: 1687407232}
   blockMask:
     serializedVersion: 2
-    m_Bits: 0
-  hitBox: {fileID: 0}
+    m_Bits: 256
+  cC2D: {fileID: 1687407230}
 --- !u!50 &1687407232
 Rigidbody2D:
   serializedVersion: 4

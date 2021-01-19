@@ -32,7 +32,7 @@ public class BossManager : MonoBehaviour
         if(paternTimer[0] < 0)
         {
             if (bossArray[0] != null)
-                StartPosPatern(bossArray[0], 1, 1, 1);
+                StartPosPatern(bossArray[0], 0, 0, 1);
             else
                 Debug.Log("Boss dead");
             //DefinePatern(1, 1, 1);
@@ -84,19 +84,19 @@ public class BossManager : MonoBehaviour
             {
                 startPos = choosePos + (Vector2)player.transform.position;
                 orient = chooseDir;
-                Debug.Log("dir found : " + chooseDir);
+                //Debug.Log("dir found : " + chooseDir);
                 findDir = true;
             }
             else
             {
                 checkDir.Remove(chooseDir);
-                Debug.Log("remove dir : " + chooseDir);
+                //Debug.Log("remove dir : " + chooseDir);
             }
                 
 
             if (checkDir.Count == 0)
             {
-                Debug.Log("no dir found: " + chooseDir);
+                //Debug.Log("no dir found: " + chooseDir);
                 findDir = true;
             }
 
@@ -129,8 +129,8 @@ public class BossManager : MonoBehaviour
         if (rValue > pAttack + pDash && rValue <= pTotal)
             patternIndex = 3;
 
-        Debug.Log("random value" + rValue);
-        Debug.Log("pattern index" + patternIndex);
+        //Debug.Log("random value" + rValue);
+        //Debug.Log("pattern index" + patternIndex);
         return patternIndex;
     }
     Vector2 CheckDir( Vector2 dir, float minDistMultiplier, LayerMask mask)
