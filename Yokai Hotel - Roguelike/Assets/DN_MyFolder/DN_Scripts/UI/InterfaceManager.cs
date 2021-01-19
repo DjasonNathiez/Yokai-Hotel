@@ -198,6 +198,10 @@ public class InterfaceManager : MonoBehaviour
             {
               enchantList[enchantM.chooseIndex].color = Color.red;
             }
+            else
+            {
+                enchantList[i].color = Color.white;
+            }
         }
     }
 

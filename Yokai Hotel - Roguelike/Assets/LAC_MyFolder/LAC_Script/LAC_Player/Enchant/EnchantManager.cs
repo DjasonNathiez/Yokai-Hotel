@@ -322,7 +322,7 @@ public class EnchantManager : MonoBehaviour
         if (enchants.Count < maxEnchant)
         {
             chooseIndex = enchants.Count;
-            choosing = false;
+            
         }
           
 
@@ -330,7 +330,7 @@ public class EnchantManager : MonoBehaviour
         {
             chooseIndex = (chooseIndex + 1) % maxEnchant;
             chooseDuration = chooseDelay;
-            choosing = true;
+           
         }
 
         chooseDuration -= Time.deltaTime;
