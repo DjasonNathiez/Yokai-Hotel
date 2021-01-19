@@ -9,6 +9,7 @@ public class AniamtorBoss : MonoBehaviour
     public enum AnimatorState { FREE, ATTACK, DASH, SHOOT };
     public AnimatorState animState = AnimatorState.FREE;
 
+    public int attackDamage = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,5 +65,18 @@ public class AniamtorBoss : MonoBehaviour
 
         animator.SetFloat("Vertical", (vertical) ? - Mathf.Sign(velocity.y) : 0);
         animator.SetFloat("Horizontal", (vertical) ? 0 : - Mathf.Sign(velocity.x));
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "PHurtBox")
+        {
+            PlayerController player = collision.GetComponentInParent<PlayerController>();
+            if (player)
+            {
+                player.hurtDamage = attackDamage;
+                Debug.Log("Boss hurt player");
+            }
+        }
     }
 }

@@ -107,7 +107,7 @@ public class BossBehaviour : EnnemiBehaviour
         #endregion
 
         bossBullet.transform.position = bulletP;
-        bossBullet.gameObject.SetActive(true);
+        bossBullet.SetActiveBullet(true);
 
         float bulletRad = (Mathf.Atan2(orient.y, orient.x) + Mathf.Deg2Rad * bulletAngle) % (2*Mathf.PI);
         float cBounceAngle = (orient == Vector2.right || orient == Vector2.left) ? -bounceAngle : bounceAngle;
@@ -128,7 +128,7 @@ public class BossBehaviour : EnnemiBehaviour
     public IEnumerator ShootEnd(float delay)
     {
         yield return new WaitForSeconds(delay);
-        bossBullet.SetInactive();
+        bossBullet.SetActiveBullet(false);
     }
 
 }
