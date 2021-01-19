@@ -10,6 +10,7 @@ public class KF_Fade : MonoBehaviour
     private void Start()
     {
         transition = GameObject.FindGameObjectWithTag("FadeAnim").GetComponent<Animator>();
+        
     }
 
     private void Update()

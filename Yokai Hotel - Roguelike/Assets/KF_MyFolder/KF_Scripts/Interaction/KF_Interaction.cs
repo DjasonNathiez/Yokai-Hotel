@@ -7,6 +7,7 @@ public class KF_Interaction : MonoBehaviour
 {
     public KF_Dialogue dialogue;
     public GameObject interactionIcon;
+    public GameObject exclamation;
     public UnityEvent interactAction;
     public UnityEvent interactContinue;
     public KF_InteractionManager intM;
@@ -17,6 +18,7 @@ public class KF_Interaction : MonoBehaviour
     [Header("==== OPTIONS ====")]
     public bool isInMultiple;
     public bool givesSomething;
+    public bool exclamationPoint;
     public bool objectDialogue;
     public bool objectEffect;
     public bool effectIsRemove;
@@ -28,6 +30,7 @@ public class KF_Interaction : MonoBehaviour
     public KF_DialogueSecond dialogue2;
     public UnityEvent interactOtherStart;
     private bool secondDialogueStart;
+    private bool onlyOnce;
 
     [Header("==== DO NOT TOUCH ====")]
     public bool isGiven;
@@ -43,6 +46,12 @@ public class KF_Interaction : MonoBehaviour
                 thisInteract = interact;
         }
         interactionIcon.SetActive(false);
+
+        if (exclamationPoint == true)
+            exclamation.SetActive(true);
+        else
+            exclamation.SetActive(false);
+
         if (secondDialogue == false)
         {
             dialogue2.sentences2 = dialogue.sentences;
@@ -63,6 +72,7 @@ public class KF_Interaction : MonoBehaviour
         {
             if (Input.GetButtonDown("Interact") && (KF_ResetInteract.dialogueReset != 1))
             {
+                onlyOnce = true;
                 Debug.Log("Dialogue Start");
                 KF_ResetInteract.dialogueReset = 1;
                 if (effectReversable == false)
@@ -147,6 +157,9 @@ public class KF_Interaction : MonoBehaviour
                     continue;
                 interact.SetActive(false);
             }
+
+            if ((exclamationPoint == true) && (onlyOnce == false))
+                exclamation.SetActive(false);
         }
 
     }
@@ -168,7 +181,8 @@ public class KF_Interaction : MonoBehaviour
                 inDialogue = false;
                 intM.EndInteraction();
             }
-
+            if ((exclamationPoint == true) && (onlyOnce == false))
+                exclamation.SetActive(true);
         }
     }
 }

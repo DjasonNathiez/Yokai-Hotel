@@ -11,16 +11,13 @@ public class MenuManager : MonoBehaviour
     public int hubScene;
     public bool paused;
 
-    public Canvas pauseMenu;
+    public GameObject pauseMenu;
     public Canvas HUD;
 
     PlayerController playerController;
 
     private void Awake()
     {
-        GameObject menu = GameObject.FindGameObjectWithTag("PauseMenu");
-        if( menu)
-        pauseMenu = menu.GetComponent<Canvas>();
 
         GameObject hud = GameObject.FindGameObjectWithTag("HUD");
         if(hud)
@@ -34,6 +31,7 @@ public class MenuManager : MonoBehaviour
     }
     public void Start()
     {
+        paused = false;
     }
     public void Update()
     {
@@ -41,6 +39,7 @@ public class MenuManager : MonoBehaviour
         {
             Pause();
         }
+
         else if (Input.GetButtonDown("Cancel") && paused == true)
         {
             Resume();
@@ -48,16 +47,7 @@ public class MenuManager : MonoBehaviour
 
         if (pauseMenu)
         {
-            if (pauseMenu.enabled == true)
-            {
-                paused = true;
-            }
-            else if (pauseMenu.enabled == false)
-            {
-                paused = false;
-            }
-
-
+          
             if(HUD && paused == true)
             {
                 HUD.enabled = false;
@@ -88,7 +78,7 @@ public class MenuManager : MonoBehaviour
     public void Pause()
     {
         
-        pauseMenu.enabled = true;
+        pauseMenu.SetActive(true);
         paused = true;
 
         if (playerController)
@@ -101,7 +91,7 @@ public class MenuManager : MonoBehaviour
 
     public void Resume()
     {
-        pauseMenu.enabled = false;
+        pauseMenu.SetActive(false);
         paused = false;
 
         if (playerController)
