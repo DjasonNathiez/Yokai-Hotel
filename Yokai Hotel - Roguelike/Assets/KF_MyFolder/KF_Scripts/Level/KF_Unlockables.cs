@@ -11,16 +11,11 @@ public class KF_Unlockables : MonoBehaviour
     public List<GameObject> bossUnlock;
     public int maxLevelReached;
     public KF_LevelManager lvlM;
-    private bool hubReturn;
+    public bool hubReturn;
 
-    private int[] unlockLevels = { 2, 4, 6, 8, 10 };
+    public int[] unlockLevels = new int[5];
     private bool updateUnlocks;
-    public bool unlock2;
-    private bool unlock4;
-    private bool unlock6;
-    private bool unlock8;
-    private bool unlockBoss;
-    private int nextUnlock;
+    public int nextUnlock;
     private bool onePerLevel;
 
     [Header("==== Secrets ====")]
@@ -30,40 +25,91 @@ public class KF_Unlockables : MonoBehaviour
     private int secretToUnlock;
     public List<int> unlocked = new List<int>();
 
+    [Header("==== Do Not Touch ====")]
+    public bool unlock2;
+    public bool unlock4;
+    public bool unlock6;
+    public bool unlock8;
+    public bool unlockBoss;
+    private int count;
+
+    [Header("==== Save Settings ====")]
+    public bool keyboard;
+    public bool firstTime;
+    public bool deleteSave;
 
 
 
-    void Start()
+    void Awake()
     {
-        //if (SaveSystem.LoadProgress() == null)// detect first time
-            //SaveSystem.SaveProgress(this);
-
-        nextUnlock = 2;
-        hubReturn = lvlM.hubReturn;
+        Debug.Log("Save exist ? " + SaveSystem.SaveExist());
         lvlM = FindObjectOfType<KF_LevelManager>();
-        foreach (GameObject go in level2Unlock)
-            go.SetActive(false);
-        foreach (GameObject go in level4Unlock)
-            go.SetActive(false);
-        foreach (GameObject go in level6Unlock)
-            go.SetActive(false);
-        foreach (GameObject go in level8Unlock)
-            go.SetActive(false);
-        foreach (GameObject go in bossUnlock)
-            go.SetActive(false);
-        foreach (GameObject secret in secrets)
-            secret.SetActive(false);
+
+        if (SaveSystem.SaveExist() == true)
+            firstTime = SaveSystem.LoadProgress().firstTime;
+        if (firstTime == true)
+        {
+            SaveSystem.DeleteSave();
+            Debug.Log("DeletedSave");
+
+            
+        }
+
+        if (SaveSystem.SaveExist() == false)// detect first time      
+        {
+            SaveSystem.SaveProgress(this);
+            Debug.Log("NewSave");
+
+            foreach (GameObject go in level2Unlock)
+                go.SetActive(false);
+            foreach (GameObject go in level4Unlock)
+                go.SetActive(false);
+            foreach (GameObject go in level6Unlock)
+                go.SetActive(false);
+            foreach (GameObject go in level8Unlock)
+                go.SetActive(false);
+            foreach (GameObject go in bossUnlock)
+                go.SetActive(false);
+        }
+        else
+        {
+            ProgressData data = SaveSystem.LoadProgress();
+            maxLevelReached = data.maxLevelReached;
+            unlock2 = data.unlock2;
+            unlock4 = data.unlock4;
+            unlock6 = data.unlock6;
+            unlock8 = data.unlock8;
+            unlockBoss = data.unlockBoss;
+            hubReturn = data.hubReturn;
+            firstTime = data.firstTime;
+
+            lvlM.hubReturn = data.hubReturn;
+            for (int i = 0; i < data.unlocked.Count; i++)
+                unlocked.Add(data.unlocked[i]);
+
+            KeepUnlocks();
+        }
+
+
+        nextUnlock = unlockLevels[count];
+        
+        //foreach (GameObject secret in secrets)
+         //   secret.SetActive(false);
         foreach (GameObject secrets in GameObject.FindGameObjectsWithTag("Secret"))
         {
             secretTriggers.Add(secrets.GetComponent<KF_UnlockablesIndividual>());
         }
-        if (hubReturn == true)
-            KeepUnlocks();
+
     }
 
 
     void Update()
     {
+        if (deleteSave == true)
+        {
+            SaveSystem.DeleteSave();
+        }
+
         hubReturn = lvlM.hubReturn;
         if (lvlM.levelCount >= maxLevelReached)
         {
@@ -73,6 +119,7 @@ public class KF_Unlockables : MonoBehaviour
         if ((maxLevelReached == nextUnlock) && (onePerLevel == false))
         {
             updateUnlocks = true;
+            nextUnlock = unlockLevels[count + 1];
         }
         if (updateUnlocks == true)
             LevelUnlock();
@@ -89,6 +136,8 @@ public class KF_Unlockables : MonoBehaviour
         }
         if ((lvlM.levelChanged == true) || (hubReturn == true))
         {
+            firstTime = false;
+            SaveSystem.SaveProgress(this);
             StartCoroutine(AddSecret());
         }
         if (secretActivated == true)
@@ -165,6 +214,12 @@ public class KF_Unlockables : MonoBehaviour
                 go.SetActive(true);
             }
         }
+        else
+        {
+            foreach (GameObject go in level2Unlock)
+                go.SetActive(false);
+        }
+
         if (unlock4 == true)
         {
             foreach (GameObject go in level4Unlock)
@@ -172,6 +227,12 @@ public class KF_Unlockables : MonoBehaviour
                 go.SetActive(true);
             }
         }
+        else
+        {
+            foreach (GameObject go in level4Unlock)
+                go.SetActive(false);
+        }
+
         if (unlock6 == true)
         {
             foreach (GameObject go in level6Unlock)
@@ -179,6 +240,12 @@ public class KF_Unlockables : MonoBehaviour
                 go.SetActive(true);
             }
         }
+        else
+        {
+            foreach (GameObject go in level6Unlock)
+                go.SetActive(false);
+        }
+
         if (unlock8 == true)
         {
             foreach (GameObject go in level8Unlock)
@@ -186,6 +253,12 @@ public class KF_Unlockables : MonoBehaviour
                 go.SetActive(true);
             }
         }
+        else
+        {
+            foreach (GameObject go in level8Unlock)
+                go.SetActive(false);
+        }
+
         if (unlockBoss == true)
         {
             foreach (GameObject go in bossUnlock)
@@ -193,10 +266,29 @@ public class KF_Unlockables : MonoBehaviour
                 go.SetActive(true);
             }
         }
-        foreach (int id in unlocked)
+        else
+        {
+            foreach (GameObject go in bossUnlock)
+                go.SetActive(false);
+        }
+
+        for (int i = 0; i < unlocked.Count; i++)
+        {
+            foreach (int id in unlocked)
+            {
+                if (i == id)
+                {
+                    secrets[id].SetActive(true);
+                }
+                else
+                    secrets[i].SetActive(false);
+            }
+        }
+        /*foreach (int id in unlocked)
         {
             secrets[id].SetActive(true); //problem?
-        }
+        }*/
+
 
 
     }

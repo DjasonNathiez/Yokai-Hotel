@@ -7,6 +7,9 @@ public class KF_KeyDesactivate : MonoBehaviour
     public InventoryManager inventoryM;
     public GameObject prepareEnd;
     public KF_ActivateUnlock actlock;
+    public GameObject interactb;
+    private bool bActif;
+    public Animator anim;
 
 
     // Start is called before the first frame update
@@ -14,6 +17,10 @@ public class KF_KeyDesactivate : MonoBehaviour
     {
         prepareEnd = GameObject.FindGameObjectWithTag("PrepareEndRoom");
         actlock = prepareEnd.GetComponent<KF_ActivateUnlock>();
+        anim = this.gameObject.GetComponent<Animator>();
+        interactb.SetActive(false);
+        bActif = true;
+
     }
 
     // Update is called once per frame
@@ -24,16 +31,19 @@ public class KF_KeyDesactivate : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if ((collision.gameObject.CompareTag("Player")) && (bActif == true))
         {
             if (!inventoryM)
                 inventoryM = collision.gameObject.GetComponent<InventoryManager>();
 
+            interactb.SetActive(true);
             if ((inventoryM.keys >= 1) && (Input.GetButtonDown("Interact")))
             {
                 inventoryM.keys = inventoryM.keys - 1;
                 Debug.Log("Key Removed");
-                this.gameObject.SetActive(false);
+                anim.SetBool("keyRemoved", true);
+                bActif = false;
+                Destroy(interactb);
                 actlock.keycount = actlock.keycount - 1;
             }
             else 
@@ -42,5 +52,11 @@ public class KF_KeyDesactivate : MonoBehaviour
                     Debug.Log("Not enough Keys");
                 }
         }
+    }
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && (bActif == true))
+            interactb.SetActive(false);
     }
 }

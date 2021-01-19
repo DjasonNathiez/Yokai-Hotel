@@ -13,6 +13,7 @@ public class EnchantManager : MonoBehaviour
     public int maxEnchant;
     [HideInInspector]
     public int chooseIndex;
+    public bool choosing ;
     float chooseDelay = 2;
     float chooseDuration;
 
@@ -319,12 +320,17 @@ public class EnchantManager : MonoBehaviour
     public void ChooseEnchant()
     {
         if (enchants.Count < maxEnchant)
+        {
             chooseIndex = enchants.Count;
+            choosing = false;
+        }
+          
 
         else if (chooseDuration < 0)
         {
             chooseIndex = (chooseIndex + 1) % maxEnchant;
             chooseDuration = chooseDelay;
+            choosing = true;
         }
 
         chooseDuration -= Time.deltaTime;

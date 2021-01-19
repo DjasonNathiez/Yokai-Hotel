@@ -17,6 +17,7 @@ public class KF_InteractionManager : MonoBehaviour
     public Image dialogueBoxSP;
     public bool objectDialogue;
     public bool interactDone;
+    public int[] objectDialogueColor = new int[3];
 
     void Start()
     {
@@ -25,6 +26,7 @@ public class KF_InteractionManager : MonoBehaviour
         dialogueText = GameObject.FindGameObjectWithTag("DialogueText").GetComponent<Text>();
         levelM = FindObjectOfType<KF_LevelManager>();
         dialogueBoxSP = GameObject.FindGameObjectWithTag("DialogueBox").GetComponent<Image>();
+        dialogueAnim = GameObject.FindGameObjectWithTag("DialogueAnim").GetComponent<Animator>();
     }
     private void Update()
     {

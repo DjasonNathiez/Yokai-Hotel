@@ -15,7 +15,10 @@ public class Door : MonoBehaviour
     public GameObject playerObj;
     public BoxCollider2D doorTriggerZone;
     public GameObject temporaryShow;
-   
+    public GameObject blocker;
+    public GameObject darkBlocker;
+    public bool dontShowBlocker;
+    public bool higherLevel;
 
     public SpriteRenderer sprite;
     private void Awake()
@@ -35,6 +38,8 @@ public class Door : MonoBehaviour
                 doorLink = null;
             }          
         }
+        blocker.SetActive(false);
+        darkBlocker.SetActive(false);
     }
 
     private void Update()
@@ -43,6 +48,17 @@ public class Door : MonoBehaviour
         {
             doorTriggerZone.isTrigger = false;
             temporaryShow.SetActive(false);
+            if (dontShowBlocker == false)
+            {
+                if (higherLevel == true)
+                {
+                    darkBlocker.SetActive(true);
+                }
+                else
+                {
+                    blocker.SetActive(true);
+                }
+            }
         }
         if (doorTriggerZone.isTrigger == false)
         {

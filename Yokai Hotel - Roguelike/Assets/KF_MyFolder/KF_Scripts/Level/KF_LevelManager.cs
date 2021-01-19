@@ -9,20 +9,31 @@ public class KF_LevelManager : MonoBehaviour
     public GameObject nextLevel;
     public int levelCount;
     public Transform playerPosition;
+    private PlayerController player;
 
     public KF_CheckTriggers checkTriggers;
     public KF_LevelExit endTrigger;
     public GameObject fadecanvas;
     public bool levelChanged;
 
-    public GameObject postProcess1;
-    public GameObject postProcess2;
+    //public GameObject postProcess1;
+    //public GameObject postProcess2;
     public int postProcessChangeLevel;
     public bool hubReturn;
+    private KF_Unlockables unlockables;
+    public int BeforeBossLevel;
+    public bool nextIsBoss;
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
+        fadecanvas.SetActive(true);
+    }
+
+    void Start()
+    {
+        unlockables = this.gameObject.GetComponent<KF_Unlockables>();
+        player = FindObjectOfType<PlayerController>();
         for (int i = 1; i < levels.Count; i++)
         {
             levels[i].SetActive(false);
@@ -33,23 +44,39 @@ public class KF_LevelManager : MonoBehaviour
         foreach (Transform child in levelpos) if (child.CompareTag("StartPoint"))
                 playerPosition.position = child.position;
         checkTriggers = currentLevel.GetComponent<KF_CheckTriggers>();
-        fadecanvas.SetActive(true);
+        hubReturn = unlockables.hubReturn;
 
-        postProcess1.SetActive(true);
-        postProcess2.SetActive(false);
+        //postProcess1.SetActive(true);
+        //postProcess2.SetActive(false);
         levelChanged = false;
     }
 
     public void Update()
     {
-        if (currentLevel.CompareTag("Hub"))
+        if (player.isDead == true)
+            hubReturn = true;
+
+        if ((currentLevel.CompareTag("Hub")) || (nextIsBoss == true))
         {
-            endTrigger = GameObject.FindGameObjectWithTag("HubTrigger").GetComponent<KF_LevelExit>();
-            if (endTrigger.exitTrigger == true)
+            if (currentLevel.CompareTag("Hub"))
             {
-                levelChanged = true;
-                StartCoroutine("MoveLevelHub");
+                endTrigger = GameObject.FindGameObjectWithTag("HubTrigger").GetComponent<KF_LevelExit>();
+                if (endTrigger.exitTrigger == true)
+                {
+                    levelChanged = true;
+                    StartCoroutine("MoveLevelHub");
+                }
             }
+            if (nextIsBoss == true)
+            {
+                checkTriggers = currentLevel.GetComponent<KF_CheckTriggers>();
+                if (checkTriggers.exitcheck == true)
+                {
+                    levelChanged = true;
+                    StartCoroutine(MoveBoss());
+                }
+            }
+            
         }
         else
         {
@@ -69,11 +96,15 @@ public class KF_LevelManager : MonoBehaviour
                         playerPosition.position = child.position;
             }*/
         }
-        if (levelCount == postProcessChangeLevel)
+        if (levelCount == BeforeBossLevel)
+        {
+            nextIsBoss = true;
+        }
+        /*if (levelCount == postProcessChangeLevel)
         {
             postProcess1.SetActive(false);
             postProcess2.SetActive(true);
-        }
+        }*/
         if (hubReturn == true)
         {
             levelChanged = true;
@@ -116,6 +147,28 @@ public class KF_LevelManager : MonoBehaviour
         foreach (Transform child in levelpos1) if (child.CompareTag("StartPoint"))
                 playerPosition.position = child.position;
         yield return new WaitForSeconds(5f);
+    }
+
+    private IEnumerator MoveBoss()
+    {
+        {
+            levelCount = levelCount + 1;
+            nextLevel = levels[levelCount];
+            GameObject previouslevel = currentLevel;
+            currentLevel = nextLevel;
+            GameObject[] currentrooms = GameObject.FindGameObjectsWithTag("Room");
+            foreach (GameObject room in currentrooms)
+                GameObject.Destroy(room);
+            GameObject[] prepareEndRooms = GameObject.FindGameObjectsWithTag("PrepareEndRoom");
+            foreach (GameObject proom in prepareEndRooms)
+                GameObject.Destroy(proom);
+            previouslevel.SetActive(false);
+            levels[levelCount].SetActive(true);
+            Transform levelpos1 = currentLevel.transform;
+            foreach (Transform child in levelpos1) if (child.CompareTag("StartPoint"))
+                    playerPosition.position = child.position;
+            yield return new WaitForSeconds(5f);
+        }
     }
 
 }

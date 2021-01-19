@@ -181,10 +181,25 @@ public class InterfaceManager : MonoBehaviour
         {
             enchantList[i].enabled = true;
             enchantList[i].texture = enchantM.enchants[i].icon.texture;
-
+            enchantList[i].color = Color.white;
+           
 
             //if(enchantM.enchants[i].enchantEffects[i].active == true)
-            
+
+            if (enchantM.enchants[i].enchantEffects[0].active == true)
+            {
+               
+                enchantList[i].color = Color.blue;
+                
+            }
+
+            //chooseIndex
+            if(enchantM.choosing == true)
+            {
+              enchantList[enchantM.chooseIndex].color = Color.red;
+            }
         }
     }
+
+   
 }
