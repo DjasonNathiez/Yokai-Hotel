@@ -33,6 +33,8 @@ public class KF_Unlockables : MonoBehaviour
     public bool unlockBoss;
     private int count;
 
+    [Header("==== Save Settings ====")]
+    public bool keyboard;
     public bool firstTime;
     public bool deleteSave;
 

@@ -10,7 +10,8 @@ public class InterfaceManager : MonoBehaviour
 {
     InventoryManager inventory;
     PlayerController player;
-    KF_KeyActivate kActive;
+    public ProceduralGenerator kActive;
+    public KF_LevelManager levelM;
     public Slider fillSlider;
 
     [Header("Health")]
@@ -18,10 +19,11 @@ public class InterfaceManager : MonoBehaviour
     public Texture hpActivate;
     public Texture hpDown;
     public GameObject hpBar;
+    public GameObject[] lightHP;
     /// Texture hpNotActive;
 
     float currentHealth;
-    float maxHealth;
+    public float maxHealth;
 
     float shootValue;
 
@@ -30,43 +32,65 @@ public class InterfaceManager : MonoBehaviour
     float currentMoney;
 
     [Header("Keys")]
-    public RawImage keysImage;
-    public Texture keysLow;
-    public Texture keysMedium;
-    public Texture keysHigh;
+    public RawImage[] keysImage;
+    public Texture keysMiss;
+    public Texture keysUp;
+    public GameObject keysObj;
     int currentKey;
+
+    [Header("Enchant")]
+    public RawImage[] enchantList;
+    GameObject enchantIMG;
+    EnchantManager enchantM;
+
+    private void Awake()
+    {
+    }
 
     private void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         
+
+        keysObj = GameObject.FindGameObjectWithTag("Keys");
+        enchantIMG = GameObject.FindGameObjectWithTag("EnchantIMG");
         
         if(playerObj)
         inventory = playerObj.GetComponent<InventoryManager>(); //initialization du script InventoryManager
-
+     
         moneyText = GameObject.FindGameObjectWithTag("MoneyText").GetComponent<TextMeshProUGUI>();
 
         if(playerObj)
         player = playerObj.GetComponent<PlayerController>();
 
+        enchantM = playerObj.GetComponentInChildren<EnchantManager>();
+
         allTextureLantern = hpBar.GetComponentsInChildren<RawImage>();
 
+        lightHP = GameObject.FindGameObjectsWithTag("LightUI");
+        
+
         //initialization HealthBar
-        for(int i = 0; i < allTextureLantern.Length; i++)
+        
+
+        for (int i = 0; i < enchantM.enchants.Count; i++)
         {
-            allTextureLantern[i].enabled = true;
+            enchantList[i].enabled = false;
         }
 
     }
 
     private void Update()
     {
+        if(levelM)
+        kActive = levelM.levels[levelM.levelCount].GetComponent<ProceduralGenerator>();
 
         UpdateHealth();
         UpdateMoney();
         UpdateShoot();
         UpdateKey();
-
+        UpdateEnchant();
+        
     }
 
     void UpdateHealth()
@@ -79,11 +103,20 @@ public class InterfaceManager : MonoBehaviour
 
         for(int i = 0; i < allTextureLantern.Length; i++)
         {
-            if(i != 0)
+
+            //allTextureLantern[i].texture = (currentHealth > i) ? hpActivate : hpDown;
+
+            if (i < maxHealth)
             {
-                allTextureLantern[i].texture = (currentHealth >= i) ? hpActivate : hpDown;
+                allTextureLantern[i].enabled = true;
+            }
+
+            if(i >= maxHealth)
+            {
+                allTextureLantern[i].enabled = false;
             }
         }
+
     }
 
     void UpdateMoney()
@@ -111,26 +144,66 @@ public class InterfaceManager : MonoBehaviour
     void UpdateKey()
     {
         //de 1 à 3 clé selon le niveau
-
         /// keys/keysinlvl
 
-        if(kActive && inventory)
-        currentKey = inventory.keys / kActive.keysinroom;
+        if (kActive)
+        currentKey = kActive.keyNumber;
+       
+        //initialization
 
-        if(currentKey == 1 / 3)
-        {
-            keysImage.texture = keysLow;
-        }
+        keysImage = keysObj.GetComponentsInChildren<RawImage>();
 
-        if(currentKey == 2 / 3)
+        for(int i = 0; i < currentKey; i++)
         {
-            keysImage.texture = keysMedium;
-        }
+            keysImage[i].enabled = true;
 
-        if (currentKey == 3 / 3)
-        {
-            keysImage.texture = keysHigh;
+            if(inventory.keys != 0)
+            {
+                keysImage[inventory.keys -1].texture = keysUp;
+
+            }
+            else 
+            {
+                keysImage[i].texture = keysMiss;
+
+            }
+            
         }
 
     }
+
+    void UpdateEnchant()
+    {
+        //initialize image
+
+        enchantList = enchantIMG.GetComponentsInChildren<RawImage>();
+        for(int i = 0; i < enchantM.enchants.Count; i++)
+        {
+            enchantList[i].enabled = true;
+            enchantList[i].texture = enchantM.enchants[i].icon.texture;
+            enchantList[i].color = Color.white;
+           
+
+            //if(enchantM.enchants[i].enchantEffects[i].active == true)
+
+            if (enchantM.enchants[i].enchantEffects[0].active == true)
+            {
+               
+                enchantList[i].color = Color.blue;
+                
+            }
+
+            //chooseIndex
+            if(enchantM.choosing == true)
+            {
+              enchantList[enchantM.chooseIndex].color = Color.red;
+            }
+            else
+            {
+                enchantList[i].color = Color.white;
+            }
+        }
+    }
+
+   
 }

@@ -382,8 +382,6 @@ public class PlayerController : MonoBehaviour
             shootGaugeState += lAFillAmount;
 
 
-            if (audioManager)
-                audioManager.PlaySound("Player fast attack", 0);
         }
 
 
@@ -395,8 +393,6 @@ public class PlayerController : MonoBehaviour
             if (screenShake)
                 screenShake.isShaking = true;
 
-            if (audioManager)
-                audioManager.PlaySound("Player heavy attack", 0);
         }
 
 

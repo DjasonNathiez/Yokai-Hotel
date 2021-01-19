@@ -49,6 +49,11 @@ public class AniamtorBoss : MonoBehaviour
     {
         boss.dashVelocity = 0;
     }
+
+    public void Shoot()
+    {
+        boss.Shoot();
+    }
     public void ReturnFreeState()
     {
         boss.bossState = BossBehaviour.BossState.FREE;

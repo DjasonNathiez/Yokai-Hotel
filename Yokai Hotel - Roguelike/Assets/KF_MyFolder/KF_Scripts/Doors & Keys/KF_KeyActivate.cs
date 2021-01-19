@@ -10,11 +10,17 @@ public class KF_KeyActivate : MonoBehaviour
     public GameObject interactb;
     private bool bActif;
     private Animator anim;
+    private bool inRange;
+
+    AudioManager audioM;
 
 
     // Start is called before the first frame update
     void Start()
     {
+       
+            audioM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
+
         thisRoom = this.transform.root.GetComponent<Room>();
         if (thisRoom.keyToSpawn == true)
         {
@@ -29,18 +35,14 @@ public class KF_KeyActivate : MonoBehaviour
         interactb.SetActive(false);
         bActif = true;
         anim = this.gameObject.GetComponent<Animator>();
+        inventoryM = FindObjectOfType<InventoryManager>();
         
     }
 
-
-
-    public void OnTriggerStay2D(Collider2D collision)
+    private void Update()
     {
-        if (collision.gameObject.CompareTag("Player") && (bActif == true))
+        if (inRange == true)
         {
-            interactb.SetActive(true);
-            if (!inventoryM)
-                inventoryM = collision.gameObject.GetComponent<InventoryManager>();
 
             if (Input.GetButtonDown("Interact"))
             {
@@ -48,14 +50,36 @@ public class KF_KeyActivate : MonoBehaviour
                 Debug.Log("Key Added");
                 anim.SetBool("gotKey", true);
                 Destroy(interactb);
-                bActif = false;  
+                bActif = false;
+
             }
+        }
+    }
+
+
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && (bActif == true))
+        {
+            interactb.SetActive(true);
+            inRange = true;
         }
     }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && (bActif == true))
+        {
             interactb.SetActive(false);
+            inRange = false;
+        }
+            
+    }
+
+    public void KeysSound()
+    {
+        if(audioM)
+        audioM.PlaySound("Keys", 0);
     }
 }
