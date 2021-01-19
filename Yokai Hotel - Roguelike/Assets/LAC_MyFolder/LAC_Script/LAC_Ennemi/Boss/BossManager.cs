@@ -19,8 +19,11 @@ public class BossManager : MonoBehaviour
     public bool phaseTwo;
 
     public int pTwoHp;
-    public bool start;
+    bool triggerPhaseTwo;
+
+    bool start;
     public bool end;
+    bool triggerEnd;
 
     [Header("Pattern Offset")]
     public Vector2 attackOffset;
@@ -35,10 +38,17 @@ public class BossManager : MonoBehaviour
 
     float paternReducProba;
     int lastPatern = 0;
+
+    [Header("CutScene")]
+    public Animator animator;
+    bool standBy;
+
     // Start is called before the first frame update
     void Start()
     {
         bossArray = GetComponentsInChildren<BossBehaviour>();
+        animator = GetComponent<Animator>();
+
         paternTimer = new float[bossArray.Length];
 
         currentBossHp = globalBossHp ;
@@ -49,19 +59,19 @@ public class BossManager : MonoBehaviour
             paternTimer[i] = paternFreq -timerOffset * i;
             bossArray[i].gameObject.SetActive(false);
         }
-
+        start = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         UpdateBossHP();
+        UpdateAnimator();
 
         for(int i = 0; i < bossArray.Length; i++)
         {
-            if(bossArray[i]!= null && !end)
+            if(bossArray[i]!= null && !standBy)
             {
-
                 //define patern
                 paternTimer[i] -= Time.deltaTime;
                 if (paternTimer[i] < 0)
@@ -71,9 +81,7 @@ public class BossManager : MonoBehaviour
                     {
                         if((i == 1 && phaseTwo) || i == 0)
                             bossArray[i].gameObject.SetActive(true);
-
                     }
-                        
 
                     // apply pattern
                     StartPosPatern(bossArray[i], 1, 1, 1);
@@ -207,11 +215,46 @@ public class BossManager : MonoBehaviour
        }
         currentBossHp = tempBossHp;
 
-        if (currentBossHp <= pTwoHp)
+        if (currentBossHp <= pTwoHp && !phaseTwo)
+        {
             phaseTwo = true;
+            triggerPhaseTwo = true;
+        }
+            
 
-        if (currentBossHp <= 0)
-            Debug.LogError("Weakness : To strong !");
+        if (currentBossHp <= 0 && !triggerEnd)
+        {
+            end = true;
+            triggerEnd = true;
+            Debug.Log("Boss defeat");
+        }
+            
     }
-  
+    public void UpdateAnimator()
+    {
+        if (start)
+        {
+            standBy = true;
+            animator.SetTrigger("FirstEmergence");
+            start = false;
+        }
+
+        if (triggerPhaseTwo)
+        {
+            standBy = true;
+            animator.SetTrigger("SecondEmergence");
+            triggerPhaseTwo = false;
+        }
+
+        if (end)
+        {
+            standBy = true;
+            animator.SetTrigger("TrueDeath");
+            end = false;
+        }
+    }
+    public void EndStandBy()
+    {
+        standBy = false;
+    }
 }
