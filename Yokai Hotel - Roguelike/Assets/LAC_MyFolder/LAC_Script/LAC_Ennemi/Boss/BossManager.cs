@@ -16,23 +16,27 @@ public class BossManager : MonoBehaviour
 
     [Header("Pattern Timing")]
     public float paternFreq;
-    float paternTimer;
+    public float paternOffsetTimming;
+    float[] paternTimer;
     // Start is called before the first frame update
     void Start()
     {
         bossArray = GetComponentsInChildren<BossBehaviour>();
-        
+        paternTimer = new float[bossArray.Length];
     }
 
     // Update is called once per frame
     void Update()
     {
-        paternTimer -= Time.deltaTime;
-        if(paternTimer < 0)
+        paternTimer[0] -= Time.deltaTime;
+        if(paternTimer[0] < 0)
         {
-            StartPosPatern(bossArray[0],0, 1, 0 );
+            if (bossArray[0] != null)
+                StartPosPatern(bossArray[0], 1, 1, 1);
+            else
+                Debug.Log("Boss dead");
             //DefinePatern(1, 1, 1);
-            paternTimer = paternFreq;
+            paternTimer[0] = paternFreq;
         }
     }
   
