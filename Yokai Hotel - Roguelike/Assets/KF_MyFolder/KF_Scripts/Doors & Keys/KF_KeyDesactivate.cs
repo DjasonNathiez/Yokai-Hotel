@@ -10,6 +10,7 @@ public class KF_KeyDesactivate : MonoBehaviour
     public GameObject interactb;
     private bool bActif;
     public Animator anim;
+    private bool inRange;
 
     public AudioManager audioM;
 
@@ -23,23 +24,15 @@ public class KF_KeyDesactivate : MonoBehaviour
         anim = this.gameObject.GetComponent<Animator>();
         interactb.SetActive(false);
         bActif = true;
+        inventoryM = FindObjectOfType<InventoryManager>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-       
-    }
-
-    public void OnTriggerStay2D(Collider2D collision)
-    {
-        if ((collision.gameObject.CompareTag("Player")) && (bActif == true))
+       if (inRange == true)
         {
-            if (!inventoryM)
-                inventoryM = collision.gameObject.GetComponent<InventoryManager>();
-
-            interactb.SetActive(true);
             if ((inventoryM.keys >= 1) && (Input.GetButtonDown("Interact")))
             {
                 inventoryM.keys = inventoryM.keys - 1;
@@ -49,18 +42,33 @@ public class KF_KeyDesactivate : MonoBehaviour
                 Destroy(interactb);
                 actlock.keycount = actlock.keycount - 1;
             }
-            else 
+            else
+            {
                 if ((inventoryM.keys == 0) && (Input.GetButtonDown("Interact")))
                 {
                     Debug.Log("Not enough Keys");
                 }
+            }
+        }
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if ((collision.gameObject.CompareTag("Player")) && (bActif == true))
+        {
+            interactb.SetActive(true);
+            inRange = true;
         }
     }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && (bActif == true))
+        {
             interactb.SetActive(false);
+            inRange = false;
+        }
+            
     }
 
     public void ActivateLanternSound()

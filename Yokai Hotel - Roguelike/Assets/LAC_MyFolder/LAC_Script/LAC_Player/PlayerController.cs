@@ -536,6 +536,7 @@ public class PlayerController : MonoBehaviour
     {
         velocity = Vector2.zero;
         playerState = PlayerState.DIE;
+        Debug.LogError("Nice try");
         StartCoroutine(Restart(4));
     }
 

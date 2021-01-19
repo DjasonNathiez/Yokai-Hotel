@@ -35,7 +35,8 @@ public class EnnemiBehaviour : MonoBehaviour
     [Header("recoil")]
     public int stunPoints;
     public float stunMultiplier = 1, stunTime;
-
+    public float constantStunTime;
+  
 
     public Vector2 repulseForce;
     public float inertness, stunInertness;
@@ -123,21 +124,26 @@ public class EnnemiBehaviour : MonoBehaviour
 
                     if (velocity.magnitude <= recovery)
                     {
-                        StartCoroutine(StunRecovery(stunTime));
+                        StartCoroutine(StunRecovery(stunTime + constantStunTime));
                         Debug.Log("apply stun");
                         velocity = Vector2.zero;
                         inertnessModifier = 1;
                     }
 
                     // show hurt
-                    Color col = Color.white;
+                    Color col = Color.red;
                     col.a = Mathf.Sin(Time.time * 30) * 255;
                     spriteT.color = col;
 
                     break;
                 }
+            
         }
-
+        if(ennemyState != EnnemyState.STUN)
+        {
+            spriteT.color = Color.white;
+        }
+      
         if (healthPoints <= 0)
         {
             drop.SortItemPos(transform, transform.position, drop.dropRadius, obstructMask);

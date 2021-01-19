@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class BossManager : MonoBehaviour
 {
+    [Header("Boss")]
+    public int globalBossHp;
+    public int currentBossHp;
+    public int singleBossHp;
 
+    public int totalDamageToDeal;
+    
     public BossBehaviour[] bossArray;
     public GameObject player;
     public LayerMask thatMask;
+
+    [Header("Phase")]
+    public bool phaseTwo;
+
+    public int pTwoHp;
+    public bool start;
+    public bool end;
 
     [Header("Pattern Offset")]
     public Vector2 attackOffset;
@@ -16,24 +29,60 @@ public class BossManager : MonoBehaviour
 
     [Header("Pattern Timing")]
     public float paternFreq;
-    float paternTimer;
+
+    float[] paternTimer;
+    public float timerOffset;
+
+    float paternReducProba;
+    int lastPatern = 0;
     // Start is called before the first frame update
     void Start()
     {
         bossArray = GetComponentsInChildren<BossBehaviour>();
-        
+        paternTimer = new float[bossArray.Length];
+
+        currentBossHp = globalBossHp ;
+        singleBossHp = ((globalBossHp * 2)+6);
+        for (int i = 0; i < bossArray.Length; i++)
+        {
+            bossArray[i].healthPoints = singleBossHp;
+            paternTimer[i] = paternFreq -timerOffset * i;
+            bossArray[i].gameObject.SetActive(false);
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        paternTimer -= Time.deltaTime;
-        if(paternTimer < 0)
+        UpdateBossHP();
+
+        for(int i = 0; i < bossArray.Length; i++)
         {
-            StartPosPatern(bossArray[0],0, 1, 0 );
-            //DefinePatern(1, 1, 1);
-            paternTimer = paternFreq;
+            if(bossArray[i]!= null && !end)
+            {
+
+                //define patern
+                paternTimer[i] -= Time.deltaTime;
+                if (paternTimer[i] < 0)
+                {
+                    // initialize
+                    if (!bossArray[i].isActiveAndEnabled)
+                    {
+                        if((i == 1 && phaseTwo) || i == 0)
+                            bossArray[i].gameObject.SetActive(true);
+
+                    }
+                        
+
+                    // apply pattern
+                    StartPosPatern(bossArray[i], 1, 1, 1);
+                    paternTimer[i] = paternFreq;
+                }
+            }
         }
+
+       
     }
   
 
@@ -45,6 +94,7 @@ public class BossManager : MonoBehaviour
 
         #region Define Pattern
         int paternIndex = DefinePatern(pAttack, pDash, pShoot);
+        
         Vector2 offSet = Vector2.zero;
 
         if (paternIndex == 1)
@@ -80,19 +130,19 @@ public class BossManager : MonoBehaviour
             {
                 startPos = choosePos + (Vector2)player.transform.position;
                 orient = chooseDir;
-                Debug.Log("dir found : " + chooseDir);
+                //Debug.Log("dir found : " + chooseDir);
                 findDir = true;
             }
             else
             {
                 checkDir.Remove(chooseDir);
-                Debug.Log("remove dir : " + chooseDir);
+                //Debug.Log("remove dir : " + chooseDir);
             }
                 
 
             if (checkDir.Count == 0)
             {
-                Debug.Log("no dir found: " + chooseDir);
+                //Debug.Log("no dir found: " + chooseDir);
                 findDir = true;
             }
 
@@ -108,6 +158,7 @@ public class BossManager : MonoBehaviour
 
     int DefinePatern(float pAttack, float pDash, float pShoot)
     {
+
         float pTotal = pAttack + pDash + pShoot;
         pAttack = pAttack/pTotal;
         pDash = pDash/ pTotal;
@@ -125,8 +176,8 @@ public class BossManager : MonoBehaviour
         if (rValue > pAttack + pDash && rValue <= pTotal)
             patternIndex = 3;
 
-        Debug.Log("random value" + rValue);
-        Debug.Log("pattern index" + patternIndex);
+        //Debug.Log("random value" + rValue);
+        //Debug.Log("pattern index" + patternIndex);
         return patternIndex;
     }
     Vector2 CheckDir( Vector2 dir, float minDistMultiplier, LayerMask mask)
@@ -146,4 +197,21 @@ public class BossManager : MonoBehaviour
         
 
     }
+
+    public void UpdateBossHP()
+    {
+       int tempBossHp = globalBossHp;
+       for(int i = 0; i < bossArray.Length; i++)
+       {
+            tempBossHp -= ((bossArray[i] != null) ? singleBossHp : 0) - (int)bossArray[i].healthPoints;
+       }
+        currentBossHp = tempBossHp;
+
+        if (currentBossHp <= pTwoHp)
+            phaseTwo = true;
+
+        if (currentBossHp <= 0)
+            Debug.LogError("Weakness : To strong !");
+    }
+  
 }
