@@ -11,10 +11,15 @@ public class KF_KeyActivate : MonoBehaviour
     private bool bActif;
     private Animator anim;
 
+    AudioManager audioM;
+
 
     // Start is called before the first frame update
     void Start()
     {
+       
+            audioM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
+
         thisRoom = this.transform.root.GetComponent<Room>();
         if (thisRoom.keyToSpawn == true)
         {
@@ -48,7 +53,8 @@ public class KF_KeyActivate : MonoBehaviour
                 Debug.Log("Key Added");
                 anim.SetBool("gotKey", true);
                 Destroy(interactb);
-                bActif = false;  
+                bActif = false;
+
             }
         }
     }
@@ -57,5 +63,11 @@ public class KF_KeyActivate : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && (bActif == true))
             interactb.SetActive(false);
+    }
+
+    public void KeysSound()
+    {
+        if(audioM)
+        audioM.PlaySound("Keys", 0);
     }
 }

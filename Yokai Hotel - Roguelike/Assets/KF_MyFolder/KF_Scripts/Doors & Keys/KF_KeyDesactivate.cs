@@ -11,10 +11,13 @@ public class KF_KeyDesactivate : MonoBehaviour
     private bool bActif;
     public Animator anim;
 
+    public AudioManager audioM;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        audioM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
         prepareEnd = GameObject.FindGameObjectWithTag("PrepareEndRoom");
         actlock = prepareEnd.GetComponent<KF_ActivateUnlock>();
         anim = this.gameObject.GetComponent<Animator>();
@@ -58,5 +61,16 @@ public class KF_KeyDesactivate : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && (bActif == true))
             interactb.SetActive(false);
+    }
+
+    public void ActivateLanternSound()
+    {
+        if (audioM)
+            audioM.PlaySound("Active Keys", 0);
+    }
+    public void FireSound()
+    {
+        if (audioM)
+            audioM.PlaySound("Fire", 0);
     }
 }

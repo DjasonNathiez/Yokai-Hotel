@@ -28,7 +28,6 @@ public class AudioManager : MonoBehaviour
         }
 
 
-        DontDestroyOnLoad(gameObject);
         musicZone = GetComponent<MusicZone>();
 
         foreach (Sound s in sounds)
