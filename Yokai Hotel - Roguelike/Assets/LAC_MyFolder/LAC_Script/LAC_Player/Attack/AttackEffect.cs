@@ -27,7 +27,11 @@ public class AttackEffect : MonoBehaviour
     public bool kill_H;
 
     float killbuffer = 0.2f;
-    
+    [Header("VFX")]
+    public float rotation;
+    public ParticleSystem smallImpact;
+    public ParticleSystem bigImpact;
+
     [Header("Cam")]
     public GameObject cam;
     public CinemachineBrain camBrain;
@@ -51,6 +55,7 @@ public class AttackEffect : MonoBehaviour
         if(gameManager)
             audioM = gameManager.GetComponent<AudioManager>();
 
+        
     }
 
     private void OnDrawGizmos()
@@ -62,6 +67,7 @@ public class AttackEffect : MonoBehaviour
             
         //Gizmos.DrawCube(col2D.offset + (Vector2)transform.position, size);
     }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.tag == "Ennemi" && player.attackChoose != -1)
@@ -132,6 +138,8 @@ public class AttackEffect : MonoBehaviour
                         
 
                     }
+                    PlayVFX(ennemi.gameObject, player.attackChoose);
+
                     // apply damage & recoil
                     Debug.Log("Hit ennemy");
                     ennemi.healthDamage = damage;
@@ -148,18 +156,6 @@ public class AttackEffect : MonoBehaviour
                 audioM.PlaySound("Ennemy hurt", 0);
         }
 
-        if (collider.tag == "BulletEnemy" && player.attackChoose == 3)
-        {
-            /*Bullet bullet = collider.GetComponentInParent<Bullet>();
-
-            if (bullet && bullet.tag == "BulletEnemy")
-            {
-                Debug.Log("hitBullet");
-                bullet.speed = -2*bullet.speed;
-                bullet.tag = "BulletAlly";
-            }*/
-            
-        }
     }
 
     public void FREE_StateTranstion()
@@ -298,5 +294,28 @@ public class AttackEffect : MonoBehaviour
     {
         if (audioM)
             audioM.PlaySound("Player heavy attack", 0);
+    }
+
+    // VFX
+    public void PlayVFX(GameObject target, int attackType)
+    {
+        // define vfx type
+        ParticleSystem particule = ((attackType < 3 && lightBoost > 1) || (attackType == 3 && heavyBoost > 1) || attackBoost > 1) ? bigImpact : smallImpact;
+            
+        // define vfx position
+        Vector2 dir = (target.transform.position - transform.position);
+        RaycastHit2D hit = Physics2D.Raycast(player.transform.position, dir.normalized, dir.magnitude, detectMask);
+        Vector2 pos = (Vector2)transform.position + dir.normalized * ((hit) ? hit.distance : dir.magnitude);
+        particule.transform.position = pos;
+
+        // play particule
+        bool vertical = (Mathf.Abs(dir.y) > Mathf.Abs(dir.x));
+        float particuleRotation = (vertical ? 1.5f : 0) + Random.Range(-0.5f,0.5f) ;
+
+        var main = particule.main;
+        main.startRotation = particuleRotation;
+        //smallImpact.startRotation = 
+        particule.Play();
+        Debug.Log("Yay VFX won't work : " + particuleRotation);
     }
 }

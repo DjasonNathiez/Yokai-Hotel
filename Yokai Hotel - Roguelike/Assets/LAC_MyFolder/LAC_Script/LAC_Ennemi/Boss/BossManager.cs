@@ -56,6 +56,7 @@ public class BossManager : MonoBehaviour
 
         currentBossHp = globalBossHp ;
         singleBossHp = ((globalBossHp * 2)+6);
+
         for (int i = 0; i < bossArray.Length; i++)
         {
             bossArray[i].healthPoints = singleBossHp;
@@ -93,7 +94,7 @@ public class BossManager : MonoBehaviour
                     // initialize
                     if (!bossArray[i].isActiveAndEnabled)
                     {
-                        if((i == 1 && phaseTwo) || i == 0)
+                       if((i == 1 && phaseTwo) || i == 0)
                             bossArray[i].gameObject.SetActive(true);
                     }
 
