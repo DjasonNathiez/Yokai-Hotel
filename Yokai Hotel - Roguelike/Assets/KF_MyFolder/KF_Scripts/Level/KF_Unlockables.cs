@@ -113,10 +113,6 @@ public class KF_Unlockables : MonoBehaviour
         {
             DeleteSave();
         }
-        if (createSave == true)
-        {
-            CreateSave();
-        }
 
         hubReturn = lvlM.hubReturn;
         if (lvlM.levelCount >= maxLevelReached)
