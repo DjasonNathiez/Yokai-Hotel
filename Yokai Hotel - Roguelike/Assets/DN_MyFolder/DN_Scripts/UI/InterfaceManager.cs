@@ -54,6 +54,10 @@ public class InterfaceManager : MonoBehaviour
     GameObject enchantIMG;
     EnchantManager enchantM;
 
+    public GameObject enchantI;
+    TextMeshProUGUI[] information;
+    RawImage[] informationIcon;
+
     private void Awake()
     {
         randomOscil = Random.value - 0.5f;
@@ -82,10 +86,12 @@ public class InterfaceManager : MonoBehaviour
 
         lightIMG = lightHP.GetComponentsInChildren<RawImage>();
 
+        //enchant
         enchantEffect = enchantEffectIMG.GetComponentsInChildren<Image>();
+        information = enchantI.GetComponentsInChildren<TextMeshProUGUI>();
+        informationIcon = enchantI.GetComponentsInChildren<RawImage>();
 
         //initialization HealthBar
-
 
         for (int i = 0; i < enchantM.enchants.Count; i++)
         {
@@ -226,6 +232,11 @@ public class InterfaceManager : MonoBehaviour
             {
                 enchantList[i].color = Color.white;
             }
+
+            //visual menu information
+
+            information[i].text = enchantM.enchants[i].GenerateDescription();
+            informationIcon[i].texture = enchantM.enchants[i].icon.texture;
         }
     }
 
