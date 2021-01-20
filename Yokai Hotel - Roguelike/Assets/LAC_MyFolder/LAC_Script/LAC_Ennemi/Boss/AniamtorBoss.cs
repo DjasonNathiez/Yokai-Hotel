@@ -59,6 +59,11 @@ public class AniamtorBoss : MonoBehaviour
     {
         boss.bossState = BossBehaviour.BossState.FREE;
     }
+
+    public void PlayVFXAttack()
+    {
+        boss.PlayVFXAttack();
+    }
     void UpdateBlendTree(Vector2 velocity)
     {
         bool vertical = (Mathf.Abs(velocity.y) > Mathf.Abs(velocity.x));

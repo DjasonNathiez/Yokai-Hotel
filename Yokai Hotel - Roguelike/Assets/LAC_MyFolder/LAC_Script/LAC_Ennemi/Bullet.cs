@@ -23,6 +23,7 @@ public class Bullet : MonoBehaviour
     PlayerController player;
 
     public GameObject visual;
+    public GameObject HitParticule;
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +72,13 @@ public class Bullet : MonoBehaviour
             if (player)
             {
                 player.hurtDamage = damage;
+                if(HitParticule != null)
+                {
+                    GameObject particule = Instantiate(HitParticule, transform.position, transform.rotation);
+                    Debug.Log("spawnParticule" + particule.transform.position);
+                    Destroy(particule, 3);
+                }
+                
                 Destroy(gameObject);
             }
 
@@ -103,7 +111,17 @@ public class Bullet : MonoBehaviour
 
         Collider2D hit = Physics2D.OverlapCircle(transform.position, 0.2f, blockMask);
         if (hit)
-            GameObject.Destroy(gameObject);
+        {
+            if (HitParticule != null)
+            {
+                GameObject particule = Instantiate(HitParticule, transform.position,transform.rotation);
+                Debug.Log("spawn particule");
+                //particule.Play();
+                Destroy(particule, 3);
+            }
+            Destroy(gameObject);
+        }
+            
     }
 
     
