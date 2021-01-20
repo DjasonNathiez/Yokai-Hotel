@@ -10,6 +10,7 @@ public class InterfaceManager : MonoBehaviour
 {
     InventoryManager inventory;
     PlayerController player;
+    AudioManager audioM;
     public ProceduralGenerator kActive;
     public KF_LevelManager levelM;
     public Slider fillSlider;
@@ -61,17 +62,18 @@ public class InterfaceManager : MonoBehaviour
     private void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        audioM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
 
         keysObj = GameObject.FindGameObjectWithTag("Keys");
         enchantIMG = GameObject.FindGameObjectWithTag("EnchantIMG");
 
         if (playerObj)
-            inventory = playerObj.GetComponent<InventoryManager>(); //initialization du script InventoryManager
+        inventory = playerObj.GetComponent<InventoryManager>(); //initialization du script InventoryManager
 
         moneyText = GameObject.FindGameObjectWithTag("MoneyText").GetComponent<TextMeshProUGUI>();
 
         if (playerObj)
-            player = playerObj.GetComponent<PlayerController>();
+        player = playerObj.GetComponent<PlayerController>();
 
         enchantM = playerObj.GetComponentInChildren<EnchantManager>();
 
@@ -209,6 +211,7 @@ public class InterfaceManager : MonoBehaviour
             {
 
                 enchantEffect[i].enabled = true;
+                audioM.PlaySound("Active Enchant", 0);
 
             }
             else
