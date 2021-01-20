@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -138.10002}
+  m_AnchoredPosition: {x: 0, y: 4}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &939479785293667295
@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 8546218301111801597}
   m_Layer: 5
   m_Name: DialogueText
-  m_TagString: Untagged
+  m_TagString: DialogueText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -71,8 +71,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.3, y: -0.8999634}
-  m_SizeDelta: {x: 420.35077, y: 70.28979}
+  m_AnchoredPosition: {x: -2.3, y: -151.3}
+  m_SizeDelta: {x: 420.35077, y: 88.14389}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2077329722839938123
 CanvasRenderer:
@@ -152,7 +152,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 251.9, y: -47.199966}
+  m_AnchoredPosition: {x: 251.9, y: -192}
   m_SizeDelta: {x: 23.338432, y: 26.672493}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1495725872288021084
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 6384857649485042539}
   m_Layer: 5
   m_Name: ObjectPrice
-  m_TagString: Untagged
+  m_TagString: ObjectPrice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -396,7 +396,7 @@ GameObject:
   - component: {fileID: 3692380789605041650}
   m_Layer: 5
   m_Name: ObjectEffects
-  m_TagString: Untagged
+  m_TagString: ObjectDesc
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -514,8 +514,8 @@ GameObject:
   - component: {fileID: 6981133413178543754}
   - component: {fileID: 2388355248791075852}
   - component: {fileID: 658239524756015329}
-  - component: {fileID: 5020534906307437233}
   - component: {fileID: 6496310192485544546}
+  - component: {fileID: 5801322922843208023}
   m_Layer: 5
   m_Name: InteractionCanvas
   m_TagString: DialogueAnim
@@ -605,18 +605,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!225 &5020534906307437233
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4103470119998224198}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!95 &6496310192485544546
 Animator:
   serializedVersion: 3
@@ -636,6 +624,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!225 &5801322922843208023
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4103470119998224198}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5357937378558081508
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,7 +680,7 @@ GameObject:
   - component: {fileID: 3338419862939619884}
   m_Layer: 5
   m_Name: ObjectName
-  m_TagString: Untagged
+  m_TagString: ObjectName
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
