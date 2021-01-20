@@ -144,7 +144,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         FielOfView();
-
+        if (Input.GetKey(KeyCode.Keypad0))
+            Debug.Log("GamePadController");
+        if (Input.anyKey)
+            Debug.Log("KeyBoardController");
         #region Input
         // movement
         Vector2 inputAxis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;

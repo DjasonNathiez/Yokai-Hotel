@@ -193,7 +193,6 @@ public class ShopManager : MonoBehaviour
                     shopInteracts[i].objectToBuy.description = shopEnchants[i].GenerateDescription().Split('?');
                     shopInteracts[i].objectToBuy.price = price[i].ToString().Split('?');
                 }
-                
 
             }
             else
@@ -207,5 +206,6 @@ public class ShopManager : MonoBehaviour
 
             
         }
+
     }
 }
