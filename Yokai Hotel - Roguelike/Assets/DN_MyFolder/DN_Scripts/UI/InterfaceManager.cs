@@ -42,13 +42,20 @@ public class InterfaceManager : MonoBehaviour
     public GameObject keysObj;
     int currentKey;
 
+    public bool oscilate;
+    public float oscilMag, oscilFreq;
+    float randomOscil;
+
     [Header("Enchant")]
     public RawImage[] enchantList;
+    public Image[] enchantEffect;
+    public GameObject enchantEffectIMG;
     GameObject enchantIMG;
     EnchantManager enchantM;
 
     private void Awake()
     {
+        randomOscil = Random.value - 0.5f;
     }
 
     private void Start()
@@ -72,6 +79,8 @@ public class InterfaceManager : MonoBehaviour
         allTextureLantern = hpBar.GetComponentsInChildren<RawImage>();
 
         lightIMG = lightHP.GetComponentsInChildren<RawImage>();
+
+        enchantEffect = enchantEffectIMG.GetComponentsInChildren<Image>();
 
         //initialization HealthBar
 
@@ -170,6 +179,9 @@ public class InterfaceManager : MonoBehaviour
             {
                 keysImage[inventory.keys - 1].texture = keysUp;
 
+                float oscill = Mathf.Sin(Time.time * oscilFreq + randomOscil) * oscilMag;
+                keysImage[inventory.keys - 1].transform.position += Vector3.up * oscill * Time.deltaTime;
+
             }
             else
             {
@@ -196,8 +208,12 @@ public class InterfaceManager : MonoBehaviour
             if (enchantM.enchants[i].enchantEffects[0].active == true)
             {
 
-                enchantList[i].color = Color.blue;
+                enchantEffect[i].enabled = true;
 
+            }
+            else
+            {
+                enchantEffect[i].enabled = false;
             }
 
             //chooseIndex
