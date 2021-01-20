@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class KF_Unlockables : MonoBehaviour
 {
@@ -37,7 +38,6 @@ public class KF_Unlockables : MonoBehaviour
     public bool keyboard;
     public bool firstTime;
     public bool deleteSave;
-    public bool createSave;
 
 
 
@@ -109,15 +109,13 @@ public class KF_Unlockables : MonoBehaviour
 
     void Update()
     {
-        if (createSave == true)
-        {
-            SaveSystem.SaveProgress(this);
-            createSave = false;
-        }
         if (deleteSave == true)
         {
-            SaveSystem.DeleteSave();
-            deleteSave = false;
+            DeleteSave();
+        }
+        if (createSave == true)
+        {
+            CreateSave();
         }
 
         hubReturn = lvlM.hubReturn;
@@ -315,4 +313,15 @@ public class KF_Unlockables : MonoBehaviour
         }
         onePerLevel = false;
     }
+
+
+    public void DeleteSave() //if problem at start
+    {
+        SaveSystem.SaveProgress(this);
+        SaveSystem.DeleteSave();
+        deleteSave = false;
+        int restartIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(restartIndex);
+    }
+
 }
