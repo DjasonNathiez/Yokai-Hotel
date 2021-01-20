@@ -87,7 +87,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.05, y: -0.389, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1163381320056636087}
   m_Father: {fileID: 5430969317846748366}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -283,10 +284,13 @@ MonoBehaviour:
   ennemyState: 0
   healthPoints: 3
   healthDamage: 0
+  hurtParticule: {fileID: 1163381320056636088}
+  deathParticule: {fileID: 0}
   hurt: 0
   stunPoints: 0
   stunMultiplier: 1
   stunTime: 0
+  constantStunTime: 0
   repulseForce: {x: 0, y: 0}
   inertness: 0
   stunInertness: 0
@@ -348,3 +352,84 @@ MonoBehaviour:
   dropRateG: 0
   dropMultiplier: 0
   dropItems: []
+--- !u!1001 &3509371359082358029
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5430969316907821496}
+    m_Modifications:
+    - target: {fileID: 2348314453860526007, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+        type: 3}
+      propertyPath: m_Name
+      value: dgt Tank
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348314453860526010, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348314453860526010, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.933
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348314453860526010, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348314453860526010, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348314453860526010, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348314453860526010, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348314453860526010, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348314453860526010, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348314453860526010, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348314453860526010, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348314453860526010, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 439485aec3f80ba4fab854f5e13c6cd5, type: 3}
+--- !u!4 &1163381320056636087 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2348314453860526010, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+    type: 3}
+  m_PrefabInstance: {fileID: 3509371359082358029}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1163381320056636088 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2348314453860526005, guid: 439485aec3f80ba4fab854f5e13c6cd5,
+    type: 3}
+  m_PrefabInstance: {fileID: 3509371359082358029}
+  m_PrefabAsset: {fileID: 0}

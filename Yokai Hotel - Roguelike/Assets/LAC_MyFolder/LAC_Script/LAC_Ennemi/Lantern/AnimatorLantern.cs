@@ -75,4 +75,9 @@ public class AnimatorLantern : MonoBehaviour
             ennemi.ennemyState = EnnemiBehaviour.EnnemyState.IDLE;
         ennemi.aFrqcTimer = 0;
     }
+
+    public void Death()
+    {
+        ennemi.Death();
+    }
 }
