@@ -196,6 +196,10 @@ MonoBehaviour:
   - {fileID: 1421191408}
   - {fileID: 1029490441}
   - {fileID: 1749997332}
+  - {fileID: 980498186}
+  - {fileID: 1473383559}
+  - {fileID: 1353097541}
+  - {fileID: 1980991776}
   currentLevel: {fileID: 0}
   nextLevel: {fileID: 0}
   levelCount: 0
@@ -204,6 +208,7 @@ MonoBehaviour:
   endTrigger: {fileID: 0}
   fadecanvas: {fileID: 1506944048}
   levelChanged: 0
+  levelMoved: 0
   postProcessChangeLevel: 5
   hubReturn: 0
   BeforeBossLevel: 8
@@ -1184,6 +1189,9 @@ MonoBehaviour:
   dropBoost: 1
   kill_L: 0
   kill_H: 0
+  rotation: 0
+  smallImpact: {fileID: 0}
+  bigImpact: {fileID: 0}
   cam: {fileID: 0}
   camBrain: {fileID: 0}
   virtualCam: {fileID: 0}
@@ -2177,10 +2185,13 @@ MonoBehaviour:
   - {fileID: 5222694042393211587, guid: 3fcb8feb2e2758e4db59fb78500489c6, type: 3}
   - {fileID: 6853162008764293193, guid: 463599b022826484bb51bb06249c3c8f, type: 3}
   - {fileID: 2046470616204943135, guid: a2d15c9cded0c7d4f829fbf5249a613a, type: 3}
+  - {fileID: 5222694042393211587, guid: 5b9c3200b1ac7b84485d62c7a5e0c9bd, type: 3}
+  - {fileID: 5222694042393211587, guid: 9add39ad46feb2c478862ac892a244f1, type: 3}
+  - {fileID: 5222694042393211587, guid: 47fb15e96646c744ba9829b8d13fbfb0, type: 3}
   maxRoomQ: 6
   minRoomQ: 4
   maxRareRoomQ: 0
-  rareRoomP: 0.1
+  rareRoomP: 0
   keyNumber: 1
   maxWalkCycle: 23
   maxWalkers: 10
@@ -2523,7 +2534,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &980498187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2568,16 +2579,20 @@ MonoBehaviour:
   endPrefab: {fileID: 1065584224371892795, guid: 1d2a4354f9462634f9ab78bf41b8211b,
     type: 3}
   rooms:
-  - {fileID: 3401893008866082439, guid: 6aa812f9181264e4080693905e5c735b, type: 3}
-  - {fileID: 4686366989978804765, guid: 71fa1c70a58851341a69b50f97962bdd, type: 3}
-  - {fileID: 8228529718346148279, guid: dd6dcea442490af4ea15c52beb318fd7, type: 3}
-  - {fileID: 4524642346497952317, guid: 1061a5dd9dd891745a5f9c592886db14, type: 3}
-  - {fileID: 8596532929774249280, guid: d452d1c57cbd8d64691c324cf0723004, type: 3}
-  - {fileID: 1847664137750088318, guid: d3bda4c04162b1f46a012bb02023d013, type: 3}
-  maxRoomQ: 15
-  minRoomQ: 12
+  - {fileID: 4336716253289620013, guid: 2a8ffba84cf59f0439c18415b0389722, type: 3}
+  - {fileID: 4336716253289620013, guid: a1587982af1d9a04ca296e83a48597e5, type: 3}
+  - {fileID: 6853162008764293193, guid: 212bc1d274ed1904aad93b1eb1e1894f, type: 3}
+  - {fileID: 2046470616204943135, guid: 4e6d974edb3001b44b23624f97dbecf9, type: 3}
+  - {fileID: 8872327278582204605, guid: b3c64496f4ba0a94fabab7be7af67c8d, type: 3}
+  - {fileID: 5931054625878209206, guid: b358aaf05ad820e4b98c3c50196aefe2, type: 3}
+  - {fileID: 3826932417770784365, guid: 14466d41be967a540ac77d8696b3f605, type: 3}
+  - {fileID: 8162334881240217693, guid: f3c555eb824d2da438755e4b8e74a148, type: 3}
+  - {fileID: 34504956800726152, guid: 06dd43611e6b25a498455284bc83f2bc, type: 3}
+  - {fileID: 5222694042393211587, guid: 81edb56e3ec3f4944a1187030f19dde6, type: 3}
+  maxRoomQ: 12
+  minRoomQ: 10
   maxRareRoomQ: 2
-  rareRoomP: 0.1
+  rareRoomP: 0
   keyNumber: 3
   maxWalkCycle: 23
   maxWalkers: 10
@@ -2700,16 +2715,19 @@ MonoBehaviour:
   endPrefab: {fileID: 1065584224371892795, guid: 1d2a4354f9462634f9ab78bf41b8211b,
     type: 3}
   rooms:
-  - {fileID: 3401893008866082439, guid: 6aa812f9181264e4080693905e5c735b, type: 3}
-  - {fileID: 4686366989978804765, guid: 71fa1c70a58851341a69b50f97962bdd, type: 3}
-  - {fileID: 8228529718346148279, guid: dd6dcea442490af4ea15c52beb318fd7, type: 3}
-  - {fileID: 4524642346497952317, guid: 1061a5dd9dd891745a5f9c592886db14, type: 3}
-  - {fileID: 8596532929774249280, guid: d452d1c57cbd8d64691c324cf0723004, type: 3}
-  - {fileID: 1847664137750088318, guid: d3bda4c04162b1f46a012bb02023d013, type: 3}
-  maxRoomQ: 13
+  - {fileID: 5931054625878209206, guid: 61ab264fa6b2c2f45ba64c5cfe4e5469, type: 3}
+  - {fileID: 5931054625878209206, guid: bef160a36f28ca6499b8e9c710b0079a, type: 3}
+  - {fileID: 5931054625878209206, guid: 1ebb1ec073f73d144b3dda6e655f188e, type: 3}
+  - {fileID: 5931054625878209206, guid: ea350c38ea5744140995f975596bc25b, type: 3}
+  - {fileID: 4336716253289620013, guid: ea0cd758537071b4db19c41d15305674, type: 3}
+  - {fileID: 4336716253289620013, guid: 651d627c6572eae46af185df2719b6e0, type: 3}
+  - {fileID: 8872327278582204605, guid: 36263bd8aebc738448d3ece40aa44a7d, type: 3}
+  - {fileID: 5931054625878209206, guid: c60be72f4cbd71f43a7087b7c20d4d0b, type: 3}
+  - {fileID: 3826932417770784365, guid: f17dce858a5ffef47b7e9b4a35a3f30c, type: 3}
+  maxRoomQ: 10
   minRoomQ: 9
   maxRareRoomQ: 2
-  rareRoomP: 0.1
+  rareRoomP: 0
   keyNumber: 2
   maxWalkCycle: 23
   maxWalkers: 10
@@ -2855,7 +2873,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1353097542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2900,17 +2918,25 @@ MonoBehaviour:
   endPrefab: {fileID: 1065584224371892795, guid: 1d2a4354f9462634f9ab78bf41b8211b,
     type: 3}
   rooms:
-  - {fileID: 3401893008866082439, guid: 6aa812f9181264e4080693905e5c735b, type: 3}
-  - {fileID: 4686366989978804765, guid: 71fa1c70a58851341a69b50f97962bdd, type: 3}
-  - {fileID: 8228529718346148279, guid: dd6dcea442490af4ea15c52beb318fd7, type: 3}
-  - {fileID: 4524642346497952317, guid: 1061a5dd9dd891745a5f9c592886db14, type: 3}
-  - {fileID: 8596532929774249280, guid: d452d1c57cbd8d64691c324cf0723004, type: 3}
+  - {fileID: 8596532929774249280, guid: 16b4fb21b1defec459aaf8bdddcb6fe6, type: 3}
+  - {fileID: 8228529718346148279, guid: e3305ce0b2866bf4c808151fac1fc3f3, type: 3}
+  - {fileID: 5931054625878209206, guid: d3b115d3f4da84c4f908af4847ff3e5b, type: 3}
+  - {fileID: 5931054625878209206, guid: 5b675cc0d914012438269c4e6d10db44, type: 3}
+  - {fileID: 5931054625878209206, guid: 83467069390166441a8b1330919ece32, type: 3}
+  - {fileID: 5931054625878209206, guid: 8feecf30acb6cdb4194a21f7c64ab972, type: 3}
+  - {fileID: 5931054625878209206, guid: f60010cec8cb58c4cacf9ec072e7ee5e, type: 3}
+  - {fileID: 5931054625878209206, guid: e4fa9c1c055680441be7262a02ce4c55, type: 3}
   - {fileID: 1847664137750088318, guid: d3bda4c04162b1f46a012bb02023d013, type: 3}
+  - {fileID: 1847664137750088318, guid: 8f500cf0d739bd44f99a708d2e382af9, type: 3}
+  - {fileID: 8228529718346148279, guid: dd6dcea442490af4ea15c52beb318fd7, type: 3}
+  - {fileID: 3401893008866082439, guid: 6aa812f9181264e4080693905e5c735b, type: 3}
+  - {fileID: 34504956800726152, guid: b3db2aeb6f79d6b4eb5fcb47482a3636, type: 3}
+  - {fileID: 5222694042393211587, guid: d88e5d562583c7548b84e1270047b86f, type: 3}
   maxRoomQ: 15
   minRoomQ: 12
   maxRareRoomQ: 2
-  rareRoomP: 0.1
-  keyNumber: 3
+  rareRoomP: 0
+  keyNumber: 4
   maxWalkCycle: 23
   maxWalkers: 10
   currentWalkers: 0
@@ -2999,10 +3025,14 @@ MonoBehaviour:
   - {fileID: 2046470616204943135, guid: a2d15c9cded0c7d4f829fbf5249a613a, type: 3}
   - {fileID: 8162334881240217693, guid: 8351749cad42291419a0c7fc2238a6e3, type: 3}
   - {fileID: 34504956800726152, guid: 44dc2b98caf8a2e43854700605806cea, type: 3}
-  maxRoomQ: 8
+  - {fileID: 5222694042393211587, guid: 3fcb8feb2e2758e4db59fb78500489c6, type: 3}
+  - {fileID: 5222694042393211587, guid: 5b9c3200b1ac7b84485d62c7a5e0c9bd, type: 3}
+  - {fileID: 5222694042393211587, guid: 9add39ad46feb2c478862ac892a244f1, type: 3}
+  - {fileID: 5222694042393211587, guid: 47fb15e96646c744ba9829b8d13fbfb0, type: 3}
+  maxRoomQ: 7
   minRoomQ: 5
   maxRareRoomQ: 2
-  rareRoomP: 0.1
+  rareRoomP: 0
   keyNumber: 1
   maxWalkCycle: 23
   maxWalkers: 10
@@ -3094,21 +3124,19 @@ MonoBehaviour:
   endPrefab: {fileID: 1065584224371892795, guid: 843854470da86ba49b4ca6f4bd12bd86,
     type: 3}
   rooms:
-  - {fileID: 8131852432581775605, guid: fd72c3ed13c2b1548a4e8642edf5e788, type: 3}
-  - {fileID: 4336716253289620013, guid: a1587982af1d9a04ca296e83a48597e5, type: 3}
-  - {fileID: 5222694042393211587, guid: 81edb56e3ec3f4944a1187030f19dde6, type: 3}
-  - {fileID: 2046470616204943135, guid: 4e6d974edb3001b44b23624f97dbecf9, type: 3}
-  - {fileID: 6853162008764293193, guid: c1382f780cc624949820e5ed4f8513ed, type: 3}
-  - {fileID: 8872327278582204605, guid: b3c64496f4ba0a94fabab7be7af67c8d, type: 3}
-  - {fileID: 5931054625878209206, guid: b358aaf05ad820e4b98c3c50196aefe2, type: 3}
-  - {fileID: 3826932417770784365, guid: 14466d41be967a540ac77d8696b3f605, type: 3}
-  - {fileID: 8370531223476974004, guid: 7b35311e8b6cfb3438eb0b6f4a5ffbd3, type: 3}
-  - {fileID: 8162334881240217693, guid: f3c555eb824d2da438755e4b8e74a148, type: 3}
-  - {fileID: 34504956800726152, guid: 06dd43611e6b25a498455284bc83f2bc, type: 3}
-  maxRoomQ: 10
-  minRoomQ: 6
+  - {fileID: 5931054625878209206, guid: 61ab264fa6b2c2f45ba64c5cfe4e5469, type: 3}
+  - {fileID: 5931054625878209206, guid: bef160a36f28ca6499b8e9c710b0079a, type: 3}
+  - {fileID: 5931054625878209206, guid: 1ebb1ec073f73d144b3dda6e655f188e, type: 3}
+  - {fileID: 5931054625878209206, guid: ea350c38ea5744140995f975596bc25b, type: 3}
+  - {fileID: 4336716253289620013, guid: ea0cd758537071b4db19c41d15305674, type: 3}
+  - {fileID: 4336716253289620013, guid: 651d627c6572eae46af185df2719b6e0, type: 3}
+  - {fileID: 8872327278582204605, guid: 36263bd8aebc738448d3ece40aa44a7d, type: 3}
+  - {fileID: 5931054625878209206, guid: c60be72f4cbd71f43a7087b7c20d4d0b, type: 3}
+  - {fileID: 3826932417770784365, guid: f17dce858a5ffef47b7e9b4a35a3f30c, type: 3}
+  maxRoomQ: 8
+  minRoomQ: 7
   maxRareRoomQ: 2
-  rareRoomP: 0.1
+  rareRoomP: 0
   keyNumber: 2
   maxWalkCycle: 23
   maxWalkers: 10
@@ -3325,7 +3353,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1473383560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3370,16 +3398,24 @@ MonoBehaviour:
   endPrefab: {fileID: 1065584224371892795, guid: 1d2a4354f9462634f9ab78bf41b8211b,
     type: 3}
   rooms:
-  - {fileID: 3401893008866082439, guid: 6aa812f9181264e4080693905e5c735b, type: 3}
-  - {fileID: 4686366989978804765, guid: 71fa1c70a58851341a69b50f97962bdd, type: 3}
-  - {fileID: 8228529718346148279, guid: dd6dcea442490af4ea15c52beb318fd7, type: 3}
-  - {fileID: 4524642346497952317, guid: 1061a5dd9dd891745a5f9c592886db14, type: 3}
-  - {fileID: 8596532929774249280, guid: d452d1c57cbd8d64691c324cf0723004, type: 3}
+  - {fileID: 8596532929774249280, guid: 16b4fb21b1defec459aaf8bdddcb6fe6, type: 3}
+  - {fileID: 8228529718346148279, guid: e3305ce0b2866bf4c808151fac1fc3f3, type: 3}
+  - {fileID: 5931054625878209206, guid: d3b115d3f4da84c4f908af4847ff3e5b, type: 3}
+  - {fileID: 5931054625878209206, guid: 5b675cc0d914012438269c4e6d10db44, type: 3}
+  - {fileID: 5931054625878209206, guid: 83467069390166441a8b1330919ece32, type: 3}
+  - {fileID: 5931054625878209206, guid: 8feecf30acb6cdb4194a21f7c64ab972, type: 3}
+  - {fileID: 5931054625878209206, guid: f60010cec8cb58c4cacf9ec072e7ee5e, type: 3}
+  - {fileID: 5931054625878209206, guid: e4fa9c1c055680441be7262a02ce4c55, type: 3}
   - {fileID: 1847664137750088318, guid: d3bda4c04162b1f46a012bb02023d013, type: 3}
-  maxRoomQ: 15
-  minRoomQ: 12
+  - {fileID: 1847664137750088318, guid: 8f500cf0d739bd44f99a708d2e382af9, type: 3}
+  - {fileID: 8228529718346148279, guid: dd6dcea442490af4ea15c52beb318fd7, type: 3}
+  - {fileID: 3401893008866082439, guid: 6aa812f9181264e4080693905e5c735b, type: 3}
+  - {fileID: 34504956800726152, guid: b3db2aeb6f79d6b4eb5fcb47482a3636, type: 3}
+  - {fileID: 5222694042393211587, guid: d88e5d562583c7548b84e1270047b86f, type: 3}
+  maxRoomQ: 14
+  minRoomQ: 11
   maxRareRoomQ: 2
-  rareRoomP: 0.1
+  rareRoomP: 0
   keyNumber: 3
   maxWalkCycle: 23
   maxWalkers: 10
@@ -3593,17 +3629,21 @@ MonoBehaviour:
   endPrefab: {fileID: 1065584224371892795, guid: 1d2a4354f9462634f9ab78bf41b8211b,
     type: 3}
   rooms:
-  - {fileID: 3401893008866082439, guid: 6aa812f9181264e4080693905e5c735b, type: 3}
-  - {fileID: 4686366989978804765, guid: 71fa1c70a58851341a69b50f97962bdd, type: 3}
-  - {fileID: 8228529718346148279, guid: dd6dcea442490af4ea15c52beb318fd7, type: 3}
-  - {fileID: 4524642346497952317, guid: 1061a5dd9dd891745a5f9c592886db14, type: 3}
-  - {fileID: 8596532929774249280, guid: d452d1c57cbd8d64691c324cf0723004, type: 3}
-  - {fileID: 1847664137750088318, guid: d3bda4c04162b1f46a012bb02023d013, type: 3}
-  maxRoomQ: 15
-  minRoomQ: 12
+  - {fileID: 4336716253289620013, guid: 2a8ffba84cf59f0439c18415b0389722, type: 3}
+  - {fileID: 4336716253289620013, guid: a1587982af1d9a04ca296e83a48597e5, type: 3}
+  - {fileID: 6853162008764293193, guid: 212bc1d274ed1904aad93b1eb1e1894f, type: 3}
+  - {fileID: 2046470616204943135, guid: 4e6d974edb3001b44b23624f97dbecf9, type: 3}
+  - {fileID: 8872327278582204605, guid: b3c64496f4ba0a94fabab7be7af67c8d, type: 3}
+  - {fileID: 5931054625878209206, guid: b358aaf05ad820e4b98c3c50196aefe2, type: 3}
+  - {fileID: 8162334881240217693, guid: f3c555eb824d2da438755e4b8e74a148, type: 3}
+  - {fileID: 34504956800726152, guid: 06dd43611e6b25a498455284bc83f2bc, type: 3}
+  - {fileID: 5222694042393211587, guid: 81edb56e3ec3f4944a1187030f19dde6, type: 3}
+  - {fileID: 3826932417770784365, guid: 14466d41be967a540ac77d8696b3f605, type: 3}
+  maxRoomQ: 11
+  minRoomQ: 10
   maxRareRoomQ: 2
-  rareRoomP: 0.1
-  keyNumber: 3
+  rareRoomP: 0
+  keyNumber: 2
   maxWalkCycle: 23
   maxWalkers: 10
   currentWalkers: 0
@@ -3698,6 +3738,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1980991776 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4926324203707565148, guid: 94430578571ab4b49a2dde8b03d36f42,
+    type: 3}
+  m_PrefabInstance: {fileID: 4926324204828877914}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2013233446 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8492579328144042712, guid: 2a5ac7db45f020b43a8cab88f39cd27d,
@@ -4568,7 +4614,7 @@ PrefabInstance:
     - target: {fileID: 4926324203707565148, guid: 94430578571ab4b49a2dde8b03d36f42,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4926324203707565149, guid: 94430578571ab4b49a2dde8b03d36f42,
         type: 3}

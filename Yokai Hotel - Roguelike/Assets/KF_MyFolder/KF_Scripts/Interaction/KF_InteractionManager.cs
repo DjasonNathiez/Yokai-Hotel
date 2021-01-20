@@ -34,14 +34,14 @@ public class KF_InteractionManager : MonoBehaviour
     }
     private void Update()
     {
-        if ((levelM.levelChanged == true) || (levelM.hubReturn == true))
+        if (levelM.levelMoved == true)
         {
             interactionInLevel.Clear();
             foreach (GameObject interact in GameObject.FindGameObjectsWithTag("Interact"))
             {
                 interactionInLevel.Add(interact);
             }
-            levelM.levelChanged = false;
+            levelM.levelMoved = false;
         }
     }
 
