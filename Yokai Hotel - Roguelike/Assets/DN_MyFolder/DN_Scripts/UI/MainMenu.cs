@@ -7,13 +7,14 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public int sceneIndex;
+    public int transitionFade;
 
-    public Image black;
+    public GameObject splashscreen;
     public Animator fadeAnim;
 
     public void Play()
     {
-        StartCoroutine(Fading());
+        SceneManager.LoadScene(sceneIndex);
     }
 
     public void Quit()
@@ -21,10 +22,14 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    IEnumerator Fading()
+    public IEnumerator Fading()
     {
+        yield return new WaitForSeconds(transitionFade);
         fadeAnim.SetBool("Fade", true);
-        yield return new WaitUntil(() => black.color.a == 1);
-        SceneManager.LoadScene(sceneIndex);
+    }
+
+    public void DestroyThis()
+    {
+        GameObject.Destroy(splashscreen);
     }
 }
