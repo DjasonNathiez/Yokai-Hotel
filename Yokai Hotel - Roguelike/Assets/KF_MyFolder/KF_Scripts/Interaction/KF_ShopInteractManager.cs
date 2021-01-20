@@ -102,10 +102,10 @@ public class KF_ShopInteractManager : MonoBehaviour
     {
         dialogueAnim.SetBool("isOpen", false);
         shopDialogueElements.SetActive(false);
-        normalDialogueElements.SetActive(true);
         nameText.text = "";
         descText.text = "";
         priceText.text = "";
+        StartCoroutine(NormalDialogueAppear());
     }
 
     private IEnumerator TypeName(string nameString)
@@ -134,5 +134,11 @@ public class KF_ShopInteractManager : MonoBehaviour
             priceText.text += letter;
             yield return new WaitForSeconds(textSpeed);
         }
+    }
+
+    private IEnumerator NormalDialogueAppear()
+    {
+        yield return new WaitForSeconds(1f);
+        normalDialogueElements.SetActive(true);
     }
 }
