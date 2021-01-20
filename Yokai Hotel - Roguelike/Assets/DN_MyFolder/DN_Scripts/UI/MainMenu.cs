@@ -8,9 +8,20 @@ public class MainMenu : MonoBehaviour
 {
     public int sceneIndex;
     public int transitionFade;
+    bool titleIsUp;
 
     public GameObject splashscreen;
+    public GameObject paperPlease;
+    public GameObject titleYoo;
     public Animator fadeAnim;
+
+    private void Update()
+    {
+        if(Input.anyKeyDown && titleIsUp == true)
+        {
+            fadeAnim.SetBool("MenuAppear", true);
+        }
+    }
 
     public void Play()
     {
@@ -26,6 +37,22 @@ public class MainMenu : MonoBehaviour
     {
         yield return new WaitForSeconds(transitionFade);
         fadeAnim.SetBool("Fade", true);
+    }
+
+    public void TitleAppearNow()
+    {
+        titleIsUp = true;
+        fadeAnim.SetBool("TitleAppear", true);
+    }
+
+    public void TitleWaiting()
+    {
+        fadeAnim.SetBool("TitleWaiting", true);
+    }
+
+    public void GoToIdleNow()
+    {
+        fadeAnim.SetBool("GoToIdle", true);
     }
 
     public void DestroyThis()
