@@ -14,24 +14,30 @@ public class MenuManager : MonoBehaviour
     public GameObject pauseMenu;
     public Canvas HUD;
 
+    public GameObject enchantInformation;
+    public bool isOpen;
+
     PlayerController playerController;
 
     private void Awake()
     {
+        enchantInformation = GameObject.FindGameObjectWithTag("EnchantInfo");
 
         GameObject hud = GameObject.FindGameObjectWithTag("HUD");
-        if(hud)
+        if (hud)
             HUD = hud.GetComponent<Canvas>();
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if(player)
+        if (player)
             playerController = player.GetComponent<PlayerController>();
-        
-        
+
+
     }
     public void Start()
     {
         paused = false;
+        isOpen = false;
+        enchantInformation.SetActive(false);
     }
     public void Update()
     {
@@ -39,16 +45,29 @@ public class MenuManager : MonoBehaviour
         {
             Pause();
         }
-
         else if (Input.GetButtonDown("Cancel") && paused == true)
         {
             Resume();
         }
 
+
+        if (Input.GetButtonDown("Information") && isOpen == false)
+        {
+
+            enchantInformation.SetActive(true);
+            isOpen = true;
+        }
+        else if (Input.GetButtonDown("Information") && isOpen == true)
+        {
+            enchantInformation.SetActive(false);
+            isOpen = false;
+        }
+
+
         if (pauseMenu)
         {
-          
-            if(HUD && paused == true)
+
+            if (HUD && paused == true)
             {
                 HUD.enabled = false;
             }
@@ -77,7 +96,7 @@ public class MenuManager : MonoBehaviour
 
     public void Pause()
     {
-        
+
         pauseMenu.SetActive(true);
         paused = true;
 
@@ -86,7 +105,7 @@ public class MenuManager : MonoBehaviour
             playerController.enabled = false;
             Time.timeScale = 0;
         }
-        
+
     }
 
     public void Resume()
