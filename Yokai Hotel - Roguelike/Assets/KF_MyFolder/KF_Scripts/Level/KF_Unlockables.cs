@@ -37,6 +37,7 @@ public class KF_Unlockables : MonoBehaviour
     public bool keyboard;
     public bool firstTime;
     public bool deleteSave;
+    public bool createSave;
 
 
 
@@ -107,9 +108,15 @@ public class KF_Unlockables : MonoBehaviour
 
     void Update()
     {
+        if (createSave == true)
+        {
+            SaveSystem.SaveProgress(this);
+            createSave = false;
+        }
         if (deleteSave == true)
         {
             SaveSystem.DeleteSave();
+            deleteSave = false;
         }
 
         hubReturn = lvlM.hubReturn;
