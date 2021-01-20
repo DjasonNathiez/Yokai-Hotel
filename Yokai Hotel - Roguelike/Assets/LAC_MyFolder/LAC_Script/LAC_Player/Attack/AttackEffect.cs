@@ -296,6 +296,12 @@ public class AttackEffect : MonoBehaviour
             audioM.PlaySound("Player heavy attack", 0);
     }
 
+    public void DeathSound()
+    {
+        if (audioM)
+            audioM.PlaySound("Player death", 0);
+    }
+
     // VFX
     public void PlayVFX(GameObject target, int attackType)
     {

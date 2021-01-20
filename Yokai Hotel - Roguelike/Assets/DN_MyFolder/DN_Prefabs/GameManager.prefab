@@ -446,7 +446,7 @@ MonoBehaviour:
     source: {fileID: 0}
     mixerGroup: {fileID: 0}
   - name: Main Theme
-    clip: {fileID: 8300000, guid: 98a2f2c425f18c54fbd5722cba4a14a4, type: 3}
+    clip: {fileID: 8300000, guid: af5f7f0a17d79c3478cbe57a54d71caf, type: 3}
     volume: 1
     pitch: 1
     loop: 1
@@ -454,17 +454,17 @@ MonoBehaviour:
     mixerGroup: {fileID: 6536977825649066790, guid: f97986808365c1746a71c43656b144bf,
       type: 2}
   - name: OST 1
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+    clip: {fileID: 8300000, guid: 98a2f2c425f18c54fbd5722cba4a14a4, type: 3}
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 6536977825649066790, guid: f97986808365c1746a71c43656b144bf,
       type: 2}
   - name: OST 2
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+    clip: {fileID: 8300000, guid: 33bfca38cb499ed41af1949820cdb8a6, type: 3}
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 6536977825649066790, guid: f97986808365c1746a71c43656b144bf,
@@ -479,8 +479,8 @@ MonoBehaviour:
       type: 2}
   - name: Boss Theme
     clip: {fileID: 8300000, guid: 8754f331f9f960c4c85261e42f50c614, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 6536977825649066790, guid: f97986808365c1746a71c43656b144bf,
@@ -522,6 +522,10 @@ MonoBehaviour:
   - Boss Theme
   - Game Over Theme
   musicChose: Main Theme
+  hubIndex: 0
+  smoothLevelIndex: 1
+  darkLevelIndex: 4
+  bossIndex: 9
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -582,6 +586,14 @@ PrefabInstance:
       propertyPath: enchantEffectIMG
       value: 
       objectReference: {fileID: 7354823212059188793}
+    - target: {fileID: 1346930699, guid: ed57b1b53cdab15419efb4fedf18d11a, type: 3}
+      propertyPath: oscilMag
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1346930699, guid: ed57b1b53cdab15419efb4fedf18d11a, type: 3}
+      propertyPath: oscilFreq
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2000986198, guid: ed57b1b53cdab15419efb4fedf18d11a, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 45.09961

@@ -80,7 +80,13 @@ public class AnimatorLantern : MonoBehaviour
 
     public void LanternAttackSound()
     {
-        audioM.PlaySound("Ennemy lantern attack", 0);
+        if (audioM)
+            audioM.PlaySound("Ennemy lantern attack", 0);
+    }
+    public void LanternEnnemyDeath()
+    {
+        if (audioM)
+            audioM.PlaySound("Ennemy lantern death", 0);
     }
 
     public void Death()
