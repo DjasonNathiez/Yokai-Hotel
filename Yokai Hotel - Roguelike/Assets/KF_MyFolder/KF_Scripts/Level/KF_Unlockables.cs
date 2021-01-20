@@ -47,15 +47,34 @@ public class KF_Unlockables : MonoBehaviour
         lvlM = FindObjectOfType<KF_LevelManager>();
 
         if (SaveSystem.SaveExist() == true)
-            firstTime = SaveSystem.LoadProgress().firstTime;
-        if (firstTime == true)
+        {
+            Debug.Log("LoadSave");
+            firstTime = false;
+            ProgressData data = SaveSystem.LoadProgress();
+            maxLevelReached = data.maxLevelReached;
+            unlock2 = data.unlock2;
+            unlock4 = data.unlock4;
+            unlock6 = data.unlock6;
+            unlock8 = data.unlock8;
+            unlockBoss = data.unlockBoss;
+            hubReturn = data.hubReturn;
+            firstTime = data.firstTime;
+
+            lvlM.hubReturn = data.hubReturn;
+            for (int i = 0; i < data.unlocked.Count; i++)
+                unlocked.Add(data.unlocked[i]);
+
+            KeepUnlocks();
+        }
+            //SaveSystem.LoadProgress().firstTime;
+        /*if (firstTime == true)
         {
             SaveSystem.SaveProgress(this);
             SaveSystem.DeleteSave();
             Debug.Log("DeletedSave");
 
             
-        }
+        }*/
 
         if (SaveSystem.SaveExist() == false)// detect first time      
         {
@@ -73,24 +92,6 @@ public class KF_Unlockables : MonoBehaviour
                 go.SetActive(false);
             foreach (GameObject go in bossUnlock)
                 go.SetActive(false);
-        }
-        else
-        {
-            ProgressData data = SaveSystem.LoadProgress();
-            maxLevelReached = data.maxLevelReached;
-            unlock2 = data.unlock2;
-            unlock4 = data.unlock4;
-            unlock6 = data.unlock6;
-            unlock8 = data.unlock8;
-            unlockBoss = data.unlockBoss;
-            hubReturn = data.hubReturn;
-            firstTime = data.firstTime;
-
-            lvlM.hubReturn = data.hubReturn;
-            for (int i = 0; i < data.unlocked.Count; i++)
-                unlocked.Add(data.unlocked[i]);
-
-            KeepUnlocks();
         }
 
 
