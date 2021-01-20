@@ -10,6 +10,7 @@ public class InterfaceManager : MonoBehaviour
 {
     InventoryManager inventory;
     PlayerController player;
+    AudioManager audioM;
     public ProceduralGenerator kActive;
     public KF_LevelManager levelM;
     public Slider fillSlider;
@@ -53,6 +54,10 @@ public class InterfaceManager : MonoBehaviour
     GameObject enchantIMG;
     EnchantManager enchantM;
 
+    public GameObject enchantI;
+    TextMeshProUGUI[] information;
+    RawImage[] informationIcon;
+
     private void Awake()
     {
         randomOscil = Random.value - 0.5f;
@@ -61,17 +66,18 @@ public class InterfaceManager : MonoBehaviour
     private void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        audioM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
 
         keysObj = GameObject.FindGameObjectWithTag("Keys");
         enchantIMG = GameObject.FindGameObjectWithTag("EnchantIMG");
 
         if (playerObj)
-            inventory = playerObj.GetComponent<InventoryManager>(); //initialization du script InventoryManager
+        inventory = playerObj.GetComponent<InventoryManager>(); //initialization du script InventoryManager
 
         moneyText = GameObject.FindGameObjectWithTag("MoneyText").GetComponent<TextMeshProUGUI>();
 
         if (playerObj)
-            player = playerObj.GetComponent<PlayerController>();
+        player = playerObj.GetComponent<PlayerController>();
 
         enchantM = playerObj.GetComponentInChildren<EnchantManager>();
 
@@ -80,10 +86,12 @@ public class InterfaceManager : MonoBehaviour
 
         lightIMG = lightHP.GetComponentsInChildren<RawImage>();
 
+        //enchant
         enchantEffect = enchantEffectIMG.GetComponentsInChildren<Image>();
+        information = enchantI.GetComponentsInChildren<TextMeshProUGUI>();
+        informationIcon = enchantI.GetComponentsInChildren<RawImage>();
 
         //initialization HealthBar
-
 
         for (int i = 0; i < enchantM.enchants.Count; i++)
         {
@@ -207,7 +215,6 @@ public class InterfaceManager : MonoBehaviour
 
             if (enchantM.enchants[i].enchantEffects[0].active == true)
             {
-
                 enchantEffect[i].enabled = true;
 
             }
@@ -225,6 +232,14 @@ public class InterfaceManager : MonoBehaviour
             {
                 enchantList[i].color = Color.white;
             }
+
+            //visual menu information
+            information[i].enabled = true;
+            informationIcon[i].enabled = true;
+
+            information[i].text = enchantM.enchants[i].GenerateDescription();
+            informationIcon[i].texture = enchantM.enchants[i].icon.texture;
+            
         }
     }
 
