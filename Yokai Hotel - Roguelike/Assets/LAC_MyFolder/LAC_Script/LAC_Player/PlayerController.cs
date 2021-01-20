@@ -174,9 +174,7 @@ public class PlayerController : MonoBehaviour
         //attackChoose = 1;
 
         #endregion
-        // debug
-        if (Input.GetKeyDown(KeyCode.K))
-            ChangeHealth(-health);
+
         // take damage
         if (hurtDamage != 0)
         {
