@@ -316,8 +316,6 @@ public class KF_Unlockables : MonoBehaviour
         SaveSystem.SaveProgress(this);
         SaveSystem.DeleteSave();
         deleteSave = false;
-        int restartIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(restartIndex);
     }
 
 }
