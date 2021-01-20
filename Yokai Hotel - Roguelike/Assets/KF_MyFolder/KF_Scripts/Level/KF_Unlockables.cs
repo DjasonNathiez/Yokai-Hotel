@@ -49,6 +49,7 @@ public class KF_Unlockables : MonoBehaviour
             firstTime = SaveSystem.LoadProgress().firstTime;
         if (firstTime == true)
         {
+            SaveSystem.SaveProgress(this);
             SaveSystem.DeleteSave();
             Debug.Log("DeletedSave");
 
