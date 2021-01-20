@@ -15,7 +15,9 @@ public class AnimatorSlime : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audioM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
+        GameObject audioManager = GameObject.FindGameObjectWithTag("GameManager");
+            if(audioManager)
+                audioM = audioManager.GetComponent<AudioManager>();
         animator = GetComponent<Animator>();
         ennemi = GetComponentInParent<EnnemiSlime>();
 
@@ -72,15 +74,15 @@ public class AnimatorSlime : MonoBehaviour
         ennemi.Death();
     }
 
-    public void DistanceEnnemyAttack()
-    {
-        if (audioM)
-            audioM.PlaySound("Distance ennemy attack", 0);
+    public void DistanceEnnemyAttack()
+    {
+        if (audioM)
+            audioM.PlaySound("Distance ennemy attack", 0);
     }
 
-    public void DistanceEnnemyDeath()
-    {
-        if(audioM)
-        audioM.PlaySound("Distance ennemy death", 0);
+    public void DistanceEnnemyDeath()
+    {
+        if(audioM)
+        audioM.PlaySound("Distance ennemy death", 0);
     }
 }

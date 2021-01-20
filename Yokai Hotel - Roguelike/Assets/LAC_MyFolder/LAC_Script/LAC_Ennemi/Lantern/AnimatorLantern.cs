@@ -15,7 +15,9 @@ public class AnimatorLantern : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audioM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
+        GameObject audioManager = GameObject.FindGameObjectWithTag("GameManager");
+        if(audioManager)
+            audioM = audioManager.GetComponent<AudioManager>();
         animator = GetComponent<Animator>();
         ennemi = GetComponentInParent<EnnemiLantern>();
 
@@ -92,5 +94,10 @@ public class AnimatorLantern : MonoBehaviour
     public void Death()
     {
         ennemi.Death();
+    }
+
+    public void DeathVFX()
+    {
+        ennemi.DeathVFXorigin();
     }
 }

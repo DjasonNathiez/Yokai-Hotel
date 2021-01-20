@@ -18,6 +18,7 @@ public class MenuManager : MonoBehaviour
     public bool isOpen;
 
     PlayerController playerController;
+    public AudioManager audioM;
 
     private void Awake()
     {
@@ -32,6 +33,7 @@ public class MenuManager : MonoBehaviour
             playerController = player.GetComponent<PlayerController>();
 
 
+
     }
     public void Start()
     {
@@ -44,10 +46,17 @@ public class MenuManager : MonoBehaviour
         if (Input.GetButtonDown("Cancel") && paused == false)
         {
             Pause();
+
+            if (audioM)
+                audioM.PlaySound("UI open menu", 0);
+
         }
         else if (Input.GetButtonDown("Cancel") && paused == true)
         {
             Resume();
+
+            if (audioM)
+                audioM.PlaySound("UI close menu", 0);
         }
 
 
@@ -56,11 +65,17 @@ public class MenuManager : MonoBehaviour
 
             enchantInformation.SetActive(true);
             isOpen = true;
+
+            if (audioM)
+                audioM.PlaySound("UI open menu", 0);
         }
         else if (Input.GetButtonDown("Information") && isOpen == true)
         {
             enchantInformation.SetActive(false);
             isOpen = false;
+
+            if (audioM)
+                audioM.PlaySound("UI close menu", 0);
         }
 
 
@@ -120,4 +135,21 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public void ClickSound()
+    {
+        if(audioM)
+        audioM.PlaySound("UI click button", 0);
+    }
+
+    public void OpenSound()
+    {
+        if (audioM)
+            audioM.PlaySound("UI open menu", 0);
+    }
+
+    public void CloseSound()
+    {
+        if (audioM)
+            audioM.PlaySound("UI close menu", 0);
+    }
 }

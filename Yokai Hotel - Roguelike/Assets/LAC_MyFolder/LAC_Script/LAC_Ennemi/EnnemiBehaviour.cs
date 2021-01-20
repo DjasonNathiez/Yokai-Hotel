@@ -32,6 +32,7 @@ public class EnnemiBehaviour : MonoBehaviour
     bool deathTrigger;
     [HideInInspector]
     public bool hurt;
+    public BoxCollider2D hurtBox;
     #endregion
     #region recoil
     [Header("recoil")]
@@ -152,15 +153,21 @@ public class EnnemiBehaviour : MonoBehaviour
             spriteT.color = Color.white;
         }
       
-        if (healthPoints <= 0 && !deathTrigger)
+        if (healthPoints <= 0)
         {
-            drop.SortItemPos(transform, transform.position, drop.dropRadius, obstructMask);
-            Debug.Log("DropItem");
- 
+            if (!deathTrigger)
+            {
+                drop.SortItemPos(transform, transform.position, drop.dropRadius, obstructMask);
+                Debug.Log("DropItem");
+
+                deathTrigger = true;
+            }
+            if (hurtBox != null)
+                hurtBox.enabled = false;
+            
             ennemyState = EnnemyState.DIE;
-            deathTrigger = true;
+            
             //healthPoints = 3;
-           
         }
     }
     private void FixedUpdate()
@@ -189,14 +196,17 @@ public class EnnemiBehaviour : MonoBehaviour
 
     public void Death()
     {
-        if(deathParticule != null)
+
+        Destroy(gameObject);
+    }
+
+    public void DeathVFXorigin()
+    {
+        if (deathParticule != null)
         {
             GameObject particule = Instantiate(deathParticule, transform.position, transform.rotation);
             Destroy(particule, 5);
         }
-        
-        Destroy(gameObject);
     }
 
-   
 }
