@@ -6,7 +6,7 @@ public class BossBehaviour : EnnemiBehaviour
 {
     public enum BossState {FREE,ATTACK,DASH,SHOOT};
     public BossState bossState = BossState.SHOOT;
-    public BoxCollider2D hurtBox;
+    //public BoxCollider2D hurtBox;
 
     [Header("Movement")]
     public Vector2 orient = new Vector2(1, 0);

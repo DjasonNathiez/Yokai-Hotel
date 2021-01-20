@@ -80,4 +80,9 @@ public class AnimatorLantern : MonoBehaviour
     {
         ennemi.Death();
     }
+
+    public void DeathVFX()
+    {
+        ennemi.DeathVFXorigin();
+    }
 }

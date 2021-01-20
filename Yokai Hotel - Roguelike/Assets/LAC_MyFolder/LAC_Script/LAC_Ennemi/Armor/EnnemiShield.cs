@@ -15,7 +15,9 @@ public class EnnemiShield : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        float angle = Mathf.Atan2(shieldDir.y, shieldDir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+
         if (shieldPoint <= 0)
             Destroy(gameObject);
     }

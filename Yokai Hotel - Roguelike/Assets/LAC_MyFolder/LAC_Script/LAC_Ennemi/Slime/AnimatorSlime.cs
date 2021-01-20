@@ -69,4 +69,9 @@ public class AnimatorSlime : MonoBehaviour
     {
         ennemi.Death();
     }
+
+    public void DeathVFX()
+    {
+        ennemi.DeathVFXorigin();
+    }
 }
