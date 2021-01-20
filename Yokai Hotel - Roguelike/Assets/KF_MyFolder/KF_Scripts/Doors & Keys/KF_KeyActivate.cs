@@ -82,4 +82,11 @@ public class KF_KeyActivate : MonoBehaviour
         if(audioM)
         audioM.PlaySound("Keys", 0);
     }
+
+    public void OpenChest()
+    {
+        if (audioM)
+            audioM.PlaySound("Chest", 0);
+    }
+        
 }

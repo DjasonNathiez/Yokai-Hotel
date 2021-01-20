@@ -234,9 +234,12 @@ public class InterfaceManager : MonoBehaviour
             }
 
             //visual menu information
+            information[i].enabled = true;
+            informationIcon[i].enabled = true;
 
             information[i].text = enchantM.enchants[i].GenerateDescription();
             informationIcon[i].texture = enchantM.enchants[i].icon.texture;
+            
         }
     }
 
