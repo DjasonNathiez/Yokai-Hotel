@@ -82,4 +82,9 @@ public class AnimatorLantern : MonoBehaviour
     {
         audioM.PlaySound("Ennemy lantern attack", 0);
     }
+
+    public void Death()
+    {
+        ennemi.Death();
+    }
 }
