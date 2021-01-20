@@ -209,9 +209,11 @@ public class InterfaceManager : MonoBehaviour
 
             if (enchantM.enchants[i].enchantEffects[0].active == true)
             {
-
                 enchantEffect[i].enabled = true;
+
                 audioM.PlaySound("Active Enchant", 0);
+                    
+
 
             }
             else
