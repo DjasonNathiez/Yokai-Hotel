@@ -26,8 +26,9 @@ public class EnnemiBehaviour : MonoBehaviour
     [Header("health")]
     public float healthPoints;
     public float healthDamage = 0;
-
-    
+    public ParticleSystem hurtParticule;
+    public GameObject deathParticule;
+    bool deathTrigger;
     [HideInInspector]
     public bool hurt;
     #endregion
@@ -82,6 +83,10 @@ public class EnnemiBehaviour : MonoBehaviour
 
         target = GameObject.FindGameObjectWithTag("Player");
         player = target.GetComponent<PlayerController>();
+
+        if (hurtParticule == null)
+            hurtParticule = GetComponentInChildren<ParticleSystem>();
+
     }
 
     // Update is called once per frame
@@ -108,6 +113,9 @@ public class EnnemiBehaviour : MonoBehaviour
 
             velocity = repulseForce;
             repulseForce = Vector2.zero;
+
+            if (hurtParticule != null)
+                hurtParticule.Play();
         }
 
 
@@ -131,7 +139,7 @@ public class EnnemiBehaviour : MonoBehaviour
                     }
 
                     // show hurt
-                    Color col = Color.red;
+                    Color col = Color.white;
                     col.a = Mathf.Sin(Time.time * 30) * 255;
                     spriteT.color = col;
 
@@ -144,12 +152,15 @@ public class EnnemiBehaviour : MonoBehaviour
             spriteT.color = Color.white;
         }
       
-        if (healthPoints <= 0)
+        if (healthPoints <= 0 && !deathTrigger)
         {
             drop.SortItemPos(transform, transform.position, drop.dropRadius, obstructMask);
             Debug.Log("DropItem");
+ 
+            ennemyState = EnnemyState.DIE;
+            deathTrigger = true;
             //healthPoints = 3;
-            Destroy(gameObject);
+           
         }
     }
     private void FixedUpdate()
@@ -174,6 +185,17 @@ public class EnnemiBehaviour : MonoBehaviour
         yield return new WaitForSeconds(delay);
         stunTime = 0;
         ennemyState = EnnemyState.IDLE;
+    }
+
+    public void Death()
+    {
+        if(deathParticule != null)
+        {
+            GameObject particule = Instantiate(deathParticule, transform.position, transform.rotation);
+            Destroy(particule, 5);
+        }
+        
+        Destroy(gameObject);
     }
 
    

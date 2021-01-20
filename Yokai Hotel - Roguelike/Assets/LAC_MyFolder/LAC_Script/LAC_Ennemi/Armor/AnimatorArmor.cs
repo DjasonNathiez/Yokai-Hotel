@@ -60,4 +60,9 @@ public class AnimatorArmor : MonoBehaviour
         animator.SetFloat("Horizontal", (vertical) ? 0 : Mathf.Sign(velocity.x));
     }
 
+    public void Death()
+    {
+        ennemi.Death();
+    }
+
 }
