@@ -306,16 +306,23 @@ public class AttackEffect : MonoBehaviour
         Vector2 dir = (target.transform.position - transform.position);
         RaycastHit2D hit = Physics2D.Raycast(player.transform.position, dir.normalized, dir.magnitude, detectMask);
         Vector2 pos = (Vector2)transform.position + dir.normalized * ((hit) ? hit.distance : dir.magnitude);
-        particule.transform.position = pos;
+        
 
         // play particule
         bool vertical = (Mathf.Abs(dir.y) > Mathf.Abs(dir.x));
         float particuleRotation = (vertical ? 1.5f : 0) + Random.Range(-0.5f,0.5f) ;
 
-        var main = particule.main;
-        main.startRotation = particuleRotation;
+        if(particule != null)
+        {
+            var main = particule.main;
+
+            main.startRotation = particuleRotation;
+            particule.transform.position = pos;
+            particule.Play();
+        }
+        
         //smallImpact.startRotation = 
-        particule.Play();
+        
         Debug.Log("Yay VFX won't work : " + particuleRotation);
     }
 }
