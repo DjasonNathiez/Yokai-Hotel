@@ -290,11 +290,13 @@ public class AttackEffect : MonoBehaviour
 
     public void LightAttackSound()
     {
-        audioM.PlaySound("Player fast attack", 0);
+        if(audioM)
+            audioM.PlaySound("Player fast attack", 0);
     }
 
     public void HeavyAttackSound()
     {
-        audioM.PlaySound("Player heavy attack", 0);
+        if (audioM)
+            audioM.PlaySound("Player heavy attack", 0);
     }
 }
