@@ -6,6 +6,7 @@ public class AnimatorLantern : MonoBehaviour
 {
     EnnemiLantern ennemi;
     public Animator animator;
+    AudioManager audioM;
 
     public enum AnimatorState { IDLE, AGGRO, ATTACK, WAIT, HURT, DIE }
     public AnimatorState animatorState;
@@ -14,6 +15,7 @@ public class AnimatorLantern : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
         animator = GetComponent<Animator>();
         ennemi = GetComponentInParent<EnnemiLantern>();
 
@@ -74,5 +76,10 @@ public class AnimatorLantern : MonoBehaviour
         if(ennemi.targetDist > ennemi.maxCacRadius)
             ennemi.ennemyState = EnnemiBehaviour.EnnemyState.IDLE;
         ennemi.aFrqcTimer = 0;
+    }
+
+    public void LanternAttackSound()
+    {
+        audioM.PlaySound("Ennemy lantern attack", 0);
     }
 }
