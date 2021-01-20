@@ -35,7 +35,7 @@ public class KF_TutorialUnlock : MonoBehaviour
         }
         if (inRange == true)
         {
-            if ((keycount >= 1) && (Input.GetButtonDown("Interact")))
+            if (((keycount >= 1) && (Input.GetButtonDown("Interact"))) && (bActif == true))
             {
                 keycount = keycount - 1;
                 Debug.Log("Key Removed");

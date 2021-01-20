@@ -49,6 +49,7 @@ public class KF_Unlockables : MonoBehaviour
             firstTime = SaveSystem.LoadProgress().firstTime;
         if (firstTime == true)
         {
+            SaveSystem.SaveProgress(this);
             SaveSystem.DeleteSave();
             Debug.Log("DeletedSave");
 
@@ -58,6 +59,7 @@ public class KF_Unlockables : MonoBehaviour
         if (SaveSystem.SaveExist() == false)// detect first time      
         {
             SaveSystem.SaveProgress(this);
+            SaveSystem.DeleteSave();
             Debug.Log("NewSave");
 
             foreach (GameObject go in level2Unlock)

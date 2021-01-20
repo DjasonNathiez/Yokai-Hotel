@@ -44,7 +44,7 @@ public class KF_KeyActivate : MonoBehaviour
         if (inRange == true)
         {
 
-            if (Input.GetButtonDown("Interact"))
+            if ((Input.GetButtonDown("Interact")) && (bActif == true))
             {
                 inventoryM.keys++;
                 Debug.Log("Key Added");
