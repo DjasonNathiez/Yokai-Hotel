@@ -180,7 +180,7 @@ public class InterfaceManager : MonoBehaviour
                 keysImage[inventory.keys - 1].texture = keysUp;
 
                 float oscill = Mathf.Sin(Time.time * oscilFreq + randomOscil) * oscilMag;
-                keysImage[inventory.keys - 1].transform.position += Vector3.up * oscill * Time.deltaTime;
+                keysImage[i].transform.position += Vector3.up * oscill * Time.deltaTime;
 
             }
             else

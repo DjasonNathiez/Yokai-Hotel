@@ -5,9 +5,15 @@ using UnityEngine;
 public class MusicZone : MonoBehaviour
 {
     [SerializeField]
-    string[] musicAllow = { "MainTheme", "Theme1.0", "Theme2.0", "Theme4.0" };
+    string[] musicAllow;
     public string musicChose;
 
+    public int hubIndex;
+    public int smoothLevelIndex;
+    public int darkLevelIndex;
+    public int bossIndex;
+
+    KF_LevelManager levelM;
     Collider2D collider;
     AudioManager audioM;
     public LayerMask layerMask;
@@ -17,11 +23,15 @@ public class MusicZone : MonoBehaviour
     {
         collider = GetComponent<Collider2D>();
         audioM = GetComponent<AudioManager>();
+
+        levelM = GameObject.FindGameObjectWithTag("HotelManager").GetComponent<KF_LevelManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        ChangeRoomMusic();
+
         if (Physics2D.OverlapArea(collider.bounds.min, collider.bounds.max, layerMask) && !trigger && !audioM.IsPlayingSound(musicChose))
         {
             // set current music volume
@@ -56,5 +66,28 @@ public class MusicZone : MonoBehaviour
             i++;
         }
         
+    }
+
+    void ChangeRoomMusic()
+    {
+        if(levelM.levelCount == hubIndex)
+        {
+            musicChose = "Main Theme";
+        }
+
+        if (levelM.levelCount == smoothLevelIndex)
+        {
+            musicChose = "OST 1";
+        }
+
+        if (levelM.levelCount == darkLevelIndex)
+        {
+            musicChose = "OST 2";
+        }
+
+        if (levelM.levelCount == bossIndex)
+        {
+            musicChose = "Boss Theme";
+        }
     }
 }
