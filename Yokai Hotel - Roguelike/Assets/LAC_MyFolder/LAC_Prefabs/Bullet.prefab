@@ -95,7 +95,7 @@ Transform:
   m_GameObject: {fileID: 5645751210512927994}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.1}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 1, y: 0.8, z: 1}
   m_Children: []
   m_Father: {fileID: 9174963586662408214}
   m_RootOrder: 0
@@ -160,8 +160,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9174963586662408214}
   - component: {fileID: 5560342672457337093}
-  - component: {fileID: 7665777743062976565}
   - component: {fileID: 1808693446805351196}
+  - component: {fileID: 3229282901170215005}
   m_Layer: 12
   m_Name: Bullet
   m_TagString: BulletEnemy
@@ -206,22 +206,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!58 &7665777743062976565
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9174963586662408213}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.2
 --- !u!114 &1808693446805351196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,4 +227,30 @@ MonoBehaviour:
   blockMask:
     serializedVersion: 2
     m_Bits: 512
-  hitBox: {fileID: 0}
+  visual: {fileID: 5645751210512927994}
+--- !u!61 &3229282901170215005
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9174963586662408213}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.02683726, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.22172248, y: 1}
+  m_EdgeRadius: 0

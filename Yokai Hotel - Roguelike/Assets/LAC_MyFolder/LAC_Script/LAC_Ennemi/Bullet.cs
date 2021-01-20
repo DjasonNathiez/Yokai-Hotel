@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(Collider2D))]
 public class Bullet : MonoBehaviour
 {
 
@@ -18,9 +18,11 @@ public class Bullet : MonoBehaviour
     public Rigidbody2D rb2D;
     public LayerMask blockMask;
 
-    public Collider2D hitBox;
+    //public Collider2D hitBox;
     CircleCollider2D cC2D;
     PlayerController player;
+
+    public GameObject visual;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +49,11 @@ public class Bullet : MonoBehaviour
 
         #endregion
 
+        if (visual)
+        {
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle + 90);
+        }
     }
 
     private void FixedUpdate()
@@ -94,7 +101,7 @@ public class Bullet : MonoBehaviour
             }
         }
 
-        Collider2D hit = Physics2D.OverlapCircle(transform.position, cC2D.radius, blockMask);
+        Collider2D hit = Physics2D.OverlapCircle(transform.position, 0.2f, blockMask);
         if (hit)
             GameObject.Destroy(gameObject);
     }
