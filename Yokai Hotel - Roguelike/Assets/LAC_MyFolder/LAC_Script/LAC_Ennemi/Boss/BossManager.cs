@@ -23,7 +23,7 @@ public class BossManager : MonoBehaviour
 
     bool start;
     public bool end;
-    bool triggerEnd;
+    bool triggerEndAnim;
 
     [Header("Pattern Offset")]
     public Vector2 attackOffset;
@@ -41,6 +41,9 @@ public class BossManager : MonoBehaviour
 
     [Header("CutScene")]
     public Animator animator;
+    public BossStartTrigger startTrigger;
+    public BossEndTrigger endTrigger;
+    bool battle;
     bool standBy;
 
     // Start is called before the first frame update
@@ -53,24 +56,36 @@ public class BossManager : MonoBehaviour
 
         currentBossHp = globalBossHp ;
         singleBossHp = ((globalBossHp * 2)+6);
+
         for (int i = 0; i < bossArray.Length; i++)
         {
             bossArray[i].healthPoints = singleBossHp;
             paternTimer[i] = paternFreq -timerOffset * i;
             bossArray[i].gameObject.SetActive(false);
         }
-        start = true;
+
+        startTrigger = GetComponentInChildren<BossStartTrigger>();
+        endTrigger = GetComponentInChildren<BossEndTrigger>();
+
+        endTrigger.gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (startTrigger.playerReady)
+        {
+            start = true;
+            battle = true;
+            startTrigger.playerReady = false;
+        }
         UpdateBossHP();
         UpdateAnimator();
 
         for(int i = 0; i < bossArray.Length; i++)
         {
-            if(bossArray[i]!= null && !standBy)
+            if(bossArray[i]!= null && !standBy && battle)
             {
                 //define patern
                 paternTimer[i] -= Time.deltaTime;
@@ -79,7 +94,7 @@ public class BossManager : MonoBehaviour
                     // initialize
                     if (!bossArray[i].isActiveAndEnabled)
                     {
-                        if((i == 1 && phaseTwo) || i == 0)
+                       if((i == 1 && phaseTwo) || i == 0)
                             bossArray[i].gameObject.SetActive(true);
                     }
 
@@ -146,7 +161,6 @@ public class BossManager : MonoBehaviour
                 checkDir.Remove(chooseDir);
                 //Debug.Log("remove dir : " + chooseDir);
             }
-                
 
             if (checkDir.Count == 0)
             {
@@ -222,10 +236,11 @@ public class BossManager : MonoBehaviour
         }
             
 
-        if (currentBossHp <= 0 && !triggerEnd)
+        if (currentBossHp <= 0 && !triggerEndAnim)
         {
             end = true;
-            triggerEnd = true;
+            endTrigger.gameObject.SetActive(true);
+            triggerEndAnim = true;
             Debug.Log("Boss defeat");
         }
             
