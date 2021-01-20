@@ -17,6 +17,7 @@ public class EnnemiBehaviour : MonoBehaviour
     public PlayerController player;
     DropSystem drop;
 
+
     #region state system
     public enum EnnemyState { IDLE, AGGRO, ATTACK, WAIT, STUN, DIE }
     public EnnemyState ennemyState;
@@ -80,7 +81,6 @@ public class EnnemiBehaviour : MonoBehaviour
     }
     public virtual void Start()
     {
-
         target = GameObject.FindGameObjectWithTag("Player");
         player = target.GetComponent<PlayerController>();
 

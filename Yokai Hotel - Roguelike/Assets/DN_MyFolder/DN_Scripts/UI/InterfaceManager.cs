@@ -166,7 +166,7 @@ public class InterfaceManager : MonoBehaviour
         {
             keysImage[i].enabled = true;
 
-            if (inventory.keys != 0)
+            if (inventory.keys > i)
             {
                 keysImage[inventory.keys - 1].texture = keysUp;
 
@@ -190,10 +190,8 @@ public class InterfaceManager : MonoBehaviour
         {
             enchantList[i].enabled = true;
             enchantList[i].texture = enchantM.enchants[i].icon.texture;
-            enchantList[i].color = Color.white;
+            //enchantList[i].color = Color.white;
 
-
-            //if(enchantM.enchants[i].enchantEffects[i].active == true)
 
             if (enchantM.enchants[i].enchantEffects[0].active == true)
             {
