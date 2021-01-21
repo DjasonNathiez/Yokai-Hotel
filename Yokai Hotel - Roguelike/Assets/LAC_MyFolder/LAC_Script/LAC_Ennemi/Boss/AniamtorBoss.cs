@@ -6,6 +6,8 @@ public class AniamtorBoss : MonoBehaviour
 {
     BossBehaviour boss;
     Animator animator;
+
+    AudioManager audioM;
     public enum AnimatorState { FREE, ATTACK, DASH, SHOOT };
     public AnimatorState animState = AnimatorState.FREE;
 
@@ -15,6 +17,8 @@ public class AniamtorBoss : MonoBehaviour
     {
         boss = GetComponentInParent<BossBehaviour>();
         animator = GetComponent<Animator>();
+
+        audioM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -83,6 +87,24 @@ public class AniamtorBoss : MonoBehaviour
                 Debug.Log("Boss hurt player");
             }
         }
+    }
+
+    public void DashAttackSound()
+    {
+        if (audioM)
+            audioM.PlaySound("Boss dash attack", 0);
+    }
+
+    public void DistanceAttackSound()
+    {
+        if (audioM)
+            audioM.PlaySound("Boss distance attack", 0);
+    }
+
+    public void HeavyAttackSound()
+    {
+        if (audioM)
+            audioM.PlaySound("Boss heavy attack", 0);
     }
 
 }

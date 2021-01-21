@@ -16,6 +16,7 @@ public class KF_SecretProba : MonoBehaviour
         proba = Random.Range(0, probability);    // 1 in a [probability] chance to spawn.
         if (proba == 0)
         {
+            Debug.Log("Secret Actif");
             secret.SetActive(true);
         }
 

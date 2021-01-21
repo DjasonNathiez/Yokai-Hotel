@@ -14,6 +14,7 @@ public class ProgressData
     public bool unlock8;
     public bool unlockBoss;
     public bool firstTime;
+    public bool keyboard;
 
     public List<int> unlocked = new List<int>();
     
@@ -29,6 +30,7 @@ public class ProgressData
         unlock8 = unlockables.unlock8;
         unlockBoss = unlockables.unlockBoss;
         firstTime = unlockables.firstTime;
+        keyboard = unlockables.keyboard;
 
         for (int i = 0; i < unlockables.unlocked.Count; i++)
             unlocked.Add(unlockables.unlocked[i]);

@@ -275,7 +275,10 @@ MonoBehaviour:
   - {fileID: 2056835250}
   - {fileID: 1055853485}
   - {fileID: 2014180749}
-  bossUnlock: []
+  - {fileID: 1112927441}
+  - {fileID: 134617307}
+  bossUnlock:
+  - {fileID: 664330020}
   maxLevelReached: 0
   lvlM: {fileID: 89314265}
   hubReturn: 0
@@ -283,6 +286,9 @@ MonoBehaviour:
   nextUnlock: 0
   secrets:
   - {fileID: 134617305}
+  - {fileID: 134617306}
+  - {fileID: 1237647762}
+  - {fileID: 134617309}
   secretActivated: 0
   secretTriggers: []
   unlocked: 
@@ -291,6 +297,7 @@ MonoBehaviour:
   unlock6: 0
   unlock8: 0
   unlockBoss: 0
+  runOnce: 0
   keyboard: 0
   firstTime: 1
   deleteSave: 0
@@ -573,6 +580,16 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1770057664932809479, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770057664932809479, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[3]
+      value: '"Now off to work!"'
+      objectReference: {fileID: 0}
     - target: {fileID: 1957758613397876750, guid: 2a824c49a4abdfd4f990cb7ddb469795,
         type: 3}
       propertyPath: m_RootOrder
@@ -688,6 +705,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 2601996714356109845, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2746232185916011233, guid: 2a824c49a4abdfd4f990cb7ddb469795,
         type: 3}
       propertyPath: m_RootOrder
@@ -710,8 +732,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2786332441484636542, guid: 2a824c49a4abdfd4f990cb7ddb469795,
         type: 3}
+      propertyPath: dialogue.sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2786332441484636542, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+        type: 3}
       propertyPath: dialogue.sentences.Array.data[0]
-      value: 'Masuyo: "I reaserch Yokai spirit apparitions"'
+      value: 'Masuyo: "I''m just an old man fond of spirits"'
       objectReference: {fileID: 0}
     - target: {fileID: 2832058988101045364, guid: 2a824c49a4abdfd4f990cb7ddb469795,
         type: 3}
@@ -793,6 +820,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3962197902982785897, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[1]
+      value: '"As you can see, well..."'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3962197902982785897, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[2]
+      value: '"Grandma isn''t capable of really running the hotel anymore.."'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3962197902982785897, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[6]
+      value: '"Show them who raised you!"'
+      objectReference: {fileID: 0}
     - target: {fileID: 4047320409953136338, guid: 2a824c49a4abdfd4f990cb7ddb469795,
         type: 3}
       propertyPath: m_RootOrder
@@ -818,6 +860,11 @@ PrefabInstance:
       propertyPath: doorLink
       value: 
       objectReference: {fileID: 3172145613489744422}
+    - target: {fileID: 4357313647391853123, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4384922624103400025, guid: 2a824c49a4abdfd4f990cb7ddb469795,
         type: 3}
       propertyPath: m_RootOrder
@@ -961,7 +1008,7 @@ PrefabInstance:
     - target: {fileID: 5995604100051956395, guid: 2a824c49a4abdfd4f990cb7ddb469795,
         type: 3}
       propertyPath: dialogue.sentences.Array.data[1]
-      value: '"Keep it up young one"'
+      value: '"Young people running around everywhere"'
       objectReference: {fileID: 0}
     - target: {fileID: 5995604101184980690, guid: 2a824c49a4abdfd4f990cb7ddb469795,
         type: 3}
@@ -1177,6 +1224,24 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 134617303}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &134617306 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1882651488699805343, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+    type: 3}
+  m_PrefabInstance: {fileID: 134617303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &134617307 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3227430067620504352, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+    type: 3}
+  m_PrefabInstance: {fileID: 134617303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &134617309 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4357313647391853121, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+    type: 3}
+  m_PrefabInstance: {fileID: 134617303}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &162826509 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5093105646036908243, guid: 2a824c49a4abdfd4f990cb7ddb469795,
@@ -1325,6 +1390,7 @@ MonoBehaviour:
   hurtParticule: {fileID: 0}
   hurtTime: 0.2
   invincibleTime: 1
+  healParticule: {fileID: 0}
   startTriggerM: []
   endTriggerM: []
   manageSpeed: 0
@@ -1713,12 +1779,12 @@ PrefabInstance:
     - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
         type: 3}
       propertyPath: dialogue.sentences.Array.data[0]
-      value: 'Obaachan: "You''re doing a good job little one"'
+      value: 'Obaachan: "You can do better"'
       objectReference: {fileID: 0}
     - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
         type: 3}
       propertyPath: dialogue.sentences.Array.data[1]
-      value: '"Keep at it!"'
+      value: '"Get to WORK!"'
       objectReference: {fileID: 0}
     - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
         type: 3}
@@ -2251,6 +2317,126 @@ MonoBehaviour:
   colorFilter: {r: 1, g: 1, b: 1, a: 0.46666667}
   spawnDelay: 0.02
   destroyTime: 0.3
+--- !u!1001 &664330019
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 134617304}
+    m_Modifications:
+    - target: {fileID: 418876278838411377, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_Name
+      value: Obaachan - Dia7 (Boss unlock)
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411377, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[0]
+      value: 'Obaachan: "The yokai seem to have calmed down.."'
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[1]
+      value: 'Obaachan: "Good job"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[2]
+      value: 'Obaachan: "But there are still plenty! Back to work!"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: isInMultiple
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: exclamationPoint
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.7665343
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 632.38544
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876279718753291, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 5469856275033690445, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0399237
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c36394d9d75c72d4ab63884300a85d7c, type: 3}
+--- !u!1 &664330020 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 418876278838411377, guid: c36394d9d75c72d4ab63884300a85d7c,
+    type: 3}
+  m_PrefabInstance: {fileID: 664330019}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &701201489
 GameObject:
   m_ObjectHideFlags: 0
@@ -2499,6 +2685,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 134617303}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &835427195 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1452908044718944082, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+    type: 3}
+  m_PrefabInstance: {fileID: 134617303}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &855471187
 GameObject:
   m_ObjectHideFlags: 0
@@ -2724,7 +2916,7 @@ MonoBehaviour:
     type: 3}
   shopPrefab: {fileID: 676889434553521318, guid: e8e31b0f5c1ff2a46842d8a9ecf5f020,
     type: 3}
-  startPrefab: {fileID: 4582611198287507410, guid: 9a717e161c44dd844a95b72a0db91fef,
+  startPrefab: {fileID: 4582611198287507410, guid: 2267a551e8bf5b74ebd1623f90d1e2cf,
     type: 3}
   preparePrefab: {fileID: 8370531223476974004, guid: cb62bed6b5f658e40b61cc7c39c782d5,
     type: 3}
@@ -2915,6 +3107,156 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 134617303}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1112927440
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 835427195}
+    m_Modifications:
+    - target: {fileID: 418876278838411377, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_Name
+      value: Reasercher Unlock 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411377, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[0]
+      value: 'Masuyo: "This hotel has dark reputation"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[1]
+      value: '"Many people talk of spirits and yokai appearing."'
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: isInMultiple
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[2]
+      value: '"They seem very attracted to the place "'
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[3]
+      value: '"People are scared"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[4]
+      value: '"But not me! Nothing scares old me"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: dialogue.sentences.Array.data[5]
+      value: '"Who are you?"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.24999142
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.543349
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.4265499
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876278838411379, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876279718753291, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.378
+      objectReference: {fileID: 0}
+    - target: {fileID: 418876279718753291, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.195
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144128514782045342, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 0.23963928
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144128514782045342, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1.0859833
+      objectReference: {fileID: 0}
+    - target: {fileID: 5469856275033690445, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.3789673
+      objectReference: {fileID: 0}
+    - target: {fileID: 5469856275033690445, guid: c36394d9d75c72d4ab63884300a85d7c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.194931
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c36394d9d75c72d4ab63884300a85d7c, type: 3}
+--- !u!1 &1112927441 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 418876278838411377, guid: c36394d9d75c72d4ab63884300a85d7c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1112927440}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &1140012671 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3749937381696364194, guid: 9f9a4e2671593f04ebd62e4d88552ab2,
@@ -2954,6 +3296,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1237647762 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3328515784842051880, guid: 2a824c49a4abdfd4f990cb7ddb469795,
+    type: 3}
+  m_PrefabInstance: {fileID: 134617303}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1302553358 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 902463876802272393, guid: 0dd68f8be89b50942a450a16c1cb7744,
@@ -3399,7 +3747,7 @@ PrefabInstance:
     - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
         type: 3}
       propertyPath: dialogue.sentences.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
         type: 3}
@@ -3409,12 +3757,12 @@ PrefabInstance:
     - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
         type: 3}
       propertyPath: dialogue.sentences.Array.data[1]
-      value: '"Grandma is proud"'
+      value: '"I guess you did a good job..."'
       objectReference: {fileID: 0}
     - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
         type: 3}
       propertyPath: dialogue.sentences.Array.data[2]
-      value: '"Check the book next to me"'
+      value: '"Now back to work!"'
       objectReference: {fileID: 0}
     - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
         type: 3}
@@ -3780,7 +4128,7 @@ MonoBehaviour:
     type: 3}
   shopPrefab: {fileID: 676889434553521318, guid: e8e31b0f5c1ff2a46842d8a9ecf5f020,
     type: 3}
-  startPrefab: {fileID: 4582611198287507410, guid: 9a717e161c44dd844a95b72a0db91fef,
+  startPrefab: {fileID: 4582611198287507410, guid: 2267a551e8bf5b74ebd1623f90d1e2cf,
     type: 3}
   preparePrefab: {fileID: 8370531223476974004, guid: cb62bed6b5f658e40b61cc7c39c782d5,
     type: 3}
@@ -3950,7 +4298,7 @@ PrefabInstance:
     - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
         type: 3}
       propertyPath: dialogue.sentences.Array.data[1]
-      value: 'Obaachan: "We seem to be getting more and more guests"'
+      value: 'Obaachan: "The hotel is getting guests"'
       objectReference: {fileID: 0}
     - target: {fileID: 418876278838411378, guid: c36394d9d75c72d4ab63884300a85d7c,
         type: 3}
@@ -4189,9 +4537,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2178055191279671020, guid: 0dd68f8be89b50942a450a16c1cb7744,
+    - target: {fileID: 1450011418310827208, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}
-      propertyPath: m_LocalPosition.z
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 89314268}
+    - target: {fileID: 2014504860768510198, guid: 0dd68f8be89b50942a450a16c1cb7744,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2014504860768510198, guid: 0dd68f8be89b50942a450a16c1cb7744,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2178055191279671021, guid: 0dd68f8be89b50942a450a16c1cb7744,
@@ -4199,6 +4557,11 @@ PrefabInstance:
       propertyPath: levelM
       value: 
       objectReference: {fileID: 89314265}
+    - target: {fileID: 2178055191279671021, guid: 0dd68f8be89b50942a450a16c1cb7744,
+        type: 3}
+      propertyPath: bossM
+      value: 
+      objectReference: {fileID: 4926324204828877915}
     - target: {fileID: 2178055192705325881, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}
       propertyPath: m_Name
@@ -4259,20 +4622,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2852642196985784390, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2859055827782238019, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 89314268}
-    - target: {fileID: 3017766480483563872, guid: 0dd68f8be89b50942a450a16c1cb7744,
+    - target: {fileID: 4049992192987726525, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 20.00003
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 89314268}
+    - target: {fileID: 5202844220806069705, guid: 0dd68f8be89b50942a450a16c1cb7744,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5202844220806069705, guid: 0dd68f8be89b50942a450a16c1cb7744,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5202844220806069705, guid: 0dd68f8be89b50942a450a16c1cb7744,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dd68f8be89b50942a450a16c1cb7744, type: 3}
@@ -4792,6 +5165,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6561214808485224728, guid: 94430578571ab4b49a2dde8b03d36f42,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6561214808485224743, guid: 94430578571ab4b49a2dde8b03d36f42,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 6561214808544546361, guid: 94430578571ab4b49a2dde8b03d36f42,
         type: 3}
       propertyPath: explosionVFX
@@ -4819,6 +5202,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -1.02
       objectReference: {fileID: 0}
+    - target: {fileID: 6561214810175091298, guid: 94430578571ab4b49a2dde8b03d36f42,
+        type: 3}
+      propertyPath: m_TagString
+      value: BossManager
+      objectReference: {fileID: 0}
     - target: {fileID: 6561214810175091310, guid: 94430578571ab4b49a2dde8b03d36f42,
         type: 3}
       propertyPath: m_Size.x
@@ -4836,6 +5224,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94430578571ab4b49a2dde8b03d36f42, type: 3}
+--- !u!114 &4926324204828877915 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6561214810175091299, guid: 94430578571ab4b49a2dde8b03d36f42,
+    type: 3}
+  m_PrefabInstance: {fileID: 4926324204828877914}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ccdc32c49c9a5e479e6ce962ee009de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5256743356511507775
 PrefabInstance:
   m_ObjectHideFlags: 0
