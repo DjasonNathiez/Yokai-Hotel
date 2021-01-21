@@ -210,7 +210,7 @@ public class InterfaceManager : MonoBehaviour
         {
             enchantList[i].enabled = true;
             enchantList[i].texture = enchantM.enchants[i].icon.texture;
-            //enchantList[i].color = Color.white;
+            enchantList[i].color = Color.white;
 
 
             if (enchantM.enchants[i].enchantEffects[0].active == true)
@@ -241,6 +241,11 @@ public class InterfaceManager : MonoBehaviour
             informationIcon[i].texture = enchantM.enchants[i].icon.texture;
             
         }
+    }
+
+    void FillHPBoss()
+    {
+
     }
 
 }
