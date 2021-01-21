@@ -80,6 +80,7 @@ public class PlayerController : MonoBehaviour
     public float hurtTime;
     public float invincibleTime;
     bool invincible;
+    public ParticleSystem healParticule;
     [Header("Manage Setting")]
     public string[] startTriggerM ;
     public string[] endTriggerM ;
@@ -524,6 +525,8 @@ public class PlayerController : MonoBehaviour
 
         if (value < 0 && hurtParticule != null)
             hurtParticule.Play();
+        if (value > 0 && healParticule != null)
+            healParticule.Play();
         if (health <= 0)
             Death();
     }

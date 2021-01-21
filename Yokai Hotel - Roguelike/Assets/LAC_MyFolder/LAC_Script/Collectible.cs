@@ -22,6 +22,7 @@ public class Collectible : MonoBehaviour
     float randomOscil;
     public GameObject playerObj;
     InventoryManager inventory;
+    PlayerController player;
 
     GameObject gameManager;
     AudioManager audioManager;
@@ -32,6 +33,8 @@ public class Collectible : MonoBehaviour
     void Awake()
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj)
+            player = playerObj.GetComponent<PlayerController>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager");
         
 
@@ -97,8 +100,9 @@ public class Collectible : MonoBehaviour
 
                     case Collectype.HEALTH:
                         {
-                            
-                            inventory.health += value;
+
+                            if (player)
+                                player.ChangeHealth(value);
 
                             if(audioManager)
                                 audioManager.PlaySound("Player healing", 0);
