@@ -9,12 +9,14 @@ public class KF_KeyboardSupport : MonoBehaviour
     public bool ui;
     public Sprite keyboardButton; //Don't forget to assign this!
     private Sprite controllerButton;
+    private KF_Unlockables unlockables;
 
 
     void Start()
     {
         if (ui == false)
             controllerButton = this.gameObject.GetComponent<SpriteRenderer>().sprite;
+
         if (ui == true)
             controllerButton = this.gameObject.GetComponent<Image>().sprite;
 
@@ -34,12 +36,41 @@ public class KF_KeyboardSupport : MonoBehaviour
         {
             if (ui == false)
             {
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = controllerButton;
+            }
+            else
+            {
+                this.gameObject.GetComponent<Image>().sprite = controllerButton;
+            }
+        }
+        unlockables = FindObjectOfType<KF_Unlockables>();
+    }
+
+    private void Update()
+    {
+        if ((unlockables.keyboard == true) && (unlockables.runOnce == true))
+        {
+            if (ui == false)
+            {
                 this.gameObject.GetComponent<SpriteRenderer>().sprite = keyboardButton;
             }
             else
             {
                 this.gameObject.GetComponent<Image>().sprite = keyboardButton;
             }
+            unlockables.runOnce = false;
+        }
+        if ((unlockables.keyboard == false) && (unlockables.runOnce == true))
+        {
+            if (ui == false)
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().sprite = controllerButton;
+            }
+            else
+            {
+                this.gameObject.GetComponent<Image>().sprite = controllerButton;
+            }
+            unlockables.runOnce = false;
         }
     }
 

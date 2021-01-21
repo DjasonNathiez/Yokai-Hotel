@@ -33,11 +33,14 @@ public class KF_Unlockables : MonoBehaviour
     public bool unlock8;
     public bool unlockBoss;
     private int count;
+    public bool runOnce;
 
     [Header("==== Save Settings ====")]
+    private bool changeKeyCon;
     public bool keyboard;
     public bool firstTime;
     public bool deleteSave;
+    
 
 
 
@@ -316,6 +319,12 @@ public class KF_Unlockables : MonoBehaviour
         SaveSystem.SaveProgress(this);
         SaveSystem.DeleteSave();
         deleteSave = false;
+    }
+
+    public void SwitchControls()
+    {
+        keyboard = !keyboard;
+        runOnce = true;
     }
 
 }
