@@ -7,7 +7,7 @@ public class BossBehaviour : EnnemiBehaviour
     public enum BossState {FREE,ATTACK,DASH,SHOOT};
     public BossState bossState = BossState.SHOOT;
     //public BoxCollider2D hurtBox;
-
+    public GameObject hitParticle;
     [Header("Movement")]
     public Vector2 orient = new Vector2(1, 0);
     Vector2 velocitySmooth;
@@ -131,4 +131,9 @@ public class BossBehaviour : EnnemiBehaviour
         bossBullet.SetActiveBullet(false);
     }
 
+    public void PlayVFXAttack()
+    {
+        GameObject particle = Instantiate(hitParticle, transform.position, transform.rotation);
+        Destroy(particle, 2);
+    }
 }
