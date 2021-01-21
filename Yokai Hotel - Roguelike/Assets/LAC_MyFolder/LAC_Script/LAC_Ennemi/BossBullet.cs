@@ -44,9 +44,15 @@ public class BossBullet : MonoBehaviour
             {
                 player.hurtDamage = damage;
                 Debug.Log("BossbulletHit");
+
+                if (active)
+                {
+                    GameObject particule = Instantiate(explosionVFX, transform.position, transform.rotation);
+                    Destroy(particule, 2);
+                }
+                
             }
-            GameObject particule = Instantiate(explosionVFX, transform.position, transform.rotation);
-            Destroy(particule, 2);
+           
             SetActiveBullet(false);
             Debug.Log("BossBullet hit Player");
         }
@@ -119,7 +125,6 @@ public class BossBullet : MonoBehaviour
             color.a = 255;
             spriteR.color = color;
         }
-        
-        
+ 
     }
 }

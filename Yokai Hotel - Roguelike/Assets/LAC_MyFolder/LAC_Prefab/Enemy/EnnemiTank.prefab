@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 5430969317846748365}
   - component: {fileID: 5430969317846748364}
   - component: {fileID: 5430969317846748355}
-  - component: {fileID: 5430969317846748367}
+  - component: {fileID: 830882791544683127}
   m_Layer: 10
   m_Name: EnnemiTank
   m_TagString: TankEnemy
@@ -287,6 +287,7 @@ MonoBehaviour:
   hurtParticule: {fileID: 1163381320056636088}
   deathParticule: {fileID: 0}
   hurt: 0
+  hurtBox: {fileID: 0}
   stunPoints: 0
   stunMultiplier: 1
   stunTime: 0
@@ -312,12 +313,12 @@ MonoBehaviour:
     m_Bits: 1024
   enemyList: []
   nearestEnemy: {fileID: 0}
-  timeToAttack: 1
+  timeToAttack: 0.4
   attackDamage: 1
-  attackSpeed: 5
+  attackSpeed: 7
   attackDuration: 1
-  minCacRadius: 3
-  maxCacRadius: 4
+  minCacRadius: 4
+  maxCacRadius: 5
   shieldPrefab: {fileID: 3326273500668777465, guid: 6c755f1af416ba0459b6cbbcc287876e,
     type: 3}
   shield: {fileID: 0}
@@ -334,7 +335,7 @@ MonoBehaviour:
   shieldAngle: 0
   defelectDegree: 90
   shieldOrigin: {x: 0, y: 0.3}
---- !u!114 &5430969317846748367
+--- !u!114 &830882791544683127
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -346,12 +347,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ac02e3fa4f1d949b39b1d2d63516d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDropItem: 1
-  minDropItem: 0
-  dropRadius: 0
-  dropRateG: 0
-  dropMultiplier: 0
-  dropItems: []
+  maxDropItem: 5
+  minDropItem: 2
+  dropRadius: 2
+  dropRateG: 0.4
+  dropMultiplier: 1
+  dropItems:
+  - itemToDrop: {fileID: 5037613768808454865, guid: e6327559c3547414592915a934b92ad3,
+      type: 3}
+    dropRate: 0.85
+  - itemToDrop: {fileID: 6765333769586439405, guid: bbdb4f5193d48f94b97c35d8de679f3f,
+      type: 3}
+    dropRate: 0.15
 --- !u!1001 &3509371359082358029
 PrefabInstance:
   m_ObjectHideFlags: 0
