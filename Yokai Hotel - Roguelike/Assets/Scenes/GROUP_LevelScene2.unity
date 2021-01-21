@@ -1390,6 +1390,7 @@ MonoBehaviour:
   hurtParticule: {fileID: 0}
   hurtTime: 0.2
   invincibleTime: 1
+  healParticule: {fileID: 0}
   startTriggerM: []
   endTriggerM: []
   manageSpeed: 0
@@ -4551,16 +4552,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2178055191279671020, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2178055191279671021, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}
       propertyPath: levelM
       value: 
       objectReference: {fileID: 89314265}
+    - target: {fileID: 2178055191279671021, guid: 0dd68f8be89b50942a450a16c1cb7744,
+        type: 3}
+      propertyPath: bossM
+      value: 
+      objectReference: {fileID: 4926324204828877915}
     - target: {fileID: 2178055192705325881, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}
       propertyPath: m_Name
@@ -4619,11 +4620,6 @@ PrefabInstance:
     - target: {fileID: 2178055192705325883, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2852642196985784390, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2859055827782238019, guid: 0dd68f8be89b50942a450a16c1cb7744,
@@ -5228,6 +5224,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94430578571ab4b49a2dde8b03d36f42, type: 3}
+--- !u!114 &4926324204828877915 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6561214810175091299, guid: 94430578571ab4b49a2dde8b03d36f42,
+    type: 3}
+  m_PrefabInstance: {fileID: 4926324204828877914}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ccdc32c49c9a5e479e6ce962ee009de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5256743356511507775
 PrefabInstance:
   m_ObjectHideFlags: 0

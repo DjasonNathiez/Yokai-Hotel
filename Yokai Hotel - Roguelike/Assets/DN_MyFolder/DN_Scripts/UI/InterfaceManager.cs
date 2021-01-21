@@ -59,8 +59,8 @@ public class InterfaceManager : MonoBehaviour
     RawImage[] informationIcon;
 
     [Header("Boss HP")]
-    BossManager bossM;
     public Slider healthBossSlider;
+    public BossManager bossM;
     public GameObject healthBarBossObj;
     int bossCurrentHP;
     public int bossLevelIndex;
@@ -100,7 +100,6 @@ public class InterfaceManager : MonoBehaviour
         informationIcon = enchantI.GetComponentsInChildren<RawImage>();
 
         //bossHP
-        bossM = GameObject.FindGameObjectWithTag("BossManager").GetComponent<BossManager>();
 
         healthBarBossObj.SetActive(false);
 
