@@ -79,6 +79,7 @@ public class AttackEffect : MonoBehaviour
                 EnnemiTank eTank = ennemi.GetComponentInParent<EnnemiTank>();
                 bool deflectShield = false;
 
+                int bossScreenShake = (ennemi.GetComponentInParent<BossBehaviour>() == null) ? 1 : 0;
                 float attackTypeBoost = 1;
                 if (attackM.attack[player.attackChoose].attackType == Attack.AttackType.HEAVY)
                     attackTypeBoost *= heavyBoost;
@@ -118,7 +119,7 @@ public class AttackEffect : MonoBehaviour
                 {
 
                     // feedBack & kill effect
-                    ScreenShake(attackM.attack[player.attackChoose].screenShakeAmp, attackM.attack[player.attackChoose].screenShakeFreq, attackM.attack[player.attackChoose].screenShakeTime);
+                    ScreenShake(attackM.attack[player.attackChoose].screenShakeAmp * bossScreenShake, attackM.attack[player.attackChoose].screenShakeFreq *bossScreenShake, attackM.attack[player.attackChoose].screenShakeTime);
                     if (ennemi.healthPoints <= damage)
                     {
                         if (player.attackChoose == 3)
