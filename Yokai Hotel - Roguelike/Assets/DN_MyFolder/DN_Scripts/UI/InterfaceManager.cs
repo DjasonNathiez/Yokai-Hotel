@@ -243,4 +243,9 @@ public class InterfaceManager : MonoBehaviour
         }
     }
 
+    void FillHPBoss()
+    {
+
+    }
+
 }
