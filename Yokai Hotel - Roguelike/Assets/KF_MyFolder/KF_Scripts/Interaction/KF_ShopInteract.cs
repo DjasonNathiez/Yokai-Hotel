@@ -57,6 +57,7 @@ public class KF_ShopInteract : MonoBehaviour
                 ShowItemDesc();
             else
                 RemoveDesc();
+
             lastShowState = showState;
         }
            

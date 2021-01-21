@@ -17,6 +17,7 @@ public class EnnemiBehaviour : MonoBehaviour
     public PlayerController player;
     DropSystem drop;
 
+
     #region state system
     public enum EnnemyState { IDLE, AGGRO, ATTACK, WAIT, STUN, DIE }
     public EnnemyState ennemyState;
@@ -26,10 +27,12 @@ public class EnnemiBehaviour : MonoBehaviour
     [Header("health")]
     public float healthPoints;
     public float healthDamage = 0;
-
-    
+    public ParticleSystem hurtParticule;
+    public GameObject deathParticule;
+    bool deathTrigger;
     [HideInInspector]
     public bool hurt;
+    public BoxCollider2D hurtBox;
     #endregion
     #region recoil
     [Header("recoil")]
@@ -79,9 +82,12 @@ public class EnnemiBehaviour : MonoBehaviour
     }
     public virtual void Start()
     {
-
         target = GameObject.FindGameObjectWithTag("Player");
         player = target.GetComponent<PlayerController>();
+
+        if (hurtParticule == null)
+            hurtParticule = GetComponentInChildren<ParticleSystem>();
+
     }
 
     // Update is called once per frame
@@ -108,6 +114,9 @@ public class EnnemiBehaviour : MonoBehaviour
 
             velocity = repulseForce;
             repulseForce = Vector2.zero;
+
+            if (hurtParticule != null)
+                hurtParticule.Play();
         }
 
 
@@ -131,7 +140,7 @@ public class EnnemiBehaviour : MonoBehaviour
                     }
 
                     // show hurt
-                    Color col = Color.red;
+                    Color col = Color.white;
                     col.a = Mathf.Sin(Time.time * 30) * 255;
                     spriteT.color = col;
 
@@ -146,10 +155,19 @@ public class EnnemiBehaviour : MonoBehaviour
       
         if (healthPoints <= 0)
         {
-            drop.SortItemPos(transform, transform.position, drop.dropRadius, obstructMask);
-            Debug.Log("DropItem");
+            if (!deathTrigger)
+            {
+                drop.SortItemPos(transform, transform.position, drop.dropRadius, obstructMask);
+                Debug.Log("DropItem");
+
+                deathTrigger = true;
+            }
+            if (hurtBox != null)
+                hurtBox.enabled = false;
+            
+            ennemyState = EnnemyState.DIE;
+            
             //healthPoints = 3;
-            Destroy(gameObject);
         }
     }
     private void FixedUpdate()
@@ -176,5 +194,19 @@ public class EnnemiBehaviour : MonoBehaviour
         ennemyState = EnnemyState.IDLE;
     }
 
-   
+    public void Death()
+    {
+
+        Destroy(gameObject);
+    }
+
+    public void DeathVFXorigin()
+    {
+        if (deathParticule != null)
+        {
+            GameObject particule = Instantiate(deathParticule, transform.position, transform.rotation);
+            Destroy(particule, 5);
+        }
+    }
+
 }

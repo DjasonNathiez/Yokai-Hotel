@@ -7,13 +7,25 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public int sceneIndex;
+    public int transitionFade;
+    bool titleIsUp;
 
-    public Image black;
+    public GameObject splashscreen;
+    public GameObject paperPlease;
+    public GameObject titleYoo;
     public Animator fadeAnim;
+
+    private void Update()
+    {
+        if(Input.anyKeyDown && titleIsUp == true)
+        {
+            fadeAnim.SetBool("MenuAppear", true);
+        }
+    }
 
     public void Play()
     {
-        StartCoroutine(Fading());
+        SceneManager.LoadScene(sceneIndex);
     }
 
     public void Quit()
@@ -21,10 +33,30 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    IEnumerator Fading()
+    public IEnumerator Fading()
     {
+        yield return new WaitForSeconds(transitionFade);
         fadeAnim.SetBool("Fade", true);
-        yield return new WaitUntil(() => black.color.a == 1);
-        SceneManager.LoadScene(sceneIndex);
+    }
+
+    public void TitleAppearNow()
+    {
+        titleIsUp = true;
+        fadeAnim.SetBool("TitleAppear", true);
+    }
+
+    public void TitleWaiting()
+    {
+        fadeAnim.SetBool("TitleWaiting", true);
+    }
+
+    public void GoToIdleNow()
+    {
+        fadeAnim.SetBool("GoToIdle", true);
+    }
+
+    public void DestroyThis()
+    {
+        GameObject.Destroy(splashscreen);
     }
 }

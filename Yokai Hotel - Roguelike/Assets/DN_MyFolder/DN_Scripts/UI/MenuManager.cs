@@ -14,41 +14,78 @@ public class MenuManager : MonoBehaviour
     public GameObject pauseMenu;
     public Canvas HUD;
 
+    public GameObject enchantInformation;
+    public bool isOpen;
+
     PlayerController playerController;
+    public AudioManager audioM;
+
+    KF_LevelManager levelM;
 
     private void Awake()
     {
+        enchantInformation = GameObject.FindGameObjectWithTag("EnchantInfo");
+        levelM = GameObject.FindGameObjectWithTag("HotelManager").GetComponent<KF_LevelManager>();
 
         GameObject hud = GameObject.FindGameObjectWithTag("HUD");
-        if(hud)
+        if (hud)
             HUD = hud.GetComponent<Canvas>();
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if(player)
+        if (player)
             playerController = player.GetComponent<PlayerController>();
-        
-        
+
+
+
     }
     public void Start()
     {
         paused = false;
+        isOpen = false;
+        enchantInformation.SetActive(false);
     }
     public void Update()
     {
         if (Input.GetButtonDown("Cancel") && paused == false)
         {
             Pause();
-        }
 
+            if (audioM)
+                audioM.PlaySound("UI open menu", 0);
+
+        }
         else if (Input.GetButtonDown("Cancel") && paused == true)
         {
             Resume();
+
+            if (audioM)
+                audioM.PlaySound("UI close menu", 0);
         }
+
+
+        if (Input.GetButtonDown("Information") && isOpen == false)
+        {
+
+            enchantInformation.SetActive(true);
+            isOpen = true;
+
+            if (audioM)
+                audioM.PlaySound("UI open menu", 0);
+        }
+        else if (Input.GetButtonDown("Information") && isOpen == true)
+        {
+            enchantInformation.SetActive(false);
+            isOpen = false;
+
+            if (audioM)
+                audioM.PlaySound("UI close menu", 0);
+        }
+
 
         if (pauseMenu)
         {
-          
-            if(HUD && paused == true)
+
+            if (HUD && paused == true)
             {
                 HUD.enabled = false;
             }
@@ -77,7 +114,7 @@ public class MenuManager : MonoBehaviour
 
     public void Pause()
     {
-        
+
         pauseMenu.SetActive(true);
         paused = true;
 
@@ -86,7 +123,7 @@ public class MenuManager : MonoBehaviour
             playerController.enabled = false;
             Time.timeScale = 0;
         }
-        
+
     }
 
     public void Resume()
@@ -101,4 +138,26 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public void ClickSound()
+    {
+        if(audioM)
+        audioM.PlaySound("UI click button", 0);
+    }
+
+    public void OpenSound()
+    {
+        if (audioM)
+            audioM.PlaySound("UI open menu", 0);
+    }
+
+    public void CloseSound()
+    {
+        if (audioM)
+            audioM.PlaySound("UI close menu", 0);
+    }
+
+    public void GoToBoss()
+    {
+        levelM.levelCount = 8;
+    }
 }

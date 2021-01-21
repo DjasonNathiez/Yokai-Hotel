@@ -14,6 +14,9 @@ public class PlayerAnimator : MonoBehaviour
     public float moveSensibility;
     public enum AnimatorState { IDLE, MOVE, DASH, ATTACK,DIE};
     public AnimatorState animatorState;
+
+    [Header("VFX")]
+    public GameObject[] dustRecoil;
     // Start is called before the first frame update
     void Start()
     {
@@ -76,5 +79,17 @@ public class PlayerAnimator : MonoBehaviour
         
         animator.SetFloat("Vertical", (vertical) ?  Mathf.Sign(velocity.y) : 0);
         animator.SetFloat("Horizontal", (vertical)? 0 : Mathf.Sign(velocity.x));
+    }
+
+    public void PlayDustRecoil(int dir)
+    {
+        if(dustRecoil.Length > dir)
+        {
+            if(dustRecoil[dir] != null)
+            {
+                GameObject particle = Instantiate(dustRecoil[dir], transform.position, transform.rotation);
+                Destroy(particle, 1);
+            }
+        }
     }
 }

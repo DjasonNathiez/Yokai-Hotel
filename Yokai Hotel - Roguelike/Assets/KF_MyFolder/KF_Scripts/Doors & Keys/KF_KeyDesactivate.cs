@@ -33,7 +33,7 @@ public class KF_KeyDesactivate : MonoBehaviour
     {
        if (inRange == true)
         {
-            if ((inventoryM.keys >= 1) && (Input.GetButtonDown("Interact")))
+            if (((inventoryM.keys >= 1) && (Input.GetButtonDown("Interact"))) && (bActif == true))
             {
                 inventoryM.keys = inventoryM.keys - 1;
                 Debug.Log("Key Removed");

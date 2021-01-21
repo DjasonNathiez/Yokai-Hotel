@@ -118,7 +118,7 @@ MonoBehaviour:
     mixerGroup: {fileID: 0}
   - name: Player hurt
     clip: {fileID: 8300000, guid: 315cddf4bdcdaf54ea9572ec377a1947, type: 3}
-    volume: 0
+    volume: 0.147
     pitch: 0
     loop: 0
     source: {fileID: 0}
@@ -138,12 +138,13 @@ MonoBehaviour:
     source: {fileID: 0}
     mixerGroup: {fileID: 0}
   - name: Player death
-    clip: {fileID: 8300000, guid: fb6d85920879ea24cb2be7742251cc41, type: 3}
-    volume: 0
-    pitch: 0
+    clip: {fileID: 8300000, guid: 8f85868bf3174ca41ba00d2e5def45f4, type: 3}
+    volume: 0.2
+    pitch: 1
     loop: 0
     source: {fileID: 0}
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: -4819151524343094414, guid: f97986808365c1746a71c43656b144bf,
+      type: 2}
   - name: Own gold
     clip: {fileID: 8300000, guid: 42e9f8ddedeaea747a6721585af4d6dd, type: 3}
     volume: 0.2
@@ -151,20 +152,22 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 0}
-  - name: Own neck
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: Keys
+    clip: {fileID: 8300000, guid: 56562c8b3ae166a4fadc58d29e667c75, type: 3}
+    volume: 0.346
+    pitch: 1
     loop: 0
     source: {fileID: 0}
-    mixerGroup: {fileID: 0}
-  - name: Own echantment
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+    mixerGroup: {fileID: -4819151524343094414, guid: f97986808365c1746a71c43656b144bf,
+      type: 2}
+  - name: Active Enchant
+    clip: {fileID: 8300000, guid: b63a72d18f78ba74e901b001b06529d1, type: 3}
+    volume: 0.2
+    pitch: 1
     loop: 0
     source: {fileID: 0}
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: -4819151524343094414, guid: f97986808365c1746a71c43656b144bf,
+      type: 2}
   - name: Own combo
     clip: {fileID: 0}
     volume: 0
@@ -207,52 +210,55 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 0}
-  - name: Ennemy invisble death
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: Chest
+    clip: {fileID: 8300000, guid: 4cde7839633e2b943b957511fd2d286a, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: -4819151524343094414, guid: f97986808365c1746a71c43656b144bf,
+      type: 2}
+  - name: Active Keys
+    clip: {fileID: 8300000, guid: 71c08712607485241a12d0c8585b53e7, type: 3}
+    volume: 0.324
+    pitch: 1.046
+    loop: 0
+    source: {fileID: 0}
+    mixerGroup: {fileID: -3929492047615634412, guid: f97986808365c1746a71c43656b144bf,
+      type: 2}
+  - name: Fire
+    clip: {fileID: 8300000, guid: 91e8999d3d6560843be157934de5ea41, type: 3}
+    volume: 0.372
+    pitch: 1.356
+    loop: 1
+    source: {fileID: 0}
+    mixerGroup: {fileID: -3929492047615634412, guid: f97986808365c1746a71c43656b144bf,
+      type: 2}
+  - name: Boss dash attack
+    clip: {fileID: 8300000, guid: 67ac8cebc4b765e40a88a3ad3c8d497a, type: 3}
+    volume: 0.5
+    pitch: 1.5
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 0}
-  - name: Ennemy trap voice
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: Boss distance attack
+    clip: {fileID: 8300000, guid: 1626baec00fba984787998bee558802a, type: 3}
+    volume: 0.529
+    pitch: 1.195
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 0}
-  - name: Ennemy trap walk
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
-    loop: 0
-    source: {fileID: 0}
-    mixerGroup: {fileID: 0}
-  - name: Ennemy trap attack
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
-    loop: 0
-    source: {fileID: 0}
-    mixerGroup: {fileID: 0}
-  - name: Ennemy trap hurt
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
-    loop: 0
-    source: {fileID: 0}
-    mixerGroup: {fileID: 0}
-  - name: Ennemy trap death
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: Boss heavy attack
+    clip: {fileID: 8300000, guid: 00fe0421e6428c9449d32e68e09e0b83, type: 3}
+    volume: 0.29
+    pitch: 1.029
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 0}
   - name: Ennemy berserk voice
     clip: {fileID: 0}
     volume: 0
-    pitch: 0
+    pitch: 0.1
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 0}
@@ -298,17 +304,17 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 0}
-  - name: Ennemy fire attack
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: Distance ennemy attack
+    clip: {fileID: 8300000, guid: e03232a9ead8ebd47ab2f5efc215cf2c, type: 3}
+    volume: 0.2
+    pitch: 1
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 0}
-  - name: Ennemy fire hurt
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: Distance ennemy death
+    clip: {fileID: 8300000, guid: 8c61f88e356eeee4784386f11e9d2b10, type: 3}
+    volume: 0.2
+    pitch: 1
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 0}
@@ -334,25 +340,25 @@ MonoBehaviour:
     source: {fileID: 0}
     mixerGroup: {fileID: 0}
   - name: Ennemy lantern attack
-    clip: {fileID: 8300000, guid: 48138414c97fe9044ad06827cff6b48c, type: 3}
-    volume: 0
-    pitch: 0
+    clip: {fileID: 8300000, guid: 16a466d16be22b44c818deb1a9b855f0, type: 3}
+    volume: 0.106
+    pitch: 1
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: -4819151524343094414, guid: f97986808365c1746a71c43656b144bf,
       type: 2}
   - name: Ennemy hurt
-    clip: {fileID: 8300000, guid: a02bd49d4ce42cc4e90584c621d01cc7, type: 3}
-    volume: 1
-    pitch: 1
+    clip: {fileID: 8300000, guid: dd75509037712f642a61df210ba9d440, type: 3}
+    volume: 0.217
+    pitch: 0.857
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: -4819151524343094414, guid: f97986808365c1746a71c43656b144bf,
       type: 2}
   - name: Ennemy lantern death
     clip: {fileID: 8300000, guid: f41898721351967419b4ff378642a637, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 0.2
+    pitch: 1
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: -4819151524343094414, guid: f97986808365c1746a71c43656b144bf,
@@ -394,18 +400,20 @@ MonoBehaviour:
     mixerGroup: {fileID: 0}
   - name: UI open menu
     clip: {fileID: 8300000, guid: 50b5dfb0864cdfe459d82671761d1f02, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 0.2
+    pitch: 1
     loop: 0
     source: {fileID: 0}
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: -4819151524343094414, guid: f97986808365c1746a71c43656b144bf,
+      type: 2}
   - name: UI close menu
     clip: {fileID: 8300000, guid: 25f3a2e9b86dc90409a642e073eba7ee, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 0.2
+    pitch: 1
     loop: 0
     source: {fileID: 0}
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: -4819151524343094414, guid: f97986808365c1746a71c43656b144bf,
+      type: 2}
   - name: UI naviguation
     clip: {fileID: 8300000, guid: 2568d5da9e98077439910d53f6e50a13, type: 3}
     volume: 0
@@ -415,11 +423,12 @@ MonoBehaviour:
     mixerGroup: {fileID: 0}
   - name: UI click button
     clip: {fileID: 8300000, guid: cfeccb48e2848ca4e96bbe57ce00d2c1, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 0.2
+    pitch: 1
     loop: 0
     source: {fileID: 0}
-    mixerGroup: {fileID: 0}
+    mixerGroup: {fileID: -4819151524343094414, guid: f97986808365c1746a71c43656b144bf,
+      type: 2}
   - name: UI switch scene
     clip: {fileID: 0}
     volume: 0
@@ -442,7 +451,7 @@ MonoBehaviour:
     source: {fileID: 0}
     mixerGroup: {fileID: 0}
   - name: Main Theme
-    clip: {fileID: 8300000, guid: 98a2f2c425f18c54fbd5722cba4a14a4, type: 3}
+    clip: {fileID: 8300000, guid: f204e38b106cbcd448620f530023652b, type: 3}
     volume: 1
     pitch: 1
     loop: 1
@@ -450,17 +459,17 @@ MonoBehaviour:
     mixerGroup: {fileID: 6536977825649066790, guid: f97986808365c1746a71c43656b144bf,
       type: 2}
   - name: OST 1
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+    clip: {fileID: 8300000, guid: 98a2f2c425f18c54fbd5722cba4a14a4, type: 3}
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 6536977825649066790, guid: f97986808365c1746a71c43656b144bf,
       type: 2}
   - name: OST 2
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+    clip: {fileID: 8300000, guid: 33bfca38cb499ed41af1949820cdb8a6, type: 3}
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 6536977825649066790, guid: f97986808365c1746a71c43656b144bf,
@@ -475,8 +484,8 @@ MonoBehaviour:
       type: 2}
   - name: Boss Theme
     clip: {fileID: 8300000, guid: 8754f331f9f960c4c85261e42f50c614, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}
     mixerGroup: {fileID: 6536977825649066790, guid: f97986808365c1746a71c43656b144bf,
@@ -518,6 +527,10 @@ MonoBehaviour:
   - Boss Theme
   - Game Over Theme
   musicChose: Main Theme
+  hubIndex: 0
+  smoothLevelIndex: 1
+  darkLevelIndex: 4
+  bossIndex: 9
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -554,6 +567,54 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2178055192705325883}
     m_Modifications:
+    - target: {fileID: 1346930699, guid: ed57b1b53cdab15419efb4fedf18d11a, type: 3}
+      propertyPath: healthBarBossObj
+      value: 
+      objectReference: {fileID: 2165600186027670870}
+    - target: {fileID: 1346930699, guid: ed57b1b53cdab15419efb4fedf18d11a, type: 3}
+      propertyPath: bossLevelIndex
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 418541020339551760, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418541020339551760, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1850264737702468236, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -261.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708335054979721084, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6200954109344211759, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6200954109344211759, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6200954109344211759, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8917920239512384280, guid: ed57b1b53cdab15419efb4fedf18d11a,
+        type: 3}
+      propertyPath: audioM
+      value: 
+      objectReference: {fileID: 2178055192705325880}
     - target: {fileID: 8917920239512384281, guid: ed57b1b53cdab15419efb4fedf18d11a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -634,3 +695,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f64e0cd1d9061db4182912500e028200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2165600186027670870 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 15692562754036656, guid: ed57b1b53cdab15419efb4fedf18d11a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2178055192080228070}
+  m_PrefabAsset: {fileID: 0}

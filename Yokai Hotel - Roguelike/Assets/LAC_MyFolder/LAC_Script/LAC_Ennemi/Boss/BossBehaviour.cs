@@ -6,8 +6,8 @@ public class BossBehaviour : EnnemiBehaviour
 {
     public enum BossState {FREE,ATTACK,DASH,SHOOT};
     public BossState bossState = BossState.SHOOT;
-    public BoxCollider2D hurtBox;
-
+    //public BoxCollider2D hurtBox;
+    public GameObject hitParticle;
     [Header("Movement")]
     public Vector2 orient = new Vector2(1, 0);
     Vector2 velocitySmooth;
@@ -26,11 +26,12 @@ public class BossBehaviour : EnnemiBehaviour
     public BossBullet bossBullet;
     public Transform[] firePoints;
 
+
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
-       
+
      
     }
 
@@ -107,7 +108,7 @@ public class BossBehaviour : EnnemiBehaviour
         #endregion
 
         bossBullet.transform.position = bulletP;
-        bossBullet.gameObject.SetActive(true);
+        bossBullet.SetActiveBullet(true);
 
         float bulletRad = (Mathf.Atan2(orient.y, orient.x) + Mathf.Deg2Rad * bulletAngle) % (2*Mathf.PI);
         float cBounceAngle = (orient == Vector2.right || orient == Vector2.left) ? -bounceAngle : bounceAngle;
@@ -128,7 +129,12 @@ public class BossBehaviour : EnnemiBehaviour
     public IEnumerator ShootEnd(float delay)
     {
         yield return new WaitForSeconds(delay);
-        bossBullet.SetInactive();
+        bossBullet.SetActiveBullet(false);
     }
 
+    public void PlayVFXAttack()
+    {
+        GameObject particle = Instantiate(hitParticle, transform.position, transform.rotation);
+        Destroy(particle, 2);
+    }
 }

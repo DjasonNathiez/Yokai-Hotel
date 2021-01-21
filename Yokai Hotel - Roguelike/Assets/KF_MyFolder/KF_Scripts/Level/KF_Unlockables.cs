@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class KF_Unlockables : MonoBehaviour
 {
@@ -46,33 +47,9 @@ public class KF_Unlockables : MonoBehaviour
         lvlM = FindObjectOfType<KF_LevelManager>();
 
         if (SaveSystem.SaveExist() == true)
-            firstTime = SaveSystem.LoadProgress().firstTime;
-        if (firstTime == true)
         {
-            SaveSystem.DeleteSave();
-            Debug.Log("DeletedSave");
-
-            
-        }
-
-        if (SaveSystem.SaveExist() == false)// detect first time      
-        {
-            SaveSystem.SaveProgress(this);
-            Debug.Log("NewSave");
-
-            foreach (GameObject go in level2Unlock)
-                go.SetActive(false);
-            foreach (GameObject go in level4Unlock)
-                go.SetActive(false);
-            foreach (GameObject go in level6Unlock)
-                go.SetActive(false);
-            foreach (GameObject go in level8Unlock)
-                go.SetActive(false);
-            foreach (GameObject go in bossUnlock)
-                go.SetActive(false);
-        }
-        else
-        {
+            Debug.Log("LoadSave");
+            firstTime = false;
             ProgressData data = SaveSystem.LoadProgress();
             maxLevelReached = data.maxLevelReached;
             unlock2 = data.unlock2;
@@ -88,6 +65,33 @@ public class KF_Unlockables : MonoBehaviour
                 unlocked.Add(data.unlocked[i]);
 
             KeepUnlocks();
+        }
+            //SaveSystem.LoadProgress().firstTime;
+        /*if (firstTime == true)
+        {
+            SaveSystem.SaveProgress(this);
+            SaveSystem.DeleteSave();
+            Debug.Log("DeletedSave");
+
+            
+        }*/
+
+        if (SaveSystem.SaveExist() == false)// detect first time      
+        {
+            SaveSystem.SaveProgress(this);
+            SaveSystem.DeleteSave();
+            Debug.Log("NewSave");
+
+            foreach (GameObject go in level2Unlock)
+                go.SetActive(false);
+            foreach (GameObject go in level4Unlock)
+                go.SetActive(false);
+            foreach (GameObject go in level6Unlock)
+                go.SetActive(false);
+            foreach (GameObject go in level8Unlock)
+                go.SetActive(false);
+            foreach (GameObject go in bossUnlock)
+                go.SetActive(false);
         }
 
 
@@ -107,7 +111,7 @@ public class KF_Unlockables : MonoBehaviour
     {
         if (deleteSave == true)
         {
-            SaveSystem.DeleteSave();
+            DeleteSave();
         }
 
         hubReturn = lvlM.hubReturn;
@@ -305,4 +309,13 @@ public class KF_Unlockables : MonoBehaviour
         }
         onePerLevel = false;
     }
+
+
+    public void DeleteSave() //if problem at start
+    {
+        SaveSystem.SaveProgress(this);
+        SaveSystem.DeleteSave();
+        deleteSave = false;
+    }
+
 }

@@ -43,6 +43,11 @@ public class AnimatorArmor : MonoBehaviour
             if ((int)ennemi.ennemyState == 5)
                 animatorState = AnimatorState.DIE;
 
+            if ((int)ennemi.ennemyState == 2)
+                animatorState = AnimatorState.ATTACK;
+
+            if ((int)ennemi.ennemyState == 1)
+                animatorState = AnimatorState.AGGRO;
         }
         else
             animatorState = AnimatorState.IDLE;
@@ -58,6 +63,15 @@ public class AnimatorArmor : MonoBehaviour
 
         animator.SetFloat("Vertical", (vertical) ? Mathf.Sign(velocity.y) : 0);
         animator.SetFloat("Horizontal", (vertical) ? 0 : Mathf.Sign(velocity.x));
+    }
+
+    public void Death()
+    {
+        ennemi.Death();
+    }
+    public void DeathVFX()
+    {
+        ennemi.DeathVFXorigin();
     }
 
 }

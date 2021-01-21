@@ -10,6 +10,7 @@ public class InterfaceManager : MonoBehaviour
 {
     InventoryManager inventory;
     PlayerController player;
+    AudioManager audioM;
     public ProceduralGenerator kActive;
     public KF_LevelManager levelM;
     public Slider fillSlider;
@@ -19,7 +20,11 @@ public class InterfaceManager : MonoBehaviour
     public Texture hpActivate;
     public Texture hpDown;
     public GameObject hpBar;
-    public GameObject[] lightHP;
+    public GameObject lightHP;
+    public RawImage[] lightIMG;
+    public Material lightUP;
+    public Material LightDOWN;
+
     /// Texture hpNotActive;
 
     float currentHealth;
@@ -38,59 +43,88 @@ public class InterfaceManager : MonoBehaviour
     public GameObject keysObj;
     int currentKey;
 
+    public bool oscilate;
+    public float oscilMag, oscilFreq;
+    float randomOscil;
+
     [Header("Enchant")]
     public RawImage[] enchantList;
+    public Image[] enchantEffect;
+    public GameObject enchantEffectIMG;
     GameObject enchantIMG;
     EnchantManager enchantM;
 
+    public GameObject enchantI;
+    TextMeshProUGUI[] information;
+    RawImage[] informationIcon;
+
+    [Header("Boss HP")]
+    BossManager bossM;
+    public Slider healthBossSlider;
+    public GameObject healthBarBossObj;
+    int bossCurrentHP;
+    public int bossLevelIndex;
+
+
     private void Awake()
     {
+        randomOscil = Random.value - 0.5f;
     }
 
     private void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        
+        audioM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
 
         keysObj = GameObject.FindGameObjectWithTag("Keys");
         enchantIMG = GameObject.FindGameObjectWithTag("EnchantIMG");
-        
-        if(playerObj)
+
+        if (playerObj)
         inventory = playerObj.GetComponent<InventoryManager>(); //initialization du script InventoryManager
-     
+
         moneyText = GameObject.FindGameObjectWithTag("MoneyText").GetComponent<TextMeshProUGUI>();
 
-        if(playerObj)
+        if (playerObj)
         player = playerObj.GetComponent<PlayerController>();
 
         enchantM = playerObj.GetComponentInChildren<EnchantManager>();
 
+        //alltexturelantern
         allTextureLantern = hpBar.GetComponentsInChildren<RawImage>();
 
-        lightHP = GameObject.FindGameObjectsWithTag("LightUI");
-        
+        lightIMG = lightHP.GetComponentsInChildren<RawImage>();
+
+        //enchant
+        enchantEffect = enchantEffectIMG.GetComponentsInChildren<Image>();
+        information = enchantI.GetComponentsInChildren<TextMeshProUGUI>();
+        informationIcon = enchantI.GetComponentsInChildren<RawImage>();
+
+        //bossHP
+        bossM = GameObject.FindGameObjectWithTag("BossManager").GetComponent<BossManager>();
+
+        healthBarBossObj.SetActive(false);
 
         //initialization HealthBar
-        
 
         for (int i = 0; i < enchantM.enchants.Count; i++)
         {
             enchantList[i].enabled = false;
+            lightIMG[i].enabled = false;
         }
 
     }
 
     private void Update()
     {
-        if(levelM)
-        kActive = levelM.levels[levelM.levelCount].GetComponent<ProceduralGenerator>();
+        if (levelM)
+            kActive = levelM.levels[levelM.levelCount].GetComponent<ProceduralGenerator>();
 
         UpdateHealth();
         UpdateMoney();
         UpdateShoot();
         UpdateKey();
         UpdateEnchant();
-        
+        FillHPBoss();
     }
 
     void UpdateHealth()
@@ -101,19 +135,24 @@ public class InterfaceManager : MonoBehaviour
             maxHealth = inventory.maxHealth;
         }
 
-        for(int i = 0; i < allTextureLantern.Length; i++)
+        for (int i = 0; i < allTextureLantern.Length; i++)
         {
 
-            //allTextureLantern[i].texture = (currentHealth > i) ? hpActivate : hpDown;
+            lightIMG[i].material = (currentHealth > i) ? lightUP : LightDOWN;
+
+
 
             if (i < maxHealth)
             {
                 allTextureLantern[i].enabled = true;
+                lightIMG[i].enabled = true;
+
             }
 
-            if(i >= maxHealth)
+            if (i >= maxHealth)
             {
                 allTextureLantern[i].enabled = false;
+                lightIMG[i].enabled = false;
             }
         }
 
@@ -127,8 +166,8 @@ public class InterfaceManager : MonoBehaviour
         if (moneyText)
         {
             moneyText.text = currentMoney.ToString();
-            
-            if(currentMoney > 999)
+
+            if (currentMoney > 999)
             {
                 moneyText.text = "999+";
             }
@@ -147,27 +186,30 @@ public class InterfaceManager : MonoBehaviour
         /// keys/keysinlvl
 
         if (kActive)
-        currentKey = kActive.keyNumber;
-       
+            currentKey = kActive.keyNumber;
+
         //initialization
 
         keysImage = keysObj.GetComponentsInChildren<RawImage>();
 
-        for(int i = 0; i < currentKey; i++)
+        for (int i = 0; i < currentKey; i++)
         {
             keysImage[i].enabled = true;
 
-            if(inventory.keys != 0)
+            if (inventory.keys > i)
             {
-                keysImage[inventory.keys -1].texture = keysUp;
+                keysImage[inventory.keys - 1].texture = keysUp;
+
+                float oscill = Mathf.Sin(Time.time * oscilFreq + randomOscil) * oscilMag;
+                keysImage[i].transform.position += Vector3.up * oscill * Time.deltaTime;
 
             }
-            else 
+            else
             {
                 keysImage[i].texture = keysMiss;
 
             }
-            
+
         }
 
     }
@@ -177,33 +219,70 @@ public class InterfaceManager : MonoBehaviour
         //initialize image
 
         enchantList = enchantIMG.GetComponentsInChildren<RawImage>();
-        for(int i = 0; i < enchantM.enchants.Count; i++)
+        for (int i = 0; i < enchantM.enchants.Count; i++)
         {
             enchantList[i].enabled = true;
             enchantList[i].texture = enchantM.enchants[i].icon.texture;
             enchantList[i].color = Color.white;
-           
 
-            //if(enchantM.enchants[i].enchantEffects[i].active == true)
 
             if (enchantM.enchants[i].enchantEffects[0].active == true)
             {
-               
-                enchantList[i].color = Color.blue;
-                
+                enchantEffect[i].enabled = true;
+
+            }
+            else
+            {
+                enchantEffect[i].enabled = false;
             }
 
             //chooseIndex
-            if(enchantM.choosing == true)
+            if (enchantM.choosing == true)
             {
-              enchantList[enchantM.chooseIndex].color = Color.red;
+                enchantList[enchantM.chooseIndex].color = Color.red;
             }
             else
             {
                 enchantList[i].color = Color.white;
             }
+
+            //visual menu information
+            information[i].enabled = true;
+            informationIcon[i].enabled = true;
+
+            information[i].text = enchantM.enchants[i].GenerateDescription();
+            informationIcon[i].texture = enchantM.enchants[i].icon.texture;
+            
         }
     }
 
-   
+    void FillHPBoss()
+    {
+        healthBossSlider.minValue = 0;
+
+        if(levelM.levelCount == bossLevelIndex)
+        {
+            healthBarBossObj.SetActive(true);
+        }
+
+        if (bossM)
+        {
+            if (bossM.phaseTwo == false)
+            {
+                healthBossSlider.maxValue = bossM.pTwoHp;
+
+                bossCurrentHP = bossM.currentBossHp - bossM.pTwoHp;
+            }
+            else
+            {
+                healthBossSlider.maxValue = bossM.globalBossHp;
+
+                bossCurrentHP = bossM.currentBossHp;
+            }
+        }
+
+        healthBossSlider.value = bossCurrentHP;
+
+    }
+
 }

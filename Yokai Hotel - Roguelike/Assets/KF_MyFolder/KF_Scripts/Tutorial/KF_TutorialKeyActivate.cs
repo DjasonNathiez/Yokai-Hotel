@@ -29,7 +29,7 @@ public class KF_TutorialKeyActivate : MonoBehaviour
     {
         if (inRange == true)
         {
-            if (Input.GetButtonDown("Interact"))
+            if ((Input.GetButtonDown("Interact")) && (bActif == true))
             {
                 Debug.Log("Key Added");
                 anim.SetBool("gotKey", true);
@@ -63,5 +63,11 @@ public class KF_TutorialKeyActivate : MonoBehaviour
     {
         if (audioM)
             audioM.PlaySound("Keys", 0);
+    }
+
+    public void OpenChest()
+    {
+        if (audioM)
+            audioM.PlaySound("Chest", 0);
     }
 }

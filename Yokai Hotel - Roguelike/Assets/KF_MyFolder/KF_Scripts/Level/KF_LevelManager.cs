@@ -15,6 +15,7 @@ public class KF_LevelManager : MonoBehaviour
     public KF_LevelExit endTrigger;
     public GameObject fadecanvas;
     public bool levelChanged;
+    public bool levelMoved; // same as levelChanged
 
     //public GameObject postProcess1;
     //public GameObject postProcess2;
@@ -49,6 +50,7 @@ public class KF_LevelManager : MonoBehaviour
         //postProcess1.SetActive(true);
         //postProcess2.SetActive(false);
         levelChanged = false;
+        levelMoved = false;
     }
 
     public void Update()
@@ -64,6 +66,7 @@ public class KF_LevelManager : MonoBehaviour
                 if (endTrigger.exitTrigger == true)
                 {
                     levelChanged = true;
+                    levelMoved = true;
                     StartCoroutine("MoveLevelHub");
                 }
             }
@@ -73,6 +76,7 @@ public class KF_LevelManager : MonoBehaviour
                 if (checkTriggers.exitcheck == true)
                 {
                     levelChanged = true;
+                    levelMoved = true;
                     StartCoroutine(MoveBoss());
                 }
             }
@@ -84,6 +88,7 @@ public class KF_LevelManager : MonoBehaviour
             if (checkTriggers.exitcheck == true)
             {
                 levelChanged = true;
+                levelMoved = true;
                 StartCoroutine("MoveLevel");
             }
             /*if (checkTriggers.goingDownCheck == true)
@@ -108,6 +113,7 @@ public class KF_LevelManager : MonoBehaviour
         if (hubReturn == true)
         {
             levelChanged = true;
+            levelMoved = true;
             hubReturn = false;
         }
     }

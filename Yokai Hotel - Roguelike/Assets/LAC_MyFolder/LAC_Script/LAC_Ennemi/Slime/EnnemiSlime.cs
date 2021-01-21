@@ -130,6 +130,11 @@ public class EnnemiSlime : EnnemiBehaviour
                     SetVelocity(Vector2.zero, 0.2f);
                     break;
                 }
+            case EnnemyState.DIE:
+                {
+                    velocity = Vector2.zero;
+                    break;
+                }
         }
         
 

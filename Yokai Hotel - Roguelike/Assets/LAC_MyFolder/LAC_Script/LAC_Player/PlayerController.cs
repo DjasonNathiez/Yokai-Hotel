@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
     public int hurtDamage;
     public bool isHurt;
     public bool isDead;
+    public ParticleSystem hurtParticule;
 
     public float hurtTime;
     public float invincibleTime;
@@ -142,7 +143,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FielOfView();
 
         #region Input
         // movement
@@ -174,9 +174,7 @@ public class PlayerController : MonoBehaviour
         //attackChoose = 1;
 
         #endregion
-        // debug
-        if (Input.GetKeyDown(KeyCode.K))
-            ChangeHealth(-health);
+
         // take damage
         if (hurtDamage != 0)
         {
@@ -190,6 +188,7 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Recovery());
                 playerState = PlayerState.HURT;
 
+                
                 // death condition
                 if (health <= 0)
                     Death();
@@ -523,6 +522,8 @@ public class PlayerController : MonoBehaviour
         Debug.Log((value>= 0)? "player heal": "player lose health");
         health = Mathf.Clamp(health + value, 0, maxHealth);
 
+        if (value < 0 && hurtParticule != null)
+            hurtParticule.Play();
         if (health <= 0)
             Death();
     }
@@ -536,6 +537,7 @@ public class PlayerController : MonoBehaviour
     {
         velocity = Vector2.zero;
         playerState = PlayerState.DIE;
+        //Debug.LogError("Nice try");
         StartCoroutine(Restart(4));
     }
 
