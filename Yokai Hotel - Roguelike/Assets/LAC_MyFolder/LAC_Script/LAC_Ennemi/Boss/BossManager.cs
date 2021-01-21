@@ -52,6 +52,7 @@ public class BossManager : MonoBehaviour
         bossArray = GetComponentsInChildren<BossBehaviour>();
         animator = GetComponent<Animator>();
 
+        player = GameObject.FindGameObjectWithTag("Player");
         paternTimer = new float[bossArray.Length];
 
         currentBossHp = globalBossHp ;
