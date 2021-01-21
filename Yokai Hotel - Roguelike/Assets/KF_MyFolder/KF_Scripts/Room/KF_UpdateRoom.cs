@@ -18,47 +18,36 @@ public class KF_UpdateRoom : MonoBehaviour
 
     void Start()
     {
-        foreach (GameObject objects in startObjects)
-            objects.SetActive(false);
-        foreach (GameObject objects in middleObjects)
-            objects.SetActive(false);
-        foreach (GameObject objects in endObjects)
-            objects.SetActive(false);
-
-
         unlockables = FindObjectOfType<KF_Unlockables>();
         maxlevelReached = unlockables.maxLevelReached;
-        if (maxlevelReached > levelChange2)
-        {
-            foreach (GameObject objects in endObjects)
-            {
-                objects.SetActive(true);
-            }
-        }
-        if (maxlevelReached > levelChange1)
-        {
-            if (maxlevelReached < levelChange2)
-            {
-                foreach (GameObject objects in middleObjects)
-                {
-                    objects.SetActive(false);
-                }
-            }
-            else
-            {
-                foreach (GameObject objects in middleObjects)
-                {
-                    objects.SetActive(true);
-                }
-            }
-           
-        }
         if (maxlevelReached < levelChange1)
         {
             foreach (GameObject objects in startObjects)
             {
                 objects.SetActive(true);
             }
+            foreach (GameObject objects in middleObjects)
+                objects.SetActive(false);
+            foreach (GameObject objects in endObjects)
+                objects.SetActive(false);
+        }
+        if ((maxlevelReached < levelChange2) && (maxlevelReached >= levelChange1 ))
+        {
+            foreach (GameObject objects in startObjects)
+                objects.SetActive(false);
+            foreach (GameObject objects in middleObjects)
+                objects.SetActive(true);
+            foreach (GameObject objects in endObjects)
+                objects.SetActive(false);
+        }
+        if (maxlevelReached >= levelChange2)
+        {
+            foreach (GameObject objects in startObjects)
+                objects.SetActive(false);
+            foreach (GameObject objects in middleObjects)
+                objects.SetActive(true);
+            foreach (GameObject objects in endObjects)
+                objects.SetActive(true);
         }
     }
 

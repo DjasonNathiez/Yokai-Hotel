@@ -38,7 +38,9 @@ public static class SaveSystem
     public static bool SaveExist()
     {
         string path = Application.persistentDataPath + "/progress.lose";
+        Debug.Log(path);
         return (File.Exists(path));
+        
     }
 
     public static void DeleteSave()

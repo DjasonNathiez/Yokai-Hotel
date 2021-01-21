@@ -74,4 +74,6 @@ public class AnimatorArmor : MonoBehaviour
         ennemi.DeathVFXorigin();
     }
 
+
+
 }
