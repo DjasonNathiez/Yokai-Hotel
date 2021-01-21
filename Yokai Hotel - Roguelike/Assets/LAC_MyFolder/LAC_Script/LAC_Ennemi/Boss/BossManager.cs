@@ -45,6 +45,7 @@ public class BossManager : MonoBehaviour
     public BossEndTrigger endTrigger;
     bool battle;
     bool standBy;
+    public ParticleSystem deathVFX;
 
     // Start is called before the first frame update
     void Start()
@@ -272,5 +273,10 @@ public class BossManager : MonoBehaviour
     public void EndStandBy()
     {
         standBy = false;
+    }
+
+    public void PlayDeathVFX()
+    {
+        deathVFX.Play();
     }
 }

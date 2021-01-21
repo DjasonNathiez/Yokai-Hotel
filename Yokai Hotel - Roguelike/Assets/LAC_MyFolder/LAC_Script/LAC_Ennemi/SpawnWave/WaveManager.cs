@@ -16,12 +16,14 @@ public class WaveManager : MonoBehaviour
     public List<GameObject> doors;
     public bool tutorial;
 
+    public GameObject poofVFX;
     // Start is called before the first frame update
     void Start()
     {
         waves = GetComponentsInChildren<Wave>();
         foreach( Wave w in waves)
         {
+            w.poofVFX = poofVFX;
             w.gameObject.SetActive(false);
         }
         roomtr = transform.root;

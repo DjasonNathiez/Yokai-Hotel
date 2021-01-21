@@ -21,6 +21,7 @@ public class BossBullet : MonoBehaviour
     SpriteRenderer spriteR;
 
     PlayerController player;
+    public GameObject explosionVFX;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +45,8 @@ public class BossBullet : MonoBehaviour
                 player.hurtDamage = damage;
                 Debug.Log("BossbulletHit");
             }
+            GameObject particule = Instantiate(explosionVFX, transform.position, transform.rotation);
+            Destroy(particule, 2);
             SetActiveBullet(false);
             Debug.Log("BossBullet hit Player");
         }
@@ -72,11 +75,13 @@ public class BossBullet : MonoBehaviour
         yield return new WaitForSeconds(delay);
         velocity = Vector2.zero;
         speed = 0;
+        GameObject particule = Instantiate(explosionVFX, transform.position, transform.rotation);
+        Destroy(particule, 2);
         moving = false;
         haveBounce = !haveBounce;
 
     }
-    private void OnTriggerEnter2D(Collider2D collision) 
+    /*private void OnTriggerEnter2D(Collider2D collision) 
     {
         // hurt player
         if (collision.tag == "PHurtBox")
@@ -91,7 +96,7 @@ public class BossBullet : MonoBehaviour
             //SetInactive();
         }
 
-    }
+    }*/
 
     public void SetActiveBullet( bool state)
     {

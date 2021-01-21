@@ -106,4 +106,5 @@ public class AniamtorBoss : MonoBehaviour
         if (audioM)
             audioM.PlaySound("Boss heavy attack", 0);
     }
+
 }
