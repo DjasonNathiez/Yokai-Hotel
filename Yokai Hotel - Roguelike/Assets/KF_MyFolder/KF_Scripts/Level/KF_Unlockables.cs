@@ -33,11 +33,14 @@ public class KF_Unlockables : MonoBehaviour
     public bool unlock8;
     public bool unlockBoss;
     private int count;
+    public bool runOnce;
 
     [Header("==== Save Settings ====")]
+    private bool changeKeyCon;
     public bool keyboard;
     public bool firstTime;
     public bool deleteSave;
+    
 
 
 
@@ -59,6 +62,7 @@ public class KF_Unlockables : MonoBehaviour
             unlockBoss = data.unlockBoss;
             hubReturn = data.hubReturn;
             firstTime = data.firstTime;
+            keyboard = data.keyboard;
 
             lvlM.hubReturn = data.hubReturn;
             for (int i = 0; i < data.unlocked.Count; i++)
@@ -316,6 +320,19 @@ public class KF_Unlockables : MonoBehaviour
         SaveSystem.SaveProgress(this);
         SaveSystem.DeleteSave();
         deleteSave = false;
+    }
+
+    public void Keyboard()
+    {
+        Debug.Log("Change1");
+        keyboard = true;
+        runOnce = true;
+    }
+
+    public void Manette()
+    {
+        keyboard = false;
+        runOnce = true;
     }
 
 }
