@@ -18,7 +18,7 @@ public class BossStartTrigger : MonoBehaviour
             player.manageSpeed = 0;
             player.playerState = PlayerController.PlayerState.MANAGE;
 
-            StartCoroutine(EndIntro(4));
+            StartCoroutine(EndIntro(6.5f));
             Debug.Log("StartBoss battle");
         }
     }

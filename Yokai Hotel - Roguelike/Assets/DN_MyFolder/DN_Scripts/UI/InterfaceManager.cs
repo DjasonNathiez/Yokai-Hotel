@@ -64,6 +64,8 @@ public class InterfaceManager : MonoBehaviour
     public GameObject healthBarBossObj;
     int bossCurrentHP;
     public int bossLevelIndex;
+    bool triggerPhaseTwo;
+    public Image fillHp;
 
 
     private void Awake()
@@ -269,19 +271,32 @@ public class InterfaceManager : MonoBehaviour
             if (bossM.phaseTwo == false)
             {
                 healthBossSlider.maxValue = bossM.pTwoHp;
-
                 bossCurrentHP = bossM.currentBossHp - bossM.pTwoHp;
             }
-            else
+            else if( ! triggerPhaseTwo)
             {
-                healthBossSlider.maxValue = bossM.globalBossHp;
-
-                bossCurrentHP = bossM.currentBossHp;
+                bossCurrentHP = 0;
+                StartCoroutine(FillHPBossLate(10));
+                triggerPhaseTwo = true;
             }
         }
 
         healthBossSlider.value = bossCurrentHP;
+        if (fillHp != null)
+        {
+            Color col = Color.white;
+            col.a = 0;
+            fillHp.color = (healthBossSlider.value <= 0) ?col : Color.white;
+        }
+        
 
+    }
+
+    IEnumerator FillHPBossLate(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        healthBossSlider.maxValue = bossM.globalBossHp;
+        bossCurrentHP = bossM.currentBossHp;
     }
 
 }

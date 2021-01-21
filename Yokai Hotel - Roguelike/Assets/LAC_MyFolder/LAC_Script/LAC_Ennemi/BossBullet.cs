@@ -42,11 +42,12 @@ public class BossBullet : MonoBehaviour
 
             if (player)
             {
-                player.hurtDamage = damage;
-                Debug.Log("BossbulletHit");
+                
 
                 if (active)
                 {
+                    player.hurtDamage = damage;
+                    Debug.Log("BossbulletHit");
                     GameObject particule = Instantiate(explosionVFX, transform.position, transform.rotation);
                     Destroy(particule, 2);
                 }
