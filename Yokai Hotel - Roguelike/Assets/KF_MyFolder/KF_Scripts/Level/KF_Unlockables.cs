@@ -62,6 +62,7 @@ public class KF_Unlockables : MonoBehaviour
             unlockBoss = data.unlockBoss;
             hubReturn = data.hubReturn;
             firstTime = data.firstTime;
+            keyboard = data.keyboard;
 
             lvlM.hubReturn = data.hubReturn;
             for (int i = 0; i < data.unlocked.Count; i++)
@@ -323,6 +324,7 @@ public class KF_Unlockables : MonoBehaviour
 
     public void Keyboard()
     {
+        Debug.Log("Change1");
         keyboard = true;
         runOnce = true;
     }
