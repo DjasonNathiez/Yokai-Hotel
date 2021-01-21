@@ -7,6 +7,7 @@ public class Wave : MonoBehaviour
 
     public EnnemiBehaviour[] enemyArray;
     public float delayPerMeter;
+    public GameObject poofVFX;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +38,14 @@ public class Wave : MonoBehaviour
     public IEnumerator DelayToSpawn(GameObject obj, float delay)
     {
         yield return new WaitForSeconds(delay);
+
+        if(poofVFX != null)
+        {
+            GameObject particle = Instantiate(poofVFX, obj.transform.position, obj.transform.rotation);
+            Destroy(particle, 1);
+        }
+
+        //yield return new WaitForSeconds(0.2f);
         obj.SetActive(true);
     }
     
