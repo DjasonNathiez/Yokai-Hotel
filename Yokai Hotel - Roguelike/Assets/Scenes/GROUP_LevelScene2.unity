@@ -1325,6 +1325,7 @@ MonoBehaviour:
   hurtParticule: {fileID: 0}
   hurtTime: 0.2
   invincibleTime: 1
+  healParticule: {fileID: 0}
   startTriggerM: []
   endTriggerM: []
   manageSpeed: 0
@@ -1847,7 +1848,6 @@ GameObject:
   - component: {fileID: 440582573}
   - component: {fileID: 440582574}
   - component: {fileID: 440582575}
-  - component: {fileID: 440582576}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2004,26 +2004,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   roomClean: 0
---- !u!114 &440582576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 440582569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AssetsPPU: 16
-  m_RefResolutionX: 320
-  m_RefResolutionY: 180
-  m_UpscaleRT: 1
-  m_PixelSnapping: 0
-  m_CropFrameX: 0
-  m_CropFrameY: 0
-  m_StretchFill: 0
 --- !u!1 &569540158 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7756021009272140360, guid: 2a5ac7db45f020b43a8cab88f39cd27d,
@@ -2100,7 +2080,7 @@ PrefabInstance:
     - target: {fileID: 3867148610447654504, guid: 6766e3eeb39b875408120eeb37285d42,
         type: 3}
       propertyPath: money
-      value: 500
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3867148610447654505, guid: 6766e3eeb39b875408120eeb37285d42,
         type: 3}

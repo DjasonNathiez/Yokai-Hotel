@@ -418,6 +418,7 @@ public class PlayerController : MonoBehaviour
         spriteT.color = Color.white;
         playerState = PlayerState.FREE;
 
+        isHurt = false;
         yield return new WaitForSeconds(invincibleTime - hurtTime);
         invincible = false;
     }

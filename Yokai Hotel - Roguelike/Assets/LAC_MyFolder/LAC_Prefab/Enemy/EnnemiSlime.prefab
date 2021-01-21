@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 1761099782500723712}
   - component: {fileID: 1761099782500723715}
   - component: {fileID: 1761099782500723714}
+  - component: {fileID: 2791896545728488593}
   m_Layer: 10
   m_Name: EnnemiSlime
   m_TagString: Ennemi
@@ -165,20 +166,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDropItem: 5
-  minDropItem: 2
+  minDropItem: 3
   dropRadius: 2
   dropRateG: 0.47
   dropMultiplier: 1
   dropItems:
-  - itemToDrop: {fileID: 2187885602079235046, guid: c9489cc5c39486244bbdbeb8128a9467,
+  - itemToDrop: {fileID: 5037613768808454865, guid: e6327559c3547414592915a934b92ad3,
       type: 3}
-    dropRate: 0.5473454
-  - itemToDrop: {fileID: 2851531606697492756, guid: 6f2f3e8f89371a242a8b753e3268ed53,
+    dropRate: 0.75
+  - itemToDrop: {fileID: 6765333769586439405, guid: bbdb4f5193d48f94b97c35d8de679f3f,
       type: 3}
-    dropRate: 0.2736727
-  - itemToDrop: {fileID: 5256743355869924717, guid: 2ba1c639969e618448fc33479313d96d,
-      type: 3}
-    dropRate: 0.17898194
+    dropRate: 0.25
 --- !u!114 &1761099782500723714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +200,7 @@ MonoBehaviour:
   deathParticule: {fileID: 2837765531737527547, guid: b2c1eaafce13bef4a9561f2dd04ede68,
     type: 3}
   hurt: 0
+  hurtBox: {fileID: 0}
   stunPoints: 0
   stunMultiplier: 1
   stunTime: 0
@@ -237,12 +236,36 @@ MonoBehaviour:
   bulletObj: {fileID: 9174963586662408213, guid: 189a40e121eda7f4faf320d8bfeaec46,
     type: 3}
   attackStock: 0
-  maxAttackStock: 3
+  maxAttackStock: 2
   minAttackDetect: 0.5
   maxAttackDetect: 1
   activeBullet: []
-  timeToLoad: 1.5
-  timeBetweenAttack: 0.5
+  timeToLoad: 2
+  timeBetweenAttack: 1
+--- !u!114 &2791896545728488593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761099782500723725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3ac02e3fa4f1d949b39b1d2d63516d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDropItem: 5
+  minDropItem: 2
+  dropRadius: 2
+  dropRateG: 0.4
+  dropMultiplier: 1
+  dropItems:
+  - itemToDrop: {fileID: 5037613768808454865, guid: e6327559c3547414592915a934b92ad3,
+      type: 3}
+    dropRate: 0.85
+  - itemToDrop: {fileID: 6765333769586439405, guid: bbdb4f5193d48f94b97c35d8de679f3f,
+      type: 3}
+    dropRate: 0.15
 --- !u!1 &1761099782719403105
 GameObject:
   m_ObjectHideFlags: 0
