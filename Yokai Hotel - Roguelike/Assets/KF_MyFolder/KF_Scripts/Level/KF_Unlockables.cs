@@ -321,9 +321,15 @@ public class KF_Unlockables : MonoBehaviour
         deleteSave = false;
     }
 
-    public void SwitchControls()
+    public void Keyboard()
     {
-        keyboard = !keyboard;
+        keyboard = true;
+        runOnce = true;
+    }
+
+    public void Manette()
+    {
+        keyboard = false;
         runOnce = true;
     }
 
