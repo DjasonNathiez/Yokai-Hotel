@@ -58,6 +58,14 @@ public class InterfaceManager : MonoBehaviour
     TextMeshProUGUI[] information;
     RawImage[] informationIcon;
 
+    [Header("Boss HP")]
+    BossManager bossM;
+    public Slider healthBossSlider;
+    public GameObject healthBarBossObj;
+    int bossCurrentHP;
+    public int bossLevelIndex;
+
+
     private void Awake()
     {
         randomOscil = Random.value - 0.5f;
@@ -91,6 +99,11 @@ public class InterfaceManager : MonoBehaviour
         information = enchantI.GetComponentsInChildren<TextMeshProUGUI>();
         informationIcon = enchantI.GetComponentsInChildren<RawImage>();
 
+        //bossHP
+        bossM = GameObject.FindGameObjectWithTag("BossManager").GetComponent<BossManager>();
+
+        healthBarBossObj.SetActive(false);
+
         //initialization HealthBar
 
         for (int i = 0; i < enchantM.enchants.Count; i++)
@@ -111,7 +124,7 @@ public class InterfaceManager : MonoBehaviour
         UpdateShoot();
         UpdateKey();
         UpdateEnchant();
-
+        FillHPBoss();
     }
 
     void UpdateHealth()
@@ -245,6 +258,30 @@ public class InterfaceManager : MonoBehaviour
 
     void FillHPBoss()
     {
+        healthBossSlider.minValue = 0;
+
+        if(levelM.levelCount == bossLevelIndex)
+        {
+            healthBarBossObj.SetActive(true);
+        }
+
+        if (bossM)
+        {
+            if (bossM.phaseTwo == false)
+            {
+                healthBossSlider.maxValue = bossM.pTwoHp;
+
+                bossCurrentHP = bossM.currentBossHp - bossM.pTwoHp;
+            }
+            else
+            {
+                healthBossSlider.maxValue = bossM.globalBossHp;
+
+                bossCurrentHP = bossM.currentBossHp;
+            }
+        }
+
+        healthBossSlider.value = bossCurrentHP;
 
     }
 

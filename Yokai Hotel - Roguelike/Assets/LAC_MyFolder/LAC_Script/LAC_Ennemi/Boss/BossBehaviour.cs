@@ -26,11 +26,12 @@ public class BossBehaviour : EnnemiBehaviour
     public BossBullet bossBullet;
     public Transform[] firePoints;
 
+
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
-       
+
      
     }
 
