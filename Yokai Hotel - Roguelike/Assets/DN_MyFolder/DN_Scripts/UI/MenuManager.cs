@@ -20,9 +20,12 @@ public class MenuManager : MonoBehaviour
     PlayerController playerController;
     public AudioManager audioM;
 
+    KF_LevelManager levelM;
+
     private void Awake()
     {
         enchantInformation = GameObject.FindGameObjectWithTag("EnchantInfo");
+        levelM = GameObject.FindGameObjectWithTag("HotelManager").GetComponent<KF_LevelManager>();
 
         GameObject hud = GameObject.FindGameObjectWithTag("HUD");
         if (hud)
@@ -151,5 +154,10 @@ public class MenuManager : MonoBehaviour
     {
         if (audioM)
             audioM.PlaySound("UI close menu", 0);
+    }
+
+    public void GoToBoss()
+    {
+        levelM.levelCount = 8;
     }
 }
