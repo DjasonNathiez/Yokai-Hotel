@@ -1322,6 +1322,7 @@ MonoBehaviour:
   hurtDamage: 0
   isHurt: 0
   isDead: 0
+  hurtParticule: {fileID: 0}
   hurtTime: 0.2
   invincibleTime: 1
   startTriggerM: []
@@ -4166,20 +4167,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 644185007, guid: 0dd68f8be89b50942a450a16c1cb7744, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 89314268}
-    - target: {fileID: 425633974532131581, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_Name
-      value: Icon 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1618045184289436232, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2178055191279671020, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -4190,32 +4177,6 @@ PrefabInstance:
       propertyPath: levelM
       value: 
       objectReference: {fileID: 89314265}
-    - target: {fileID: 2178055192705325880, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: sounds.Array.data[22].name
-      value: Chest
-      objectReference: {fileID: 0}
-    - target: {fileID: 2178055192705325880, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: sounds.Array.data[22].volume
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2178055192705325880, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: sounds.Array.data[22].pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2178055192705325880, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: sounds.Array.data[22].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 4cde7839633e2b943b957511fd2d286a, type: 3}
-    - target: {fileID: 2178055192705325880, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: sounds.Array.data[22].mixerGroup
-      value: 
-      objectReference: {fileID: -4819151524343094414, guid: f97986808365c1746a71c43656b144bf,
-        type: 2}
     - target: {fileID: 2178055192705325881, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}
       propertyPath: m_Name
@@ -4276,6 +4237,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2178055192720074057, guid: 0dd68f8be89b50942a450a16c1cb7744,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 89314268}
     - target: {fileID: 2852642196985784390, guid: 0dd68f8be89b50942a450a16c1cb7744,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -4286,96 +4252,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 89314268}
-    - target: {fileID: 2907855066352938696, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3232580158669869864, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4183334582838147055, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_Name
-      value: Icon 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749813094271084974, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4957111743003319237, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4957111743003319237, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4957111743003319237, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_fontSizeBase
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4957111743003319237, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5572877090812543841, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8106935254727506508, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8106935254727506508, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8106935254727506508, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_fontSizeBase
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8106935254727506508, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8616884177339726894, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8616884177339726894, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8616884177339726894, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_fontSizeBase
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8616884177339726894, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8923217895544997588, guid: 0dd68f8be89b50942a450a16c1cb7744,
-        type: 3}
-      propertyPath: m_Name
-      value: Icon 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dd68f8be89b50942a450a16c1cb7744, type: 3}
 --- !u!95 &2178055191257970694 stripped
@@ -4833,11 +4709,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Boss Level
-      objectReference: {fileID: 0}
-    - target: {fileID: 4926324203707565148, guid: 94430578571ab4b49a2dde8b03d36f42,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4926324203707565149, guid: 94430578571ab4b49a2dde8b03d36f42,
         type: 3}
