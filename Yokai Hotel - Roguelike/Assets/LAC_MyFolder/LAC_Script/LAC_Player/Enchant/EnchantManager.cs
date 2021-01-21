@@ -142,7 +142,7 @@ public class EnchantManager : MonoBehaviour
                         }
                     case EnchantEffect.ConditionType.MONEY:
                         {
-                            e.enchantEffects[i].active = (inventory.money >= e.enchantEffects[i].conditionValues[1].value);
+                            e.enchantEffects[i].active = (inventory.money >= e.enchantEffects[i].conditionValues[0].value);
                             break;
                         }
                     case EnchantEffect.ConditionType.LIGHT_KILL:

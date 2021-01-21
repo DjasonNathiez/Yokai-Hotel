@@ -16,6 +16,7 @@ public class ShopManager : MonoBehaviour
     public List<Enchant> enchantList;
     List<Enchant> exceptEnchants;
     public Enchant[] shopEnchants;
+    public GameObject[] scrolls;
     
 
     [Header("Health")]
@@ -29,6 +30,7 @@ public class ShopManager : MonoBehaviour
     [Header("Buy")]
     public BuyDetector[] buyDetectors;
     public int[] price = new int[3];
+    public bool[] bought = new bool[3];
 
     [Header("Show")]
     public SpriteRenderer[] shopItemS;
@@ -119,25 +121,27 @@ public class ShopManager : MonoBehaviour
 
                     trigger = true;
                 }
-                else if (shopInteracts[i] != null)
+                else if (shopInteracts[i] != null && !bought[i])
                     shopInteracts[i].showState = false ;
 
                 if (buyDetectors[i].Buy )
                 {
                     if (inventoryM.money >= price[i])
                     {
-                        Buy(i);
+                        
                         buyDetectors[i].Buy = false;
                         buyDetectors[i].enabled = false;
 
                         if (shopInteracts[i] != null)
                             shopInteracts[i].showState = false;
+                        Buy(i);
                     }
                     else
                         Debug.Log("need more money");
                 }
             }
         }
+        enchantM.choosing = trigger;
     }
     void Buy(int buyIndex)
     {
@@ -146,9 +150,11 @@ public class ShopManager : MonoBehaviour
             // buy enchant
             enchantM.AddEnchant(shopEnchants[buyIndex]);
             shopEnchants[buyIndex] = null;
-
+            scrolls[buyIndex].SetActive(false);
             inventoryM.money -= price[buyIndex];
             Debug.Log("Buy Enchant");
+
+            
         }
         else
         {
@@ -157,6 +163,10 @@ public class ShopManager : MonoBehaviour
 
             Debug.Log("Buy Heal");
         }
+
+        shopInteracts[buyIndex].RemoveDesc();
+        shopInteracts[buyIndex] = null;
+
     } 
     void UpdatePrice()
     {
@@ -169,6 +179,7 @@ public class ShopManager : MonoBehaviour
         }
         price[2] = (int)((healPrice * healValue) *Mathf.Pow(priceMultiplier, floorLevel) *enchantM.moneyReduc);
     }
+
     void UpdateVisual()
     {
         // show enchants
@@ -195,8 +206,9 @@ public class ShopManager : MonoBehaviour
                 }
 
             }
-            else
+            else if(shopInteracts[i] != null)
             {
+                
                 string healName = "Heal stock of : " + healValue;
                 string healDesc = " Heal " + healValue + " points no more, no less";
                 shopInteracts[i].objectToBuy.nameObj = healName.Split('?');

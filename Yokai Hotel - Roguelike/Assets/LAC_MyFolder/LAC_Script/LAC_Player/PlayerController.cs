@@ -143,11 +143,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FielOfView();
-        if (Input.GetKey(KeyCode.Keypad0))
-            Debug.Log("GamePadController");
-        if (Input.anyKey)
-            Debug.Log("KeyBoardController");
+
         #region Input
         // movement
         Vector2 inputAxis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
@@ -178,9 +174,7 @@ public class PlayerController : MonoBehaviour
         //attackChoose = 1;
 
         #endregion
-        // debug
-        if (Input.GetKeyDown(KeyCode.K))
-            ChangeHealth(-health);
+
         // take damage
         if (hurtDamage != 0)
         {
@@ -543,7 +537,7 @@ public class PlayerController : MonoBehaviour
     {
         velocity = Vector2.zero;
         playerState = PlayerState.DIE;
-        Debug.LogError("Nice try");
+        //Debug.LogError("Nice try");
         StartCoroutine(Restart(4));
     }
 
