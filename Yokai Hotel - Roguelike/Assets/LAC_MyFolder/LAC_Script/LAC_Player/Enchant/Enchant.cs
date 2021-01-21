@@ -51,7 +51,7 @@ public class Enchant : ScriptableObject
                     }
                 case EnchantEffect.ConditionType.MONEY:
                     {
-                        condition += "If money stock is greater than ";
+                        condition += "If money stock is greater than " + e.conditionValues[0].value;
                         break;
                     }
                 case EnchantEffect.ConditionType.LIGHT_KILL:
