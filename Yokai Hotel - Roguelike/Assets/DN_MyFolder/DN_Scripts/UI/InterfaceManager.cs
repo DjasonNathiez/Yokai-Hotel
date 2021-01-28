@@ -64,7 +64,7 @@ public class InterfaceManager : MonoBehaviour
     public GameObject healthBarBossObj;
     int bossCurrentHP;
     public int bossLevelIndex;
-    bool triggerPhaseTwo;
+    bool triggerPhaseTwo, endTrigger;
     public Image fillHp;
 
 
@@ -240,7 +240,9 @@ public class InterfaceManager : MonoBehaviour
             //chooseIndex
             if (enchantM.choosing == true)
             {
-                enchantList[enchantM.chooseIndex].color = Color.red;
+                Color col = Color.white;
+                col.a = 0;
+                enchantList[enchantM.chooseIndex].color = col;
             }
             else
             {
@@ -279,6 +281,10 @@ public class InterfaceManager : MonoBehaviour
                 StartCoroutine(FillHPBossLate(10));
                 triggerPhaseTwo = true;
             }
+            if (bossM.phaseTwo && endTrigger)
+            {
+                bossCurrentHP = bossM.currentBossHp;
+            }
         }
 
         healthBossSlider.value = bossCurrentHP;
@@ -297,6 +303,7 @@ public class InterfaceManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         healthBossSlider.maxValue = bossM.globalBossHp;
         bossCurrentHP = bossM.currentBossHp;
+        endTrigger = true;
     }
 
 }

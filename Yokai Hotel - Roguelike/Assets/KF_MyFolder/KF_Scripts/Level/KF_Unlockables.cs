@@ -119,15 +119,26 @@ public class KF_Unlockables : MonoBehaviour
         }
 
         hubReturn = lvlM.hubReturn;
+
+        if ((lvlM.levelChanged == true) || (hubReturn == true))
+        {
+            firstTime = false;
+            SaveSystem.SaveProgress(this);
+            onePerLevel = false;
+            StartCoroutine(AddSecret());
+        }
         if (lvlM.levelCount >= maxLevelReached)
         {
             maxLevelReached = lvlM.levelCount;
         }
 
-        if ((maxLevelReached == nextUnlock) && (onePerLevel == false))
+        if ((lvlM.levelCount == nextUnlock) && (onePerLevel == false))
         {
+            Debug.Log("NEXT UNLOCK");
             updateUnlocks = true;
-            nextUnlock = unlockLevels[count + 1];
+            nextUnlock = unlockLevels[count];
+            count++;
+            onePerLevel = true;
         }
         if (updateUnlocks == true)
             LevelUnlock();
@@ -141,12 +152,6 @@ public class KF_Unlockables : MonoBehaviour
                 secretTrigger.secretUnlocked = false;
                 secretActivated = true;
             }
-        }
-        if ((lvlM.levelChanged == true) || (hubReturn == true))
-        {
-            firstTime = false;
-            SaveSystem.SaveProgress(this);
-            StartCoroutine(AddSecret());
         }
         if (secretActivated == true)
             SecretUnlock();
